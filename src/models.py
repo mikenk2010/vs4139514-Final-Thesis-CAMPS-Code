@@ -22,6 +22,7 @@ class ScoreResult:
     score: float
     rationale: str
     raw: str
+    usage: dict | None = None
 
 
 def _cache_key(model_id: str, agent: str, essay_id: str, system_prompt: str,
@@ -50,18 +51,19 @@ class ScoringClient:
         if cached.exists():
             d = json.loads(cached.read_text())
         else:
-            raw = self._call_with_retry(system_prompt, user_prompt)
+            raw, usage = self._call_with_retry(system_prompt, user_prompt)
             d = {"essay_id": essay_id, "model": self.model_id, "agent": agent,
-                 "raw": raw}
+                 "raw": raw, "usage": usage}
             parsed = json.loads(raw)
             d["score"] = float(parsed["score"])
             d["rationale"] = str(parsed.get("rationale", ""))
             cached.write_text(json.dumps(d, ensure_ascii=False, indent=1))
-        return ScoreResult(**{k: d[k] for k in
+        return ScoreResult(**{k: d.get(k) for k in
                               ("essay_id", "model", "agent", "score",
-                               "rationale", "raw")})
+                               "rationale", "raw", "usage")})
 
-    def _call_with_retry(self, system_prompt: str, user_prompt: str) -> str:
+    def _call_with_retry(self, system_prompt: str,
+                         user_prompt: str) -> tuple[str, dict | None]:
         delay = 2.0
         for attempt in range(self.max_retries):
             try:
@@ -74,7 +76,8 @@ class ScoringClient:
                 delay *= 2
         raise RuntimeError("unreachable")
 
-    def _call(self, system_prompt: str, user_prompt: str) -> str:
+    def _call(self, system_prompt: str,
+              user_prompt: str) -> tuple[str, dict | None]:
         if self.provider == "openai":
             from openai import OpenAI
             client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -83,7 +86,10 @@ class ScoringClient:
                 response_format={"type": "json_object"},
                 messages=[{"role": "system", "content": system_prompt},
                           {"role": "user", "content": user_prompt}])
-            return r.choices[0].message.content
+            u = r.usage
+            return r.choices[0].message.content, (
+                {"in": u.prompt_tokens, "out": u.completion_tokens}
+                if u else None)
         if self.provider == "anthropic":
             import anthropic
             client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -91,7 +97,8 @@ class ScoringClient:
                 model=self.model_id, max_tokens=1024, temperature=0.0,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}])
-            return r.content[0].text
+            return r.content[0].text, {"in": r.usage.input_tokens,
+                                       "out": r.usage.output_tokens}
         if self.provider == "google":
             from google import genai
             client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
@@ -100,7 +107,9 @@ class ScoringClient:
                 contents=user_prompt,
                 config={"system_instruction": system_prompt, "temperature": 0.0,
                         "response_mime_type": "application/json"})
-            return r.text
+            um = getattr(r, "usage_metadata", None)
+            return r.text, ({"in": um.prompt_token_count,
+                             "out": um.candidates_token_count} if um else None)
         if self.provider == "ollama":
             from openai import OpenAI  # Ollama exposes an OpenAI-compatible API
             client = OpenAI(
@@ -112,7 +121,10 @@ class ScoringClient:
                 response_format={"type": "json_object"},
                 messages=[{"role": "system", "content": system_prompt},
                           {"role": "user", "content": user_prompt}])
-            return r.choices[0].message.content
+            u = r.usage
+            return r.choices[0].message.content, (
+                {"in": u.prompt_tokens, "out": u.completion_tokens}
+                if u else None)
         if self.provider == "together":
             from openai import OpenAI  # Together exposes an OpenAI-compatible API
             client = OpenAI(api_key=os.environ["TOGETHER_API_KEY"],
@@ -122,5 +134,8 @@ class ScoringClient:
                 response_format={"type": "json_object"},
                 messages=[{"role": "system", "content": system_prompt},
                           {"role": "user", "content": user_prompt}])
-            return r.choices[0].message.content
+            u = r.usage
+            return r.choices[0].message.content, (
+                {"in": u.prompt_tokens, "out": u.completion_tokens}
+                if u else None)
         raise ValueError(f"unknown provider: {self.provider}")

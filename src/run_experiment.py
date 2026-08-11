@@ -85,7 +85,8 @@ def main() -> None:
                             "task": row.task, "cefr": row.cefr,
                             "model": m["name"], "condition": cond_name,
                             "agent": agent, "score": res.score,
-                            "rationale": res.rationale}) + "\n")
+                            "rationale": res.rationale,
+                            "usage": res.usage}) + "\n")
                         log.flush()
                     if len(scores) > 1:
                         print(f"{row.essay_id} {m['name']} {cond_name}: "
