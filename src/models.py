@@ -101,6 +101,18 @@ class ScoringClient:
                 config={"system_instruction": system_prompt, "temperature": 0.0,
                         "response_mime_type": "application/json"})
             return r.text
+        if self.provider == "ollama":
+            from openai import OpenAI  # Ollama exposes an OpenAI-compatible API
+            client = OpenAI(
+                api_key="ollama",  # ignored by Ollama
+                base_url=os.environ.get("OLLAMA_BASE_URL",
+                                        "http://localhost:11434/v1"))
+            r = client.chat.completions.create(
+                model=self.model_id, temperature=0.0,
+                response_format={"type": "json_object"},
+                messages=[{"role": "system", "content": system_prompt},
+                          {"role": "user", "content": user_prompt}])
+            return r.choices[0].message.content
         if self.provider == "together":
             from openai import OpenAI  # Together exposes an OpenAI-compatible API
             client = OpenAI(api_key=os.environ["TOGETHER_API_KEY"],

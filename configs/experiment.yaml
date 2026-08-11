@@ -17,6 +17,8 @@ sampling:
   gra: keep_all               # 140 essays, validation set for E3
 
 models:                        # personal API accounts; exact IDs pinned before E1
+  # local smoke-test model (free, via Ollama; not part of the official E1 set)
+  # - {name: qwen3-local, provider: ollama, id: "qwen3:14b"}
   - {name: gpt-4o,        provider: openai,    id: "TODO-pin-exact-version"}
   - {name: claude-sonnet, provider: anthropic, id: "TODO-pin-exact-version"}
   - {name: gemini-pro,    provider: google,    id: "TODO-pin-exact-version"}
