@@ -1,0 +1,41 @@
+# CAMPS Part B experiment configuration (single source of truth)
+seed: 4139514
+
+paths:
+  icnale_root: data/          # unzipped ICNALE modules live here (gitignored)
+  manifest: results/manifest.csv
+  cache: results/cache/
+  results: results/
+
+sampling:
+  tasks: [PTJ0, SMK0]         # both controlled topics
+  bands: [B1_2, B2_0]         # upper proficiency bands
+  cohorts:
+    sea:    {regions: [THA, IDN, PHL], n: 100}
+    native: {regions: [ENS], ens_types: [XX_1], n: 100}   # college students
+    mekong_validation: {regions: [VNM, KHM, LAO, MMR], n: 40}  # CRI_Mekong check
+  gra: keep_all               # 140 essays, validation set for E3
+
+models:                        # personal API accounts; exact IDs pinned before E1
+  - {name: gpt-4o,        provider: openai,    id: "TODO-pin-exact-version"}
+  - {name: claude-sonnet, provider: anthropic, id: "TODO-pin-exact-version"}
+  - {name: gemini-pro,    provider: google,    id: "TODO-pin-exact-version"}
+  - {name: llama-70b,     provider: together,  id: "TODO-pin-exact-version"}
+
+generation:
+  temperature: 0.0
+  response_format: json
+  max_retries: 5
+
+conditions:
+  baseline:  {agents: [neutral_single]}                # single-agent standard rubric
+  camps_k3:  {agents: [western, sea, neutral]}         # pilot configuration
+  camps_k5:  {agents: [western, sea, east_asian, mekong, neutral]}
+  camps_k5_adj: {agents: [western, sea, east_asian, mekong, neutral],
+                 adjudicator: true}
+
+experiments:
+  E1: {conditions: [baseline, camps_k3], cohorts: [sea, native]}
+  E2: {conditions: [camps_k5, camps_k5_adj], cohorts: [sea, native],
+       weight_sweep: {step: 0.05}}
+  E3: {conditions: [camps_k5], cohorts: [gra], roc_calibration: true}
