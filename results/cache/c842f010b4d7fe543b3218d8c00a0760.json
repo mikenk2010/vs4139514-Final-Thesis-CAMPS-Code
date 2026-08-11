@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_148_B1_2",
+ "model": "qwen3:14b",
+ "agent": "western",
+ "raw": "{\"score\": 5, \"rationale\": \"The essay lacks a clear, developed thesis statement and exhibits disjointed logical progression. Topic sentences are repetitive and underdeveloped, with minimal cohesive devices to link ideas, resulting in a fragmented structure.\"}",
+ "score": 5.0,
+ "rationale": "The essay lacks a clear, developed thesis statement and exhibits disjointed logical progression. Topic sentences are repetitive and underdeveloped, with minimal cohesive devices to link ideas, resulting in a fragmented structure."
+}

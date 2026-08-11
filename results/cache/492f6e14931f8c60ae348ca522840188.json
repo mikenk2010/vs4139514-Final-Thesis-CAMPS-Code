@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_184_B1_2",
+ "model": "qwen3:14b",
+ "agent": "sea",
+ "raw": "{\"score\": 5, \"rationale\": \"The essay presents a basic argument in favor of part-time jobs but lacks clear organization and transitions between ideas. While it gradually develops its thesis through examples, the repetition of points (e.g., financial independence) and abrupt shifts between ideas (e.g., from financial benefits to work experience) weaken coherence. Hedging is minimal, and the collectivist framing (helping parents) is present but underdeveloped.\"}",
+ "score": 5.0,
+ "rationale": "The essay presents a basic argument in favor of part-time jobs but lacks clear organization and transitions between ideas. While it gradually develops its thesis through examples, the repetition of points (e.g., financial independence) and abrupt shifts between ideas (e.g., from financial benefits to work experience) weaken coherence. Hedging is minimal, and the collectivist framing (helping parents) is present but underdeveloped."
+}

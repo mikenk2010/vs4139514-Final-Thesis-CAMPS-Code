@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_196_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral_single",
+ "raw": "{\n  \"score\": 7,\n  \"rationale\": \"The essay is logically organized with clear topic sentences and a coherent progression of ideas. However, some transitions between paragraphs could be smoother, and there is minor repetition of points (e.g., time management). Linking words are used effectively but with limited variety.\"\n}",
+ "score": 7.0,
+ "rationale": "The essay is logically organized with clear topic sentences and a coherent progression of ideas. However, some transitions between paragraphs could be smoother, and there is minor repetition of points (e.g., time management). Linking words are used effectively but with limited variety."
+}

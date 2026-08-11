@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_165_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral_single",
+ "raw": "{\"score\": 5.5, \"rationale\": \"The essay lacks clear organization and logical progression, with ideas presented in a disjointed manner. There is minimal use of cohesive devices, and the conclusion is absent, weakening overall coherence.\"}",
+ "score": 5.5,
+ "rationale": "The essay lacks clear organization and logical progression, with ideas presented in a disjointed manner. There is minimal use of cohesive devices, and the conclusion is absent, weakening overall coherence."
+}

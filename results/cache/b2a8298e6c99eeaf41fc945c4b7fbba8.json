@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_184_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral_single",
+ "raw": "{\"score\": 5.5, \"rationale\": \"The essay lacks clear organization and logical progression of ideas, with repetitive points and disjointed paragraph transitions. Linking words are inconsistently used, and the overall structure fails to present arguments cohesively, resulting in a moderate score for coherence and cohesion.\"}",
+ "score": 5.5,
+ "rationale": "The essay lacks clear organization and logical progression of ideas, with repetitive points and disjointed paragraph transitions. Linking words are inconsistently used, and the overall structure fails to present arguments cohesively, resulting in a moderate score for coherence and cohesion."
+}

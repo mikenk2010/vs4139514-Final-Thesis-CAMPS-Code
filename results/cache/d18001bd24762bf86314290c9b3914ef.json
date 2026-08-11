@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_165_B1_2",
+ "model": "qwen3:14b",
+ "agent": "sea",
+ "raw": "{\"score\": 6, \"rationale\": \"The essay presents a clear thesis but lacks smooth transitions between ideas, resulting in a somewhat fragmented flow. Collectivist framing (e.g., family pride) aligns with Southeast Asian traditions, but inductive reasoning is underdeveloped, and hedging is minimal.\"}",
+ "score": 6.0,
+ "rationale": "The essay presents a clear thesis but lacks smooth transitions between ideas, resulting in a somewhat fragmented flow. Collectivist framing (e.g., family pride) aligns with Southeast Asian traditions, but inductive reasoning is underdeveloped, and hedging is minimal."
+}

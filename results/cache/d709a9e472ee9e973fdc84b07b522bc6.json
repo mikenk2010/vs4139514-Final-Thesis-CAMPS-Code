@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_148_B1_2",
+ "model": "qwen3:14b",
+ "agent": "sea",
+ "raw": "{\"score\": 5.5, \"rationale\": \"The essay presents a clear thesis but lacks smooth transitions between ideas, with repetitive 'Reason one/two' structures disrupting flow. While collectivist values are implicitly addressed, hedging is minimal, and coherence follows an inductive pattern with limited contextual development.\"}",
+ "score": 5.5,
+ "rationale": "The essay presents a clear thesis but lacks smooth transitions between ideas, with repetitive 'Reason one/two' structures disrupting flow. While collectivist values are implicitly addressed, hedging is minimal, and coherence follows an inductive pattern with limited contextual development."
+}

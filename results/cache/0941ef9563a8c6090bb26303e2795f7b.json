@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_020_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral",
+ "raw": "{\"score\": 5.5, \"rationale\": \"The essay presents a clear position but lacks logical progression and structural coherence. Ideas jump between positive/negative arguments without clear transitions, and the conclusion reiterates the stance without synthesizing earlier points effectively.\"}",
+ "score": 5.5,
+ "rationale": "The essay presents a clear position but lacks logical progression and structural coherence. Ideas jump between positive/negative arguments without clear transitions, and the conclusion reiterates the stance without synthesizing earlier points effectively."
+}

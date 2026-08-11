@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_196_B1_2",
+ "model": "qwen3:14b",
+ "agent": "sea",
+ "raw": "{\"score\": 7, \"rationale\": \"The essay demonstrates acceptable coherence with a logical flow from financial benefits to character development and time management, though the thesis emerges gradually rather than being explicitly stated early. Cohesion is maintained through transitional phrases, but some repetition of ideas weakens the argument's clarity.\"}",
+ "score": 7.0,
+ "rationale": "The essay demonstrates acceptable coherence with a logical flow from financial benefits to character development and time management, though the thesis emerges gradually rather than being explicitly stated early. Cohesion is maintained through transitional phrases, but some repetition of ideas weakens the argument's clarity."
+}

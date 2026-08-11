@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_165_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral",
+ "raw": "{\"score\": 5.5, \"rationale\": \"The essay's position is somewhat clear but lacks logical flow between ideas, with abrupt transitions between managing time, independence, and future job prospects. While some claims are made about benefits of part-time jobs, they are not consistently supported with specific evidence or examples, weakening the argument's persuasiveness.\"}",
+ "score": 5.5,
+ "rationale": "The essay's position is somewhat clear but lacks logical flow between ideas, with abrupt transitions between managing time, independence, and future job prospects. While some claims are made about benefits of part-time jobs, they are not consistently supported with specific evidence or examples, weakening the argument's persuasiveness."
+}

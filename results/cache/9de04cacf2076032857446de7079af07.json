@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_020_B1_2",
+ "model": "qwen3:14b",
+ "agent": "sea",
+ "raw": "{\"score\": 6, \"rationale\": \"The essay presents a personal perspective with gradual thesis development, but lacks clear structural organization. Coherence is hindered by abrupt shifts between personal opinion, pros/cons lists, and conclusion, while hedging language and collectivist framing are underdeveloped.\"}",
+ "score": 6.0,
+ "rationale": "The essay presents a personal perspective with gradual thesis development, but lacks clear structural organization. Coherence is hindered by abrupt shifts between personal opinion, pros/cons lists, and conclusion, while hedging language and collectivist framing are underdeveloped."
+}

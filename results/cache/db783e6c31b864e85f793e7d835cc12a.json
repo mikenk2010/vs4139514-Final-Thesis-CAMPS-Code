@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_020_B1_2",
+ "model": "qwen3:14b",
+ "agent": "western",
+ "raw": "{\"score\": 5, \"rationale\": \"The essay lacks a clear, focused thesis statement and exhibits disorganized logical progression. Topic sentences are vague, and cohesive devices are inconsistently applied, leading to a fragmented structure. The argument shifts abruptly between general statements and personal opinion without clear transitions.\"}",
+ "score": 5.0,
+ "rationale": "The essay lacks a clear, focused thesis statement and exhibits disorganized logical progression. Topic sentences are vague, and cohesive devices are inconsistently applied, leading to a fragmented structure. The argument shifts abruptly between general statements and personal opinion without clear transitions."
+}

@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_184_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral",
+ "raw": "{\"score\": 5, \"rationale\": \"The essay's position is clear but poorly structured, with repetitive and disorganized ideas. Logical connections between points are weak, and evidence is presented in a fragmented manner without clear transitions, hindering overall coherence.\"}",
+ "score": 5.0,
+ "rationale": "The essay's position is clear but poorly structured, with repetitive and disorganized ideas. Logical connections between points are weak, and evidence is presented in a fragmented manner without clear transitions, hindering overall coherence."
+}

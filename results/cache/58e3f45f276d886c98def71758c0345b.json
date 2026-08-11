@@ -1,0 +1,8 @@
+{
+ "essay_id": "WE_IDN_PTJ0_148_B1_2",
+ "model": "qwen3:14b",
+ "agent": "neutral",
+ "raw": "{\"score\": 5, \"rationale\": \"The essay presents a clear position on the importance of part-time jobs for college students but lacks logical flow between ideas and cohesive transitions. While reasons are listed, they are repetitive and disconnected, with minimal evidence to support claims. The conclusion is abrupt and does not effectively synthesize the arguments.\"}",
+ "score": 5.0,
+ "rationale": "The essay presents a clear position on the importance of part-time jobs for college students but lacks logical flow between ideas and cohesive transitions. While reasons are listed, they are repetitive and disconnected, with minimal evidence to support claims. The conclusion is abrupt and does not effectively synthesize the arguments."
+}
