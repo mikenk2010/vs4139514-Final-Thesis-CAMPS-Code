@@ -55,6 +55,10 @@ def main() -> None:
 
     models = [m for m in cfg["models"]
               if not args.models or m["name"] in args.models]
+    if not models:
+        available = [m["name"] for m in cfg["models"]]
+        raise SystemExit(f"No models matched {args.models}. "
+                         f"Available in config: {available}")
     with log_path.open("a") as log:
         for m in models:
             client = ScoringClient(m["provider"], m["id"],
