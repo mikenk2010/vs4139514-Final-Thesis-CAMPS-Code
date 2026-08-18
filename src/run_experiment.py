@@ -101,6 +101,9 @@ def main() -> None:
                             run_rec["errors"] += 1
                             raise
                         run_rec["calls_new"] += 1
+                        print(f"  [{run_rec['calls_new']}] {row.essay_id} "
+                              f"{cond_name}/{agent} -> {res.score}",
+                              flush=True)
                         if res.usage:
                             run_rec["tokens_in"] += res.usage.get("in", 0)
                             run_rec["tokens_out"] += res.usage.get("out", 0)
