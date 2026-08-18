@@ -14,6 +14,27 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
+def load_env(path: str = ".env") -> None:
+    """Load KEY=VALUE lines from .env into os.environ (no override)."""
+    p = Path(path)
+    if not p.exists():
+        # also try relative to the repo root when run from src/
+        p = Path(__file__).resolve().parent.parent / ".env"
+        if not p.exists():
+            return
+    for line in p.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        k, v = k.strip(), v.strip().strip('"').strip("'")
+        if k and v and k not in os.environ:
+            os.environ[k] = v
+
+
+load_env()
+
+
 @dataclass(frozen=True)
 class ScoreResult:
     essay_id: str
