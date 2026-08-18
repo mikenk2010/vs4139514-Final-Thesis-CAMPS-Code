@@ -46,6 +46,26 @@ class ScoreResult:
     usage: dict | None = None
 
 
+def extract_json(raw: str) -> str:
+    """Extract a JSON object from possibly-wrapped model output.
+
+    Handles: markdown code fences (``` / ```json), <think>...</think>
+    blocks, and prose before/after the JSON object.
+    """
+    import re
+    t = raw.strip()
+    t = re.sub(r"<think>.*?</think>", "", t, flags=re.S).strip()
+    fence = re.search(r"```(?:json)?\s*(.*?)```", t, flags=re.S)
+    if fence:
+        t = fence.group(1).strip()
+    if not t.startswith("{"):
+        start = t.find("{")
+        end = t.rfind("}")
+        if start != -1 and end > start:
+            t = t[start:end + 1]
+    return t
+
+
 def _cache_key(model_id: str, agent: str, essay_id: str, system_prompt: str,
                user_prompt: str) -> str:
     h = hashlib.sha256(
@@ -75,7 +95,14 @@ class ScoringClient:
             raw, usage = self._call_with_retry(system_prompt, user_prompt)
             d = {"essay_id": essay_id, "model": self.model_id, "agent": agent,
                  "raw": raw, "usage": usage}
-            parsed = json.loads(raw)
+            try:
+                parsed = json.loads(extract_json(raw))
+            except json.JSONDecodeError as exc:
+                bad = self.cache_dir / f"{key}.bad.txt"
+                bad.write_text(raw)
+                raise RuntimeError(
+                    f"Unparseable model output (saved to {bad}). "
+                    f"First 200 chars: {raw[:200]!r}") from exc
             d["score"] = float(parsed["score"])
             d["rationale"] = str(parsed.get("rationale", ""))
             cached.write_text(json.dumps(d, ensure_ascii=False, indent=1))
