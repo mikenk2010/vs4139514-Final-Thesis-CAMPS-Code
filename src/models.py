@@ -110,6 +110,21 @@ class ScoringClient:
             um = getattr(r, "usage_metadata", None)
             return r.text, ({"in": um.prompt_token_count,
                              "out": um.candidates_token_count} if um else None)
+        if self.provider == "openai_compat":
+            # generic OpenAI-compatible endpoint (e.g., ProxyPal)
+            from openai import OpenAI
+            client = OpenAI(
+                api_key=os.environ.get("PROXY_API_KEY", "proxypal"),
+                base_url=os.environ["PROXY_BASE_URL"])
+            r = client.chat.completions.create(
+                model=self.model_id, temperature=0.0,
+                response_format={"type": "json_object"},
+                messages=[{"role": "system", "content": system_prompt},
+                          {"role": "user", "content": user_prompt}])
+            u = r.usage
+            return r.choices[0].message.content, (
+                {"in": u.prompt_tokens, "out": u.completion_tokens}
+                if u else None)
         if self.provider == "ollama":
             from openai import OpenAI  # Ollama exposes an OpenAI-compatible API
             client = OpenAI(
