@@ -109,13 +109,74 @@ def main() -> None:
                             run_rec["tokens_out"] += res.usage.get("out", 0)
                         scores.append(res.score)
                         log.write(json.dumps({
+                            "ts": datetime.now(timezone.utc).isoformat(
+                                timespec="seconds"),
+                            "run_id": run_rec["run_id"],
                             "essay_id": row.essay_id, "cohort": row.cohort,
                             "task": row.task, "cefr": row.cefr,
-                            "model": m["name"], "condition": cond_name,
+                            "model": m["name"], "model_id": m["id"],
+                            "condition": cond_name,
                             "agent": agent, "score": res.score,
                             "rationale": res.rationale,
                             "usage": res.usage}) + "\n")
                         log.flush()
+                    if (cfg["conditions"][cond_name].get("adjudicator")
+                            and (row.essay_id, m["name"], cond_name,
+                                 "adjudicator") not in done):
+                        # gather the panel's scores + rationales from the log
+                        panel = [json.loads(l) for l in
+                                 log_path.read_text().splitlines()]
+                        panel = [r for r in panel
+                                 if r["essay_id"] == row.essay_id
+                                 and r["model"] == m["name"]
+                                 and r["condition"] == cond_name
+                                 and r["agent"] in agents]
+                        if len(panel) == len(agents):
+                            summary = "\n".join(
+                                f"Evaluator {i+1} score: {r['score']}. "
+                                f"Rationale: {r['rationale']}"
+                                for i, r in enumerate(panel))
+                            adj_user = (
+                                "Five evaluators scored the same essay "
+                                "under different documented cultural "
+                                "interpretations of the rubric.\n"
+                                f"{summary}\n\nESSAY:\n{essay_text}\n\n"
+                                "Give your adjudicated score as JSON: "
+                                '{"score": <band>, "confidence": <0-1>, '
+                                '"rationale": "<3-4 sentences>"}')
+                            res = client.score(row.essay_id, "adjudicator",
+                                               load_prompt("adjudicator")
+                                               if Path("prompts/cri_adjudicator.txt").exists()
+                                               else Path("prompts/adjudicator.txt").read_text(),
+                                               adj_user)
+                            run_rec["calls_new"] += 1
+                            if res.usage:
+                                run_rec["tokens_in"] += res.usage.get("in", 0)
+                                run_rec["tokens_out"] += res.usage.get("out", 0)
+                            conf = None
+                            try:
+                                from models import extract_json
+                                conf = json.loads(
+                                    extract_json(res.raw)).get("confidence")
+                            except Exception:
+                                pass
+                            log.write(json.dumps({
+                                "ts": datetime.now(timezone.utc).isoformat(
+                                    timespec="seconds"),
+                                "run_id": run_rec["run_id"],
+                                "essay_id": row.essay_id,
+                                "cohort": row.cohort, "task": row.task,
+                                "cefr": row.cefr, "model": m["name"],
+                                "model_id": m["id"],
+                                "condition": cond_name,
+                                "agent": "adjudicator",
+                                "score": res.score,
+                                "confidence": conf,
+                                "rationale": res.rationale,
+                                "usage": res.usage}) + "\n")
+                            log.flush()
+                            print(f"  [adj] {row.essay_id} -> {res.score} "
+                                  f"(conf={conf})", flush=True)
                     if len(scores) > 1:
                         print(f"{row.essay_id} {m['name']} {cond_name}: "
                               f"mean={statistics.mean(scores):.2f} "
