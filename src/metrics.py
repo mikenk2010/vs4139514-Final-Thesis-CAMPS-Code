@@ -50,7 +50,13 @@ def fisher_z_diff(r1: float, n1: int, r2: float, n2: int) -> tuple[float, float]
 
 def consensus_and_bds(df: pd.DataFrame,
                       weights: dict[str, float] | None = None) -> pd.DataFrame:
-    """Per essay x model x condition: weighted consensus score and BDS."""
+    """Per essay x model x condition: weighted consensus score and BDS.
+
+    The meta-adjudicator is excluded: BDS and the weighted consensus are
+    defined over the panel agents only. Use adjudicated_scores() for the
+    adjudicator's alternative aggregate.
+    """
+    df = df[df.agent != "adjudicator"]
     def agg(g: pd.DataFrame) -> pd.Series:
         w = np.array([weights.get(a, 1.0) if weights else 1.0
                       for a in g.agent])
@@ -61,6 +67,13 @@ def consensus_and_bds(df: pd.DataFrame,
                           "k": len(s)})
     return (df.groupby(["essay_id", "cohort", "model", "condition"])
               .apply(agg, include_groups=False).reset_index())
+
+
+def adjudicated_scores(df: pd.DataFrame) -> pd.DataFrame:
+    """Per essay x model x condition: the adjudicator's score (E2 path B)."""
+    adj = df[df.agent == "adjudicator"]
+    return adj[["essay_id", "cohort", "model", "condition",
+                "score"]].rename(columns={"score": "adjudicated"})
 
 
 def roc_calibrate(bds_values: np.ndarray, contested: np.ndarray

@@ -103,7 +103,15 @@ def table_e2(df: pd.DataFrame, out: Path, model: str) -> None:
         sub = sub_all[sub_all.condition == cond]
         if sub.empty:
             continue
-        agg = consensus_and_bds(sub)
+        if cond == "camps_k5_adj":
+            # the adjudicated score is the aggregate for this condition
+            from metrics import adjudicated_scores
+            agg = (adjudicated_scores(sub)
+                   .rename(columns={"adjudicated": "consensus"}))
+            if agg.empty:
+                continue
+        else:
+            agg = consensus_and_bds(sub)
         cells = {}
         for cohort in ("sea", "native"):
             g = agg[agg.cohort == cohort]
