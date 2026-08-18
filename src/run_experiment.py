@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import json
 import statistics
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -59,6 +61,20 @@ def main() -> None:
         available = [m["name"] for m in cfg["models"]]
         raise SystemExit(f"No models matched {args.models}. "
                          f"Available in config: {available}")
+
+    # --- run-history record (results/runs.jsonl) ---
+    run_rec = {
+        "run_id": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
+        "experiment": args.experiment,
+        "models": [m["name"] for m in models],
+        "model_ids": {m["name"]: m["id"] for m in models},
+        "limit": args.limit,
+        "essays": len(manifest),
+        "started": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "calls_new": 0, "calls_cached_or_resumed": 0, "errors": 0,
+        "tokens_in": 0, "tokens_out": 0,
+    }
+    t0 = time.time()
     with log_path.open("a") as log:
         for m in models:
             client = ScoringClient(m["provider"], m["id"],
@@ -76,9 +92,18 @@ def main() -> None:
                     scores: list[float] = []
                     for agent in agents:
                         if (row.essay_id, m["name"], cond_name, agent) in done:
+                            run_rec["calls_cached_or_resumed"] += 1
                             continue
-                        res = client.score(row.essay_id, agent,
-                                           load_prompt(agent), user_prompt)
+                        try:
+                            res = client.score(row.essay_id, agent,
+                                               load_prompt(agent), user_prompt)
+                        except Exception:
+                            run_rec["errors"] += 1
+                            raise
+                        run_rec["calls_new"] += 1
+                        if res.usage:
+                            run_rec["tokens_in"] += res.usage.get("in", 0)
+                            run_rec["tokens_out"] += res.usage.get("out", 0)
                         scores.append(res.score)
                         log.write(json.dumps({
                             "essay_id": row.essay_id, "cohort": row.cohort,
@@ -92,7 +117,17 @@ def main() -> None:
                         print(f"{row.essay_id} {m['name']} {cond_name}: "
                               f"mean={statistics.mean(scores):.2f} "
                               f"BDS={bds(scores):.2f}")
+    run_rec["finished"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    run_rec["duration_s"] = round(time.time() - t0, 1)
+    runs_path = Path(cfg["paths"]["results"]) / "runs.jsonl"
+    with runs_path.open("a") as f:
+        f.write(json.dumps(run_rec) + "\n")
     print(f"Done. Log: {log_path}")
+    print(f"Run record appended to {runs_path}: "
+          f"{run_rec['calls_new']} new calls, "
+          f"{run_rec['calls_cached_or_resumed']} resumed/cached, "
+          f"tokens in/out {run_rec['tokens_in']}/{run_rec['tokens_out']}, "
+          f"{run_rec['duration_s']}s")
 
 
 if __name__ == "__main__":
