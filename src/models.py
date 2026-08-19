@@ -112,17 +112,35 @@ class ScoringClient:
 
     def _call_with_retry(self, system_prompt: str,
                          user_prompt: str) -> tuple[str, dict | None]:
+        import re
         delay = 2.0
-        for attempt in range(self.max_retries):
+        attempt = 0
+        while True:
             try:
                 return self._call(system_prompt, user_prompt)
             except Exception as exc:  # noqa: BLE001 - provider SDK variety
-                if attempt == self.max_retries - 1:
+                msg = str(exc)
+                m = re.search(r"reset_seconds['\"]?\s*[:=]\s*(\d+)", msg)
+                if m:
+                    # provider announced a cooldown: wait it out, in
+                    # chunks, without consuming retry attempts
+                    wait = int(m.group(1)) + 120
+                    print(f"  model cooldown: sleeping {wait}s "
+                          f"(~{wait/3600:.1f}h) until reset...", flush=True)
+                    while wait > 0:
+                        step = min(wait, 900)
+                        time.sleep(step)
+                        wait -= step
+                        if wait > 0:
+                            print(f"    ...{wait/3600:.1f}h remaining",
+                                  flush=True)
+                    continue
+                attempt += 1
+                if attempt >= self.max_retries:
                     raise
-                print(f"  retry {attempt + 1} after error: {exc}")
+                print(f"  retry {attempt} after error: {exc}", flush=True)
                 time.sleep(delay)
                 delay *= 2
-        raise RuntimeError("unreachable")
 
     def _call(self, system_prompt: str,
               user_prompt: str) -> tuple[str, dict | None]:
