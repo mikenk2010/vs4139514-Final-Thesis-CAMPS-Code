@@ -45,6 +45,12 @@ def table_e1(df: pd.DataFrame, out: Path) -> None:
     gap on proficiency-matched cohorts, with a bootstrap CI.
     """
     agg = consensus_and_bds(df)
+    cond_label = {"baseline": "Baseline", "camps_k3": "CAMPS $k{=}3$",
+                  "camps_k5": "CAMPS $k{=}5$",
+                  "camps_k5_adj": "CAMPS $k{=}5$+adj."}
+    model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
+                   "gemini-pro": "Gemini Pro", "qwen3-local": "Qwen3 14B",
+                   "llama-70b": "Llama 3.3 70B"}
     rows = []
     for (model, cond), g in agg.groupby(["model", "condition"]):
         sea = g[g.cohort == "sea"].consensus.to_numpy()
@@ -52,6 +58,8 @@ def table_e1(df: pd.DataFrame, out: Path) -> None:
         if len(sea) == 0 or len(nat) == 0:
             continue
         point, lo, hi = gap_ci(sea, nat)
+        model = model_label.get(model, model.replace("_", "\\_"))
+        cond = cond_label.get(cond, cond.replace("_", "\\_"))
         rows.append(
             f"{model} & {cond} & {sea.mean():.2f} ($n$={len(sea)}) & "
             f"{nat.mean():.2f} ($n$={len(nat)}) & "
