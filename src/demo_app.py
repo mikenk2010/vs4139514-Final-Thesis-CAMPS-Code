@@ -82,6 +82,22 @@ About money, part-time jobs give money. But scholarships also give money, and so
 Also, health is important. Students should sleep eight hours and do exercise. A job at night is bad for sleep. But morning jobs are hard because of classes. In conclusion, there are many factors and everyone should decide for themselves what is good for their own situation and future."""},
 }
 
+REAL_CASES = [
+    {"id": "WE_PHL_PTJ0_087_B1_2",
+     "title": "Real case A - Philippine essay, B1 upper",
+     "desc": "The largest lens disagreement in Experiment 1: the Western "
+             "lens scored it 5.0, the SEA and Neutral lenses 7.0. "
+             "Two full bands hang on the evaluator's cultural assumption."},
+    {"id": "WE_IDN_PTJ0_113_B1_2",
+     "title": "Real case B - Indonesian essay, B1 upper",
+     "desc": "Western lens 5.0 vs SEA/Neutral 6.0 in Experiment 1: the "
+             "typical one-band penalty documented across the corpus."},
+    {"id": "WE_IDN_PTJ0_161_B2_0",
+     "title": "Real case C - Indonesian essay, B2+ (high proficiency)",
+     "desc": "Even at the top proficiency band: Western 5.0 vs SEA/Neutral "
+             "6.0. The bias shrinks with proficiency but does not vanish."},
+]
+
 st.set_page_config(page_title="CAMPS demo", layout="wide")
 st.title("CAMPS — Culturally-Aware Multi-Perspective Scoring")
 st.markdown(
@@ -108,9 +124,29 @@ tab_ex, tab_manual, tab_icnale = st.tabs(
     ["Built-in examples", "Paste an essay", "ICNALE sample (Kobe)"])
 essay_text = essay_label = None
 with tab_ex:
-    st.caption("Pre-generated demonstration essays: the same topic argued "
-               "in different rhetorical traditions, plus a weak control "
-               "case. Click any card to run the full analysis.")
+    st.markdown("##### Real essays from the ICNALE corpus (Kobe University)")
+    st.caption("Selected from the Experiment 1 logs as the cases with the "
+               "largest measured lens disagreement - authentic student "
+               "writing, authentic bias.")
+    mf_all = pd.read_csv(cfg["paths"]["manifest"]).set_index("essay_id")
+    for case in REAL_CASES:
+        if case["id"] not in mf_all.index:
+            continue
+        with st.container(border=True):
+            c_txt, c_btn = st.columns([5, 1])
+            with c_txt:
+                st.markdown(f"**{case['title']}**")
+                st.caption(case["desc"])
+            with c_btn:
+                if st.button("Analyse", key=f"real_{case['id']}",
+                             type="primary", use_container_width=True):
+                    essay_text = (Path(cfg["paths"]["icnale_root"])
+                                  / mf_all.loc[case["id"], "path"]
+                                  ).read_text(encoding="utf-8-sig")
+                    essay_label = case["title"]
+    st.markdown("##### Synthetic demonstration essays")
+    st.caption("Authored for this demo: the same topic argued in different "
+               "rhetorical traditions, plus a weak control case.")
     for name, ex in EXAMPLES.items():
         with st.container(border=True):
             c_txt, c_btn = st.columns([5, 1])
@@ -154,8 +190,14 @@ if essay_text:
         '"rationale": "<2-3 sentences>"}\n\n'
         f"ESSAY:\n{essay_text}")
     eid = f"demoV2_{hash(essay_text) & 0xffffffff:x}"
+    prog = st.progress(0.0, "Scoring with a standard AI grader...")
+    baseline_res = client.score(
+        eid, "neutral_single",
+        Path("prompts/cri_neutral_single.txt").read_text(),
+        'Score the following essay. Respond with JSON: '
+        '{"score": <band>, "rationale": "<2-3 sentences>"}.\n\n'
+        f"ESSAY:\n{essay_text}")
     results, details = [], {}
-    prog = st.progress(0.0, "Scoring with the cultural panel...")
     for i, agent in enumerate(PANEL):
         res = client.score(eid, agent,
                            Path(f"prompts/cri_{agent}.txt").read_text(),
@@ -200,6 +242,17 @@ if essay_text:
             polar=dict(radialaxis=dict(range=[0, 9], visible=True)),
             height=380, margin=dict(t=50, b=10))
         st.plotly_chart(radar, use_container_width=True)
+
+    # ---- the bias, made visible ----
+    st.divider()
+    b1, b2, b3 = st.columns([1, 1, 2])
+    b1.metric("Standard AI grader (single evaluator)",
+              f"{baseline_res.score:.1f}")
+    b2.metric("Culturally-aware panel (consensus)", f"{consensus:.2f}",
+              delta=f"{consensus - baseline_res.score:+.2f} vs standard")
+    with b3:
+        st.caption(f"**Standard grader's rationale:** "
+                   f"{baseline_res.rationale}")
 
     # ---- verdict row ----
     v1, v2, v3 = st.columns([1, 1, 2])
