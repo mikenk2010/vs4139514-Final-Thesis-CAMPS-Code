@@ -128,7 +128,8 @@ with tab_ex:
     st.caption("Selected from the Experiment 1 logs as the cases with the "
                "largest measured lens disagreement - authentic student "
                "writing, authentic bias.")
-    mf_all = pd.read_csv(cfg["paths"]["manifest"]).set_index("essay_id")
+    mf_all = (pd.read_csv(cfg["paths"]["manifest"])
+              .drop_duplicates("essay_id").set_index("essay_id"))
     for case in REAL_CASES:
         if case["id"] not in mf_all.index:
             continue
