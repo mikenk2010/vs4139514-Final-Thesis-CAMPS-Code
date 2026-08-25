@@ -30,18 +30,26 @@ DIM_LABEL = {"thesis_clarity": "Thesis clarity", "organisation": "Organisation",
              "argument_support": "Argument support"}
 
 EXAMPLES = {
-    "Western-style essay (deductive, thesis-first)": """College students should take a part-time job during their studies. Three reasons support this position: financial independence, transferable skills, and stronger employment prospects after graduation.
+    "1. Western style — deductive, thesis-first": {
+        "desc": "States the thesis in sentence one, three signposted "
+                "reasons, explicit transitions. The form Western-trained "
+                "evaluators expect.",
+        "text": """College students should take a part-time job during their studies. Three reasons support this position: financial independence, transferable skills, and stronger employment prospects after graduation.
 
 First, financial independence matters. A student who earns even a modest income covers daily expenses without depending entirely on family support. This reduces household pressure and teaches budgeting directly; managing one's own money is learned by doing it, not by reading about it.
 
-Second, part-time work builds transferable skills. Serving customers trains communication under pressure. Meeting shift schedules trains reliability. Balancing work hours against assignment deadlines trains time management more effectively than any study-skills seminar. These abilities transfer directly to professional life.
+Second, part-time work builds transferable skills. Serving customers trains communication under pressure. Meeting shift schedules trains reliability. Balancing work hours against assignment deadlines trains time management more effectively than any study-skills seminar.
 
-Third, employers favour graduates with work experience. A resume that shows two years of part-time employment signals discipline and familiarity with workplace norms. Studies of graduate recruitment consistently show that candidates with employment history receive more interview offers than those without.
+Third, employers favour graduates with work experience. A resume that shows two years of part-time employment signals discipline and familiarity with workplace norms, and candidates with employment history receive more interview offers than those without.
 
 Critics argue that part-time work distracts from academic study, and excessive hours certainly can. However, the solution is moderation rather than avoidance: ten to fifteen hours per week is compatible with full academic performance for most students.
 
-In conclusion, part-time employment develops financial independence, practical skills, and employability. Universities should encourage students to take moderate part-time work, because the benefits clearly outweigh the manageable risks. The case, on balance, is decisive.""",
-    "Southeast Asian-style essay (inductive, context-first)": """My grandmother often says that a tree grows strong not from the wind that shakes it, but from the roots that hold it. When I think about students and part-time jobs, I think first of her words, and of my cousin Minh.
+In conclusion, part-time employment develops financial independence, practical skills, and employability. Universities should encourage students to take moderate part-time work, because the benefits clearly outweigh the manageable risks."""},
+    "2. Vietnamese/Mekong style — inductive, narrative-anchored": {
+        "desc": "Opens with a proverb, argues through a family story, states "
+                "its position only at the end. Valid reasoning in a "
+                "reader-responsible tradition — watch the lenses disagree.",
+        "text": """My grandmother often says that a tree grows strong not from the wind that shakes it, but from the roots that hold it. When I think about students and part-time jobs, I think first of her words, and of my cousin Minh.
 
 Minh comes from a family of rice farmers in the Mekong Delta. When he entered university in the city, his parents sold a buffalo to pay his first year of fees. In his second year, he began serving in a small noodle shop near the campus, four evenings each week. At first his mother worried that the work would pull him away from his books. Perhaps many families would share this worry, and it is not without reason.
 
@@ -49,7 +57,29 @@ Yet something else happened. Because his evenings had a price, Minh began to tre
 
 His marks did not fall. They rose, slowly, like water finding its level.
 
-It seems to me, then, that a part-time job is not truly separate from education. For students like Minh, and perhaps for most students, the shop and the classroom teach one lesson together: that effort, given steadily, becomes strength. This is why, in the end, I believe students should be encouraged to work while they study.""",
+It seems to me, then, that a part-time job is not truly separate from education. For students like Minh, and perhaps for most students, the shop and the classroom teach one lesson together: that effort, given steadily, becomes strength. This is why, in the end, I believe students should be encouraged to work while they study."""},
+    "3. East Asian style — four-part development with a turn": {
+        "desc": "Introduction, development, an apparent digression (the "
+                "'turn'), then conclusion; the central claim is implied "
+                "before it is stated. Reader-responsible coherence.",
+        "text": """In spring, the university noticeboard fills with two kinds of paper: examination schedules, and advertisements for part-time workers. Students pass both every day, and most pause at each.
+
+The examination schedule speaks of one duty. Lectures, libraries, and laboratory hours ask for a student's whole attention, and teachers remind us that these years will not return. A scholarship student who fails a course loses more than a grade. This duty is real, and no serious person dismisses it.
+
+Consider, however, the tea master. It is said that a master once sent his student not to practise the ceremony, but to work a season in the market. When the student returned, his tea had improved, though he had not touched the utensils. Handling money taught his hands care; serving strangers taught his eyes attention. What appeared to be a departure from training was training.
+
+A part-time job may stand in the same relation to study. The hours given to work are not subtracted from education but folded into it, provided the proportion is kept. Perhaps ten hours in a week; not thirty. Kept in measure, the market becomes a second library. For this reason, students should be permitted, and quietly encouraged, to work alongside their studies."""},
+    "4. Weak essay — unfocused (all lenses should agree)": {
+        "desc": "Multiple unrelated topics, no unified argument. A control "
+                "case: cultural lenses agree on genuine incoherence, so "
+                "BDS stays low and the score is low.",
+        "text": """Part-time jobs are one thing students think about. There are many jobs like cafe work, tutoring, and delivery. Some students like them. University food is also expensive now, and the canteen queue is very long at lunch time, which wastes time for everyone.
+
+Another topic is online learning. Since the pandemic, many classes are recorded, so students can watch them later. This is convenient but some students never come to campus anymore, which changes friendship. Friendship at university is important because later in life it is hard to make friends.
+
+About money, part-time jobs give money. But scholarships also give money, and some students get money from parents. There are many ways to get money, and each way is different for each person, so it is hard to say which is best.
+
+Also, health is important. Students should sleep eight hours and do exercise. A job at night is bad for sleep. But morning jobs are hard because of classes. In conclusion, there are many factors and everyone should decide for themselves what is good for their own situation and future."""},
 }
 
 st.set_page_config(page_title="CAMPS demo", layout="wide")
@@ -78,12 +108,20 @@ tab_ex, tab_manual, tab_icnale = st.tabs(
     ["Built-in examples", "Paste an essay", "ICNALE sample (Kobe)"])
 essay_text = essay_label = None
 with tab_ex:
-    st.caption("Two synthetic essays authored for this demonstration: the "
-               "same position on the same topic, written in two rhetorical "
-               "traditions. Watch the lenses disagree about the second one.")
-    choice = st.radio("Choose an example", list(EXAMPLES), index=1)
-    if st.button("Score this example", type="primary"):
-        essay_text, essay_label = EXAMPLES[choice], choice
+    st.caption("Pre-generated demonstration essays: the same topic argued "
+               "in different rhetorical traditions, plus a weak control "
+               "case. Click any card to run the full analysis.")
+    for name, ex in EXAMPLES.items():
+        with st.container(border=True):
+            c_txt, c_btn = st.columns([5, 1])
+            with c_txt:
+                st.markdown(f"**{name}**")
+                st.caption(ex["desc"])
+                st.caption("_" + " ".join(ex["text"].split()[:28]) + "..._")
+            with c_btn:
+                if st.button("Analyse", key=f"ex_{name}", type="primary",
+                             use_container_width=True):
+                    essay_text, essay_label = ex["text"], name
 with tab_manual:
     txt = st.text_area("Essay text (English, ideally 150+ words)", height=240)
     if st.button("Score pasted essay", type="primary"):
