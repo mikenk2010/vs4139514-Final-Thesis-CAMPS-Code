@@ -249,6 +249,63 @@ if essay_text:
     consensus = sum(scores) / len(scores)
     bds = (sum((s - consensus) ** 2 for s in scores) / len(scores)) ** 0.5
 
+    # ---- key findings summary ----
+    findings = []
+    delta = consensus - baseline_res.score
+    hi_i = max(range(len(scores)), key=lambda i: scores[i])
+    lo_i = min(range(len(scores)), key=lambda i: scores[i])
+    spread = scores[hi_i] - scores[lo_i]
+    if spread >= 1.0:
+        findings.append(
+            f"**Cultural divergence detected:** the "
+            f"{LENS_LABEL[PANEL[lo_i]]} lens gave **{scores[lo_i]:.1f}** "
+            f"while the {LENS_LABEL[PANEL[hi_i]]} lens gave "
+            f"**{scores[hi_i]:.1f}** — a {spread:.1f}-band disagreement "
+            f"about the same essay. The score depends on which rhetorical "
+            f"tradition the evaluator assumes.")
+    else:
+        findings.append(
+            f"**All five cultural lenses agree** (spread "
+            f"{spread:.1f} bands): this essay's qualities are recognised "
+            f"the same way across rhetorical traditions — no cultural "
+            f"contest for this essay under {model_name}.")
+    if abs(delta) >= 0.3:
+        direction = "under-scored" if delta > 0 else "over-scored"
+        findings.append(
+            f"**The standard single grader {direction} this essay by "
+            f"{abs(delta):.1f} bands** relative to the culturally-aware "
+            f"panel — the per-essay footprint of the bias measured at "
+            f"scale in Experiment 1.")
+    else:
+        findings.append(
+            f"**Standard grader and panel agree** "
+            f"({baseline_res.score:.1f} vs {consensus:.2f}): no cultural "
+            f"penalty on this essay.")
+    # dimension-level insight from the radar data
+    dim_spread = {}
+    for d in DIMS:
+        vals = [details[a].get("dimensions", {}).get(d)
+                for a in PANEL if details.get(a)]
+        vals = [v for v in vals if v is not None]
+        if len(vals) >= 3:
+            dim_spread[d] = max(vals) - min(vals)
+    if dim_spread:
+        d_max = max(dim_spread, key=dim_spread.get)
+        if dim_spread[d_max] >= 2:
+            findings.append(
+                f"**The lenses disagree most about "
+                f"{DIM_LABEL[d_max].lower()}** "
+                f"(spread {dim_spread[d_max]:.0f} points on the radar) — "
+                f"the dimension where cultural expectations differ for "
+                f"this essay.")
+    findings.append(
+        ("**Routing: flagged for human review** "
+         f"(BDS {bds:.2f} ≥ τ {tau})." if bds >= tau else
+         f"**Routing: automated score accepted** (BDS {bds:.2f} < "
+         f"τ {tau})."))
+    st.info("#### Key findings\n\n" + "\n\n".join(
+        f"{i+1}. {f}" for i, f in enumerate(findings)))
+
     # ---- score bar chart ----
     c_left, c_right = st.columns([1, 1])
     with c_left:
