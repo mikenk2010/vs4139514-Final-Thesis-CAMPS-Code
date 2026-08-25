@@ -210,8 +210,7 @@ essay_text = st.session_state.get("sel_text")
 
 if essay_text:
     st.subheader(f"Analysing: {essay_label}")
-    with st.expander("Show essay text"):
-        st.write(essay_text)
+    essay_slot = st.container()
     client = ScoringClient(model_cfg["provider"], model_cfg["id"],
                            Path(cfg["paths"]["cache"]),
                            cfg["generation"]["max_retries"])
@@ -223,9 +222,13 @@ if essay_text:
         '"cohesion": <1-9>, "tone_hedging": <1-9>, '
         '"argument_support": <1-9>}, '
         '"strengths": "<one sentence>", "weaknesses": "<one sentence>", '
-        '"rationale": "<2-3 sentences>"}\n\n'
+        '"rationale": "<2-3 sentences>", '
+        '"evidence": [{"quote": "<EXACT short phrase copied verbatim from '
+        'the essay>", "comment": "<why this matters under your '
+        'calibration>", "sentiment": "positive|negative"}, ... 2-3 '
+        'items]}\n\n'
         f"ESSAY:\n{essay_text}")
-    eid = f"demoV2_{hash(essay_text) & 0xffffffff:x}"
+    eid = f"demoV3_{hash(essay_text) & 0xffffffff:x}"
     prog = st.progress(0.0, "Scoring with a standard AI grader...")
     baseline_res = client.score(
         eid, "neutral_single",
@@ -248,6 +251,53 @@ if essay_text:
     scores = [r.score for r in results]
     consensus = sum(scores) / len(scores)
     bds = (sum((s - consensus) ** 2 for s in scores) / len(scores)) ** 0.5
+
+    # ---- annotated essay with hover tooltips ----
+    import html as _html
+    spans = []
+    low = essay_text.lower()
+    for a in PANEL:
+        for ev in (details.get(a, {}).get("evidence") or []):
+            q = (ev.get("quote") or "").strip().strip('"')
+            if len(q) < 8:
+                continue
+            pos = low.find(q.lower())
+            if pos < 0:
+                continue
+            spans.append((pos, pos + len(q), a,
+                          ev.get("sentiment", ""), ev.get("comment", "")))
+    spans.sort()
+    merged, last_end = [], -1
+    for sp in spans:
+        if sp[0] >= last_end:
+            merged.append(sp)
+            last_end = sp[1]
+    out, cur = [], 0
+    for start, end_, a, sent, comment in merged:
+        out.append(_html.escape(essay_text[cur:start]))
+        tip = _html.escape(f"{LENS_LABEL[a]} ({sent}): {comment}",
+                           quote=True)
+        colour = LENS_COLOR[a]
+        border = "#2ca02c" if sent == "positive" else "#d62728"
+        out.append(
+            f'<span title="{tip}" style="background:{colour}33;'
+            f'border-bottom:2px solid {border};border-radius:3px;'
+            f'cursor:help;">{_html.escape(essay_text[start:end_])}</span>')
+        cur = end_
+    out.append(_html.escape(essay_text[cur:]))
+    legend = " &nbsp; ".join(
+        f'<span style="background:{LENS_COLOR[a]}33;padding:1px 6px;'
+        f'border-radius:3px;">{LENS_LABEL[a]}</span>' for a in PANEL)
+    with essay_slot.expander("Essay with lens highlights "
+                             "(hover a highlight for the analysis)",
+                             expanded=True):
+        st.markdown(
+            f'<div style="line-height:1.8;">{legend}<br><span '
+            f'style="font-size:0.85em;color:#666;">underline green = '
+            f'praised, red = penalised; hover for the lens comment'
+            f'</span><hr>'
+            + "".join(out).replace("\n\n", "<br><br>").replace("\n", "<br>")
+            + "</div>", unsafe_allow_html=True)
 
     # ---- key findings summary ----
     findings = []
