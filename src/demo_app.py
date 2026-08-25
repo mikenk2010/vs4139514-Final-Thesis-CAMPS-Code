@@ -111,6 +111,11 @@ st.markdown(
     "extended output format for visual analysis.")
 
 cfg = yaml.safe_load(Path("configs/experiment.yaml").read_text())
+
+def select(label: str, text: str) -> None:
+    st.session_state["sel_label"] = label
+    st.session_state["sel_text"] = text
+
 with st.sidebar:
     st.header("Settings")
     model_name = st.selectbox("Model", [m["name"] for m in cfg["models"]],
@@ -118,60 +123,51 @@ with st.sidebar:
     tau = st.slider("BDS threshold (tau)", 0.0, 2.0, 0.75, 0.05)
     st.caption("0.75 = pilot operating point; Experiment 3 calibrates "
                "this against 80 human raters.")
-model_cfg = next(m for m in cfg["models"] if m["name"] == model_name)
 
-tab_ex, tab_manual, tab_icnale = st.tabs(
-    ["Built-in examples", "Paste an essay", "ICNALE sample (Kobe)"])
-essay_text = essay_label = None
-with tab_ex:
-    st.markdown("##### Real essays from the ICNALE corpus (Kobe University)")
-    st.caption("Selected from the Experiment 1 logs as the cases with the "
-               "largest measured lens disagreement - authentic student "
-               "writing, authentic bias.")
+    st.divider()
+    st.header("Samples")
+    st.caption("Click any sample to run the full analysis.")
+
+    st.markdown("**Real ICNALE essays (Kobe University)** — selected from "
+                "the Experiment 1 logs as the largest measured lens "
+                "disagreements.")
     mf_all = (pd.read_csv(cfg["paths"]["manifest"])
               .drop_duplicates("essay_id").set_index("essay_id"))
     for case in REAL_CASES:
         if case["id"] not in mf_all.index:
             continue
-        with st.container(border=True):
-            c_txt, c_btn = st.columns([5, 1])
-            with c_txt:
-                st.markdown(f"**{case['title']}**")
-                st.caption(case["desc"])
-            with c_btn:
-                if st.button("Analyse", key=f"real_{case['id']}",
-                             type="primary", use_container_width=True):
-                    essay_text = (Path(cfg["paths"]["icnale_root"])
-                                  / mf_all.loc[case["id"], "path"]
-                                  ).read_text(encoding="utf-8-sig")
-                    essay_label = case["title"]
-    st.markdown("##### Synthetic demonstration essays")
-    st.caption("Authored for this demo: the same topic argued in different "
-               "rhetorical traditions, plus a weak control case.")
+        if st.button(case["title"], key=f"real_{case['id']}",
+                     use_container_width=True):
+            text = (Path(cfg["paths"]["icnale_root"])
+                    / mf_all.loc[case["id"], "path"]
+                    ).read_text(encoding="utf-8-sig")
+            select(case["title"] + " — " + case["desc"], text)
+
+    st.markdown("**Synthetic demonstration essays**")
     for name, ex in EXAMPLES.items():
-        with st.container(border=True):
-            c_txt, c_btn = st.columns([5, 1])
-            with c_txt:
-                st.markdown(f"**{name}**")
-                st.caption(ex["desc"])
-                st.caption("_" + " ".join(ex["text"].split()[:28]) + "..._")
-            with c_btn:
-                if st.button("Analyse", key=f"ex_{name}", type="primary",
-                             use_container_width=True):
-                    essay_text, essay_label = ex["text"], name
-with tab_manual:
-    txt = st.text_area("Essay text (English, ideally 150+ words)", height=240)
-    if st.button("Score pasted essay", type="primary"):
-        essay_text, essay_label = txt.strip(), "manual input"
-with tab_icnale:
+        if st.button(name, key=f"ex_{name}", use_container_width=True):
+            select(name + " — " + ex["desc"], ex["text"])
+
+    st.markdown("**Random from the corpus**")
     cohort = st.radio("Cohort", ["sea", "native", "mekong_validation"],
-                      horizontal=True)
-    if st.button("Load and score a random ICNALE essay"):
-        mf = pd.read_csv(cfg["paths"]["manifest"])
-        row = mf[mf.cohort == cohort].sample(1).iloc[0]
-        essay_text = (Path(cfg["paths"]["icnale_root"]) / row.path
-                      ).read_text(encoding="utf-8-sig")
-        essay_label = f"{row.essay_id} ({cohort})"
+                      horizontal=True, label_visibility="collapsed")
+    if st.button("Random ICNALE essay", use_container_width=True):
+        row = (pd.read_csv(cfg["paths"]["manifest"])
+               .query("cohort == @cohort").sample(1).iloc[0])
+        text = (Path(cfg["paths"]["icnale_root"]) / row.path
+                ).read_text(encoding="utf-8-sig")
+        select(f"{row.essay_id} ({cohort})", text)
+
+model_cfg = next(m for m in cfg["models"] if m["name"] == model_name)
+
+with st.expander("Or paste your own essay"):
+    txt = st.text_area("Essay text (English, ideally 150+ words)",
+                       height=200)
+    if st.button("Score pasted essay", type="primary"):
+        select("manual input", txt.strip())
+
+essay_label = st.session_state.get("sel_label")
+essay_text = st.session_state.get("sel_text")
 
 if essay_text:
     st.subheader(f"Analysing: {essay_label}")
