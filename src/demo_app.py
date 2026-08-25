@@ -80,6 +80,29 @@ Another topic is online learning. Since the pandemic, many classes are recorded,
 About money, part-time jobs give money. But scholarships also give money, and some students get money from parents. There are many ways to get money, and each way is different for each person, so it is hard to say which is best.
 
 Also, health is important. Students should sleep eight hours and do exercise. A job at night is bad for sleep. But morning jobs are hard because of classes. In conclusion, there are many factors and everyone should decide for themselves what is good for their own situation and future."""},
+    "5. IELTS Band 8.0 model essay — part-time jobs (prep material)": {
+        "desc": "A published IELTS model answer on this demo's exact topic "
+                "(user-supplied prep material, reported Band 8.0). "
+                "High-band Western academic form: the panel should agree "
+                "high.",
+        "text": """In recent years working and studying simultaneously has become an important and widely debated issue. While some people maintain that a part time job is highly beneficial for a student's future, others reject this notion, believing that working is detrimental to a person's studies. Personally, I believe the drawbacks outweigh the advantages.
+
+For a variety of reasons it can be worthwhile for students to get a job while they study. First of all, a student can gain vital knowledge in their given field. For example, if a person is studying to be a teacher, then working as a tutor in their free time will allow them to acquire experience before they begin their teaching career. Another advantage is the financial aspect. Many people rely on loans from their family or banks to partake in university. By having a part-time job students can earn money as they learn, which means they may not have the financial burden of paying back loans after they finish studying.
+
+On the other hand, there are many negative aspects of working and studying at the same time. The biggest disadvantage is that work can be time-consuming. Students, especially those in university, have a heavy workload while studying due to numerous assignments and many tests throughout the course. If a student is overworked it could distract from their studies and cause them to lose focus, resulting in bad grades, which would affect their future careers. Moreover, students may have higher levels of stress due to their hectic schedules. This could result in a student feeling dejected with their career choice and they may even drop out of university.
+
+Taking everything into account, although there are strong arguments to support the claim that working part time is advantageous, I am inclined to believe that it is better for students to focus on their studies because high grades often help them secure a better career in the future."""},
+    "6. IELTS Band 8.5 model essay — urban housing (prep material)": {
+        "desc": "A published IELTS model answer on a different topic "
+                "(user-supplied prep material, reported Band 8.5). Tests "
+                "the panel off-topic and at the top of the scale.",
+        "text": """It is undeniable that soaring urban populations have pushed many residents into compact apartments without private outdoor areas. While not without drawbacks, I believe that the financial savings, reduced maintenance burdens, and access to communal amenities make small-space living a viable and largely positive development.
+
+Living in small homes without outdoor space can harm both physical and mental well-being. One key concern is that limited access to nature and fresh air deprives residents of personal relaxation areas. Without gardens or balconies, individuals cannot easily soak up sunlight or enjoy ventilated environments. As a consequence, this lack of open space leads to increased stress levels and reduced physical activity. Equally troubling is the fact that cramped living conditions can hamper family life and child development. For instance, children confined to tiny flats lack safe, spacious areas in which to play and explore. In turn, their physical growth and creative play opportunities are significantly restricted.
+
+Nonetheless, living in a smaller home offers certain advantages and can be effectively mitigated, which makes this trend largely positive. To begin with, lower costs and minimal upkeep make compact apartments financially attractive. Reduced square footage often results in lower rent or mortgage payments and less time required for cleaning and household chores. As a result, residents benefit from decreased living expenses and gain more time for leisure or personal pursuits. In addition, the absence of private outdoor spaces can be offset by access to shared urban amenities. For example, community parks, rooftop gardens, and nearby recreation centres provide alternative green environments for rest and recreation. Through this kind of thoughtful urban planning, city dwellers are able to enjoy fresh air and leisure activities outside their homes, maintaining a balanced lifestyle despite limited private space.
+
+In conclusion, although the absence of private outdoor space can pose certain risks to residents' physical health and children's development, I believe that compact city apartments deliver considerable economic relief, reduced maintenance demands, and are easily compensated for by the convenience of shared urban infrastructure."""},
 }
 
 REAL_CASES = [
@@ -96,9 +119,25 @@ REAL_CASES = [
      "title": "Real case C - Indonesian essay, B2+ (high proficiency)",
      "desc": "Even at the top proficiency band: Western 5.0 vs SEA/Neutral "
              "6.0. The bias shrinks with proficiency but does not vanish."},
+    {"id": "WEP_VNM_PTJ0_359_B2_0",
+     "title": "Real case D - Vietnamese essay, B2+ (ICNALE WEP)",
+     "desc": "Authentic Vietnamese student essay from the newest ICNALE "
+             "module; used to validate the Mekong/Vietnamese lens."},
+    {"id": "WEP_VNM_PTJ0_364_B1_2",
+     "title": "Real case E - Vietnamese essay, B1 upper (ICNALE WEP)",
+     "desc": "Authentic Vietnamese student essay, mid proficiency; the "
+             "band where Experiment 1 found the bias concentrates."},
 ]
 
 st.set_page_config(page_title="CAMPS demo", layout="wide")
+st.markdown("""<style>
+section[data-testid="stSidebar"] div.stButton > button {
+  text-align: left; justify-content: flex-start;
+}
+section[data-testid="stSidebar"] div.stButton > button p {
+  text-align: left;
+}
+</style>""", unsafe_allow_html=True)
 st.title("CAMPS — Culturally-Aware Multi-Perspective Scoring")
 st.markdown(
     "**The problem:** AI essay graders trained mostly on Western text "
