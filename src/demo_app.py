@@ -161,6 +161,12 @@ with st.sidebar:
     model_name = st.selectbox("Model", [m["name"] for m in cfg["models"]],
                               index=1)
     tau = st.slider("BDS threshold (tau)", 0.0, 2.0, 0.75, 0.05)
+    compare_models = st.multiselect(
+        "Compare with additional models",
+        [m["name"] for m in cfg["models"]],
+        help="Runs the same panel on each selected model and shows a "
+             "cross-model comparison - the same essay, different "
+             "graders. Cloud models recommended.")
     st.caption("0.75 = pilot operating point; Experiment 3 calibrates "
                "this against 80 human raters.")
 
@@ -532,6 +538,67 @@ if essay_text:
         conf = json.loads(extract_json(adj.raw)).get("confidence")
     except Exception:
         pass
+    # ---- cross-model comparison ----
+    extra = [m for m in compare_models if m != model_name]
+    if extra:
+        st.divider()
+        st.subheader("Cross-model comparison: same essay, different graders")
+        comp_rows = [{
+            "model": model_name,
+            "standard grader": baseline_res.score,
+            "panel consensus": round(consensus, 2),
+            "BDS": round(bds, 2),
+            "flagged": "YES" if bds >= tau else "no"}]
+        lens_data = {model_name: scores}
+        for mn in extra:
+            mc = next(m for m in cfg["models"] if m["name"] == mn)
+            cclient = ScoringClient(mc["provider"], mc["id"],
+                                    Path(cfg["paths"]["cache"]),
+                                    cfg["generation"]["max_retries"])
+            log_box2 = st.status(f"Scoring with {mn}...", expanded=False)
+            try:
+                b = cclient.score(
+                    eid, "neutral_single",
+                    Path("prompts/cri_neutral_single.txt").read_text(),
+                    'Score the following essay. Respond with JSON: '
+                    '{"score": <band>, "rationale": "<2-3 sentences>"}'
+                    f'.\n\nESSAY:\n{essay_text}')
+                sc = []
+                for agent in PANEL:
+                    r = cclient.score(
+                        eid, agent,
+                        Path(f"prompts/cri_{agent}.txt").read_text(),
+                        user_prompt)
+                    sc.append(r.score)
+                    log_box2.write(f"{LENS_LABEL[agent]}: {r.score:.1f}")
+                cons2 = sum(sc) / len(sc)
+                bds2 = (sum((x - cons2) ** 2 for x in sc) / len(sc)) ** 0.5
+                comp_rows.append({
+                    "model": mn, "standard grader": b.score,
+                    "panel consensus": round(cons2, 2),
+                    "BDS": round(bds2, 2),
+                    "flagged": "YES" if bds2 >= tau else "no"})
+                lens_data[mn] = sc
+                log_box2.update(label=f"{mn}: done", state="complete")
+            except Exception as exc:  # provider not configured, quota, etc.
+                log_box2.update(label=f"{mn}: unavailable ({exc})"[:80],
+                                state="error")
+        st.dataframe(pd.DataFrame(comp_rows).set_index("model"),
+                     use_container_width=True)
+        figc = go.Figure()
+        for mn, sc in lens_data.items():
+            figc.add_trace(go.Bar(name=mn,
+                                  x=[LENS_LABEL[a] for a in PANEL], y=sc))
+        figc.update_layout(barmode="group", height=360,
+                           yaxis=dict(range=[0, 9.5], title="band score"),
+                           title="Lens scores by model")
+        st.plotly_chart(figc, use_container_width=True)
+        st.caption("The same essay, the same five cultural lenses, "
+                   "different underlying models: differences between the "
+                   "bars are the model-dependence documented in "
+                   "Experiment 1 - which grader an institution licenses "
+                   "is itself a fairness decision.")
+
     st.divider()
     st.subheader("Meta-adjudicator verdict")
     a1, a2 = st.columns([1, 4])
