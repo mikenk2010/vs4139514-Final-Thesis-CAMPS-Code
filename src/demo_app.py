@@ -159,7 +159,7 @@ def select(label: str, text: str, meta: dict | None = None) -> None:
 with st.sidebar:
     st.header("Settings")
     model_name = st.selectbox("Model", [m["name"] for m in cfg["models"]],
-                              index=1)
+                              index=1, key="model_sel")
     tau = st.slider("BDS threshold (tau)", 0.0, 2.0, 0.75, 0.05)
     compare_models = st.multiselect(
         "Compare with additional models",
@@ -218,6 +218,27 @@ with st.sidebar:
         select(f"{row.essay_id} ({cohort})", text,
                {"essay_id": row.essay_id, "region": row.region,
                 "band": row.cefr, "cohort": cohort})
+
+    st.divider()
+    st.header("History")
+    hist_path = Path("results/demo_history.jsonl")
+    if hist_path.exists():
+        recs = [json.loads(l) for l in hist_path.read_text().splitlines()]
+        for i, r in enumerate(reversed(recs[-12:])):
+            flag = "FLAG" if r["flagged"] else "ok"
+            if st.button(
+                    f"{r['label'][:34]} | {r['model']} | "
+                    f"{r['consensus']:.1f} / BDS {r['bds']:.2f} [{flag}]",
+                    key=f"hist_{i}", use_container_width=True):
+                st.session_state["sel_label"] = r["label"]
+                st.session_state["sel_text"] = r["text"]
+                st.session_state["sel_meta"] = r.get("meta")
+                st.session_state["model_sel"] = r["model"]
+                st.rerun()
+        st.caption("Click to replay instantly (served from cache - no "
+                   "API calls).")
+    else:
+        st.caption("Completed analyses appear here for instant replay.")
 
 model_cfg = next(m for m in cfg["models"] if m["name"] == model_name)
 if model_cfg["provider"] == "ollama":
@@ -598,6 +619,24 @@ if essay_text:
                    "bars are the model-dependence documented in "
                    "Experiment 1 - which grader an institution licenses "
                    "is itself a fairness decision.")
+
+    # ---- save to demo history (dedupe on essay+model) ----
+    hist_path = Path("results/demo_history.jsonl")
+    rec = {"ts": __import__("datetime").datetime.now().isoformat(
+               timespec="seconds"),
+           "label": essay_label, "model": model_name,
+           "text": essay_text, "meta": st.session_state.get("sel_meta"),
+           "baseline": baseline_res.score,
+           "consensus": round(consensus, 2), "bds": round(bds, 2),
+           "flagged": bool(bds >= tau)}
+    existing = []
+    if hist_path.exists():
+        existing = [json.loads(l)
+                    for l in hist_path.read_text().splitlines()]
+    if not any(e["label"] == rec["label"] and e["model"] == rec["model"]
+               for e in existing):
+        with hist_path.open("a") as f:
+            f.write(json.dumps(rec) + "\n")
 
     st.divider()
     st.subheader("Meta-adjudicator verdict")
