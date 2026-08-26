@@ -151,9 +151,10 @@ st.markdown(
 
 cfg = yaml.safe_load(Path("configs/experiment.yaml").read_text())
 
-def select(label: str, text: str) -> None:
+def select(label: str, text: str, meta: dict | None = None) -> None:
     st.session_state["sel_label"] = label
     st.session_state["sel_text"] = text
+    st.session_state["sel_meta"] = meta
 
 with st.sidebar:
     st.header("Settings")
@@ -180,12 +181,25 @@ with st.sidebar:
             text = (Path(cfg["paths"]["icnale_root"])
                     / mf_all.loc[case["id"], "path"]
                     ).read_text(encoding="utf-8-sig")
-            select(case["title"] + " — " + case["desc"], text)
+            row_m = mf_all.loc[case["id"]]
+            select(case["title"] + " — " + case["desc"], text,
+                   {"essay_id": case["id"], "region": row_m.region,
+                    "band": row_m.cefr, "cohort": row_m.cohort})
 
     st.markdown("**Synthetic demonstration essays**")
     for name, ex in EXAMPLES.items():
         if st.button(name, key=f"ex_{name}", use_container_width=True):
             select(name + " — " + ex["desc"], ex["text"])
+
+    st.markdown("**GRA-rated essay (80 human raters)**")
+    if st.button("Random GRA-rated ICNALE essay", use_container_width=True):
+        row = (pd.read_csv(cfg["paths"]["manifest"])
+               .query("cohort == 'gra'").sample(1).iloc[0])
+        text = (Path(cfg["paths"]["icnale_root"]) / row.path
+                ).read_text(encoding="utf-8-sig")
+        select(f"{row.essay_id} (GRA, 80 human ratings)", text,
+               {"essay_id": row.essay_id, "region": row.region,
+                "band": row.cefr, "cohort": "gra"})
 
     st.markdown("**Random from the corpus**")
     cohort = st.radio("Cohort", ["sea", "native", "mekong_validation"],
@@ -195,7 +209,9 @@ with st.sidebar:
                .query("cohort == @cohort").sample(1).iloc[0])
         text = (Path(cfg["paths"]["icnale_root"]) / row.path
                 ).read_text(encoding="utf-8-sig")
-        select(f"{row.essay_id} ({cohort})", text)
+        select(f"{row.essay_id} ({cohort})", text,
+               {"essay_id": row.essay_id, "region": row.region,
+                "band": row.cefr, "cohort": cohort})
 
 model_cfg = next(m for m in cfg["models"] if m["name"] == model_name)
 if model_cfg["provider"] == "ollama":
@@ -223,6 +239,31 @@ essay_text = st.session_state.get("sel_text")
 
 if essay_text:
     st.subheader(f"Analysing: {essay_label}")
+    meta = st.session_state.get("sel_meta")
+    if meta:
+        gra_path = Path("results/gra_dispersion.csv")
+        gra_row = None
+        if gra_path.exists():
+            g = pd.read_csv(gra_path).set_index("essay_id")
+            if meta["essay_id"] in g.index:
+                gra_row = g.loc[meta["essay_id"]]
+        cols = st.columns(4 if gra_row is None else 6)
+        cols[0].metric("Corpus", "ICNALE (Kobe)")
+        cols[1].metric("Region", str(meta["region"]))
+        cols[2].metric("Official CEFR band", str(meta["band"]))
+        cols[3].metric("Cohort", str(meta["cohort"]))
+        if gra_row is not None:
+            cols[4].metric("Human mean (80 raters)",
+                           f"{gra_row.content_mean:.2f} / 10")
+            cols[5].metric("Human disagreement (SD)",
+                           f"{gra_row.dispersion:.2f}")
+            st.caption("Human ratings from the ICNALE Global Rating "
+                       "Archives: mean of the Content dimensions across "
+                       "80 raters (0-10 scale; the panel scores on the "
+                       "1-9 band scale, so compare standing, not raw "
+                       "values). Human raters themselves disagree by "
+                       f"{gra_row.dispersion:.1f} points SD on this essay "
+                       "- disagreement is normal in essay assessment.")
     essay_slot = st.container()
     client = ScoringClient(model_cfg["provider"], model_cfg["id"],
                            Path(cfg["paths"]["cache"]),
