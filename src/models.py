@@ -138,9 +138,16 @@ class ScoringClient:
                 attempt += 1
                 if attempt >= self.max_retries:
                     raise
-                print(f"  retry {attempt} after error: {exc}", flush=True)
-                time.sleep(delay)
-                delay *= 2
+                # capacity errors (503/UNAVAILABLE) deserve patience, not
+                # escalation: wait longer, capped, without giving up early
+                if "UNAVAILABLE" in msg or "503" in msg:
+                    wait = min(delay * 2, 120.0)
+                else:
+                    wait = delay
+                print(f"  retry {attempt} in {wait:.0f}s after: "
+                      f"{msg[:120]}", flush=True)
+                time.sleep(wait)
+                delay = min(delay * 2, 120.0)
 
     def _call(self, system_prompt: str,
               user_prompt: str) -> tuple[str, dict | None]:

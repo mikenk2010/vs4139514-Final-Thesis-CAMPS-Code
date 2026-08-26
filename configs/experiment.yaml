@@ -32,7 +32,7 @@ models:                        # personal API accounts; exact IDs pinned before 
 generation:
   temperature: 0.0
   response_format: json
-  max_retries: 5
+  max_retries: 10
 
 conditions:
   baseline:  {agents: [neutral_single]}                # single-agent standard rubric
