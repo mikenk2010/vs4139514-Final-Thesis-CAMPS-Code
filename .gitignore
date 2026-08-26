@@ -5,3 +5,4 @@ __pycache__/
 results/**/raw/
 *.zip
 results/cache/
+results/demo_history.jsonl
