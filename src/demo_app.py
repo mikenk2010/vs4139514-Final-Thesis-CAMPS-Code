@@ -198,6 +198,19 @@ with st.sidebar:
         select(f"{row.essay_id} ({cohort})", text)
 
 model_cfg = next(m for m in cfg["models"] if m["name"] == model_name)
+if model_cfg["provider"] == "ollama":
+    st.sidebar.warning("Local thinking model: expect 30-90s per call "
+                       "(7 calls per analysis, so 4-10 minutes total). "
+                       "Cloud models respond in seconds.")
+    import urllib.request
+    base = __import__("os").environ.get("OLLAMA_BASE_URL",
+                                        "http://localhost:11434/v1")
+    try:
+        urllib.request.urlopen(base.replace("/v1", "/api/tags"), timeout=2)
+    except Exception:
+        st.error("Ollama does not respond at " + base +
+                 " - start it with `ollama serve` (or pick a cloud model).")
+        st.stop()
 
 with st.expander("Or paste your own essay"):
     txt = st.text_area("Essay text (English, ideally 150+ words)",
@@ -229,18 +242,40 @@ if essay_text:
         'items]}\n\n'
         f"ESSAY:\n{essay_text}")
     eid = f"demoV3_{hash(essay_text) & 0xffffffff:x}"
+    import time as _time
+    call_log = []
+    log_box = st.status("Running the CAMPS pipeline...", expanded=True)
+
+    def timed_score(agent_name, display, system_prompt, uprompt):
+        t0 = _time.time()
+        log_box.write(f"→ {display}: calling {model_cfg['id']} ...")
+        r = client.score(eid, agent_name, system_prompt, uprompt)
+        dt = _time.time() - t0
+        cached = dt < 0.5
+        u = r.usage or {}
+        call_log.append({
+            "step": display, "score": r.score,
+            "seconds": round(dt, 1),
+            "tokens_in": u.get("in"), "tokens_out": u.get("out"),
+            "cached": cached})
+        log_box.write(
+            f"   done in {dt:.1f}s - score {r.score:.1f}"
+            + (" (cached)" if cached else
+               f" - tokens {u.get('in','?')}/{u.get('out','?')}"))
+        return r
+
     prog = st.progress(0.0, "Scoring with a standard AI grader...")
-    baseline_res = client.score(
-        eid, "neutral_single",
+    baseline_res = timed_score(
+        "neutral_single", "Standard grader (baseline)",
         Path("prompts/cri_neutral_single.txt").read_text(),
         'Score the following essay. Respond with JSON: '
         '{"score": <band>, "rationale": "<2-3 sentences>"}.\n\n'
         f"ESSAY:\n{essay_text}")
     results, details = [], {}
     for i, agent in enumerate(PANEL):
-        res = client.score(eid, agent,
-                           Path(f"prompts/cri_{agent}.txt").read_text(),
-                           user_prompt)
+        res = timed_score(agent, f"{LENS_LABEL[agent]} lens",
+                          Path(f"prompts/cri_{agent}.txt").read_text(),
+                          user_prompt)
         results.append(res)
         try:
             details[agent] = json.loads(extract_json(res.raw))
@@ -432,9 +467,25 @@ if essay_text:
                 f"{summary}\n\nESSAY:\n{essay_text}\n\n"
                 'Give your adjudicated score as JSON: {"score": <band>, '
                 '"confidence": <0-1>, "rationale": "<3-4 sentences>"}')
-    adj = client.score(eid, "adjudicator",
-                       Path("prompts/adjudicator.txt").read_text(), adj_user)
+    adj = timed_score("adjudicator", "Meta-adjudicator",
+                      Path("prompts/adjudicator.txt").read_text(), adj_user)
     prog.progress(1.0, "Done")
+    log_box.update(label="Pipeline complete", state="complete",
+                   expanded=False)
+
+    # ---- run log & computation details ----
+    with st.expander("Run log and computation details"):
+        st.dataframe(pd.DataFrame(call_log), use_container_width=True)
+        st.markdown("**Consensus calculation (equal weights):**")
+        st.latex(r"S^{*} = \\frac{1}{k}\\sum_i s_i = \\frac{"
+                 + " + ".join(f"{x:.0f}" for x in scores)
+                 + f"}}{{{len(scores)}}} = {consensus:.2f}")
+        st.markdown("**Bias Divergence Score:**")
+        st.latex(r"\\mathrm{BDS} = \\sqrt{\\frac{1}{k}\\sum_i (s_i - "
+                 + f"{consensus:.2f}" + r")^2} = " + f"{bds:.2f}")
+        st.caption(f"Cache: results/cache/ - repeated analyses of the "
+                   f"same essay are instant and free. Model id: "
+                   f"{model_cfg['id']}.")
     conf = None
     try:
         conf = json.loads(extract_json(adj.raw)).get("confidence")
