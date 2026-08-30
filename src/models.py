@@ -121,6 +121,22 @@ class ScoringClient:
             except Exception as exc:  # noqa: BLE001 - provider SDK variety
                 msg = str(exc)
                 m = re.search(r"reset_seconds['\"]?\s*[:=]\s*(\d+)", msg)
+                if m is None:
+                    # Google daily-quota 429s announce the wait as
+                    # RetryInfo retryDelay ('24873s'); honour it so an
+                    # overnight run survives a quota-day rollover.
+                    m = re.search(
+                        r"retryDelay['\"]?\s*[:=]\s*'?\"?(\d+)(?:\.\d+)?s",
+                        msg)
+                if m is None and ("RESOURCE_EXHAUSTED" in msg
+                                  or "429" in msg):
+                    h = re.search(r"retry in (?:(\d+)h)?(?:(\d+)m)?"
+                                  r"(?:(\d+(?:\.\d+)?)s)?", msg)
+                    if h and h.group(0) != "retry in ":
+                        secs = (int(h.group(1) or 0) * 3600
+                                + int(h.group(2) or 0) * 60
+                                + float(h.group(3) or 0))
+                        m = re.match(r"(\d+)", str(int(secs)))
                 if m:
                     # provider announced a cooldown: wait it out, in
                     # chunks, without consuming retry attempts
