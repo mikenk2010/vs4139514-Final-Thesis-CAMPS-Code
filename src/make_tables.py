@@ -51,11 +51,21 @@ def table_e1(df: pd.DataFrame, out: Path) -> None:
     model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
                    "gemini-pro": "Gemini Pro", "qwen3-local": "Qwen3 14B",
                    "llama-70b": "Llama 3.3 70B"}
+    # Completeness guard: a (model, condition) cell is published only if
+    # both cohorts are as large as the largest cohort seen anywhere in
+    # the run -- partially completed conditions must never reach a table.
+    exp_sea = max((len(g[g.cohort == "sea"])
+                   for _, g in agg.groupby(["model", "condition"])), default=0)
+    exp_nat = max((len(g[g.cohort == "native"])
+                   for _, g in agg.groupby(["model", "condition"])), default=0)
     rows = []
     for (model, cond), g in agg.groupby(["model", "condition"]):
         sea = g[g.cohort == "sea"].consensus.to_numpy()
         nat = g[g.cohort == "native"].consensus.to_numpy()
-        if len(sea) == 0 or len(nat) == 0:
+        if len(sea) < exp_sea or len(nat) < exp_nat:
+            if len(sea) or len(nat):
+                print(f"  SKIP partial cell {model}/{cond}: "
+                      f"sea={len(sea)}/{exp_sea} nat={len(nat)}/{exp_nat}")
             continue
         point, lo, hi = gap_ci(sea, nat)
         model = model_label.get(model, model.replace("_", "\\_"))
