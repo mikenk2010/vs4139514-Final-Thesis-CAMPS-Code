@@ -119,6 +119,11 @@ class ScoringClient:
             try:
                 return self._call(system_prompt, user_prompt)
             except Exception as exc:  # noqa: BLE001 - provider SDK variety
+                if isinstance(exc, (TypeError, AttributeError, ImportError,
+                                    KeyError)):
+                    # programming/environment faults are not transient --
+                    # retrying only hides them; fail loud immediately
+                    raise
                 msg = str(exc)
                 m = re.search(r"reset_seconds['\"]?\s*[:=]\s*(\d+)", msg)
                 if m is None:
