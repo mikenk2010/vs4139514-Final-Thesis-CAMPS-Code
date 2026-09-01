@@ -1,0 +1,94 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "RCA: Anthropic v1 Temperature Failure",
+  "description": "Trace the overnight CAMPS run from model configuration through caching, provider dispatch, the Anthropic SDK v1 incompatibility, and safe resumption.",
+  "ref": "main",
+  "steps": [
+    {
+      "directory": "src",
+      "title": "Experiment Runtime",
+      "description": "The CAMPS runtime separates experiment orchestration in run_experiment.py from provider-specific API calls in models.py. The failure crosses that boundary, so follow the runner first and then the Anthropic adapter."
+    },
+    {
+      "file": "configs/experiment.yaml",
+      "selection": {
+        "start": {"line": 19, "character": 0},
+        "end": {"line": 37, "character": 0}
+      },
+      "title": "Claude and Determinism Configuration",
+      "description": "The configuration maps claude-sonnet to the Anthropic provider and records temperature 0.0 where providers support sampling controls. Anthropic SDK v1 no longer accepts it as a normal Messages argument, so the repaired Anthropic branch deliberately omits it."
+    },
+    {
+      "file": "src/run_experiment.py",
+      "selection": {
+        "start": {"line": 48, "character": 0},
+        "end": {"line": 82, "character": 0}
+      },
+      "title": "Resume Set and Client Construction",
+      "description": "At startup the runner reconstructs completed work from scores.jsonl, selects the requested model, and creates ScoringClient with the configured provider and model ID. This is why a corrected rerun can continue without repeating already logged scoring units."
+    },
+    {
+      "file": "src/run_experiment.py",
+      "selection": {
+        "start": {"line": 93, "character": 0},
+        "end": {"line": 122, "character": 0}
+      },
+      "title": "Scoring Call and Durable Row Write",
+      "description": "Each agent result is requested, printed, appended to scores.jsonl, and flushed immediately. Exceptions are re-raised, so the invalid SDK argument terminates this command and the shell's && chain prevents the later E3 commands from starting."
+    },
+    {
+      "file": "src/models.py",
+      "selection": {
+        "start": {"line": 89, "character": 0},
+        "end": {"line": 109, "character": 0}
+      },
+      "title": "Why Two Claude Scores Appeared",
+      "description": "ScoringClient checks its content-addressed disk cache before making a provider call. The western and sea scores printed immediately because cached E1-compatible responses existed; the next uncached agent was the first request to exercise the upgraded Anthropic SDK and expose the incompatibility."
+    },
+    {
+      "file": "src/models.py",
+      "selection": {
+        "start": {"line": 114, "character": 0},
+        "end": {"line": 127, "character": 0}
+      },
+      "title": "Immediate Failure Is Intentional",
+      "description": "The retry wrapper classifies TypeError as a programming or environment fault and re-raises it immediately. Retrying cannot help because every call would use the same unsupported keyword, so the fail-fast behaviour is correct."
+    },
+    {
+      "file": "src/models.py",
+      "selection": {
+        "start": {"line": 188, "character": 0},
+        "end": {"line": 196, "character": 0}
+      },
+      "title": "Root Cause in the Anthropic Adapter",
+      "description": "At the time of failure, the Anthropic branch passed temperature=0.0 directly to client.messages.create(). Installed anthropic 1.2.0 removed temperature, top_p, and top_k from this method; the repaired adapter shown here now omits the unsupported argument."
+    },
+    {
+      "file": "overnight.log",
+      "selection": {
+        "start": {"line": 3048, "character": 0},
+        "end": {"line": 3070, "character": 0}
+      },
+      "title": "Observed Failure Chain",
+      "description": "The log ties the two cache-backed scores to the first uncached request and records the complete call chain into Messages.create(). There is no quota, authentication, or network error in this trace."
+    },
+    {
+      "file": "src/run_experiment.py",
+      "selection": {
+        "start": {"line": 184, "character": 0},
+        "end": {"line": 194, "character": 0}
+      },
+      "title": "Run-History Gap After a Crash",
+      "description": "The summary record is appended only after all work completes normally. The two durable score rows from the failed Claude attempt remain resumable, but that interrupted attempt has no matching results/runs.jsonl record—a provenance detail to preserve when documenting the experiment."
+    },
+    {
+      "uri": "https://github.com/anthropics/anthropic-sdk-python/blob/v1.2.0/MIGRATION.md#removed-deprecated-request-parameters",
+      "title": "Official Anthropic v1 Migration Rule",
+      "description": "Anthropic documents removal of message-method sampling parameters and says current models do not use them. Removing the keyword repairs SDK compatibility, but CAMPS must not continue claiming Claude Sonnet 4.6 was deterministically run at temperature 0.0 without separate evidence."
+    },
+    {
+      "title": "Safe Next Move",
+      "description": "The Anthropic adapter and its no-network regression test are now updated. Run a one-essay Claude smoke test before the remaining experiments; existing E2 rows will be skipped, and E3 should use a schedule that avoids concurrent writers to one scores.jsonl file."
+    }
+  ]
+}

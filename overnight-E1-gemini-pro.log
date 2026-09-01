@@ -1,0 +1,285 @@
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+Resuming: 3004 calls already logged
+  [1] WE_ENS_PTJ0_057_XX_1 camps_k3/neutral -> 7.0
+  [2] WE_ENS_PTJ0_075_XX_1 camps_k3/western -> 5.0
+  [3] WE_ENS_PTJ0_075_XX_1 camps_k3/sea -> 5.0
+  [4] WE_ENS_PTJ0_075_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_075_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [5] WE_ENS_PTJ0_003_XX_1 camps_k3/western -> 4.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  retry 2 in 8s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [6] WE_ENS_PTJ0_003_XX_1 camps_k3/sea -> 6.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [7] WE_ENS_PTJ0_003_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_003_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.63
+  [8] WE_ENS_PTJ0_029_XX_1 camps_k3/western -> 4.0
+  [9] WE_ENS_PTJ0_029_XX_1 camps_k3/sea -> 5.0
+  [10] WE_ENS_PTJ0_029_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_029_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [11] WE_ENS_PTJ0_007_XX_1 camps_k3/western -> 5.0
+  [12] WE_ENS_PTJ0_007_XX_1 camps_k3/sea -> 6.0
+  [13] WE_ENS_PTJ0_007_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_007_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.25
+  [14] WE_ENS_PTJ0_077_XX_1 camps_k3/western -> 5.0
+  [15] WE_ENS_PTJ0_077_XX_1 camps_k3/sea -> 5.0
+  [16] WE_ENS_PTJ0_077_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_077_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [17] WE_ENS_PTJ0_009_XX_1 camps_k3/western -> 5.0
+  [18] WE_ENS_PTJ0_009_XX_1 camps_k3/sea -> 5.0
+  [19] WE_ENS_PTJ0_009_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_009_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [20] WE_ENS_PTJ0_095_XX_1 camps_k3/western -> 4.0
+  [21] WE_ENS_PTJ0_095_XX_1 camps_k3/sea -> 6.0
+  [22] WE_ENS_PTJ0_095_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_095_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.63
+  [23] WE_ENS_PTJ0_015_XX_1 camps_k3/western -> 5.0
+  [24] WE_ENS_PTJ0_015_XX_1 camps_k3/sea -> 5.0
+  [25] WE_ENS_PTJ0_015_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_PTJ0_015_XX_1 gemini-pro camps_k3: mean=5.33 BDS=0.47
+  [26] WE_ENS_PTJ0_041_XX_1 camps_k3/western -> 4.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [27] WE_ENS_PTJ0_041_XX_1 camps_k3/sea -> 5.0
+  [28] WE_ENS_PTJ0_041_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_PTJ0_041_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [29] WE_ENS_PTJ0_071_XX_1 camps_k3/western -> 4.0
+  [30] WE_ENS_PTJ0_071_XX_1 camps_k3/sea -> 5.0
+  [31] WE_ENS_PTJ0_071_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_071_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [32] WE_ENS_PTJ0_065_XX_1 camps_k3/western -> 4.0
+  [33] WE_ENS_PTJ0_065_XX_1 camps_k3/sea -> 5.0
+  [34] WE_ENS_PTJ0_065_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_065_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.70
+  [35] WE_ENS_PTJ0_014_XX_1 camps_k3/western -> 5.0
+  [36] WE_ENS_PTJ0_014_XX_1 camps_k3/sea -> 5.0
+  [37] WE_ENS_PTJ0_014_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_014_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [38] WE_ENS_PTJ0_031_XX_1 camps_k3/western -> 4.0
+  [39] WE_ENS_PTJ0_031_XX_1 camps_k3/sea -> 6.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [40] WE_ENS_PTJ0_031_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_031_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.63
+  [41] WE_ENS_PTJ0_028_XX_1 camps_k3/western -> 5.0
+  [42] WE_ENS_PTJ0_028_XX_1 camps_k3/sea -> 6.0
+  [43] WE_ENS_PTJ0_028_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_PTJ0_028_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.25
+  [44] WE_ENS_PTJ0_063_XX_1 camps_k3/western -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [45] WE_ENS_PTJ0_063_XX_1 camps_k3/sea -> 5.0
+  [46] WE_ENS_PTJ0_063_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_PTJ0_063_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [47] WE_ENS_SMK0_069_XX_1 camps_k3/western -> 5.0
+  [48] WE_ENS_SMK0_069_XX_1 camps_k3/sea -> 5.0
+  [49] WE_ENS_SMK0_069_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_069_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [50] WE_ENS_SMK0_074_XX_1 camps_k3/western -> 5.0
+  [51] WE_ENS_SMK0_074_XX_1 camps_k3/sea -> 6.0
+  [52] WE_ENS_SMK0_074_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_074_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.25
+  [53] WE_ENS_SMK0_044_XX_1 camps_k3/western -> 4.0
+  [54] WE_ENS_SMK0_044_XX_1 camps_k3/sea -> 4.0
+  [55] WE_ENS_SMK0_044_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_044_XX_1 gemini-pro camps_k3: mean=5.00 BDS=1.41
+  [56] WE_ENS_SMK0_001_XX_1 camps_k3/western -> 4.0
+  [57] WE_ENS_SMK0_001_XX_1 camps_k3/sea -> 5.0
+  [58] WE_ENS_SMK0_001_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_001_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.70
+  [59] WE_ENS_SMK0_032_XX_1 camps_k3/western -> 4.0
+  [60] WE_ENS_SMK0_032_XX_1 camps_k3/sea -> 5.0
+  [61] WE_ENS_SMK0_032_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_032_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [62] WE_ENS_SMK0_053_XX_1 camps_k3/western -> 4.0
+  [63] WE_ENS_SMK0_053_XX_1 camps_k3/sea -> 5.0
+  [64] WE_ENS_SMK0_053_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_053_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [65] WE_ENS_SMK0_017_XX_1 camps_k3/western -> 4.0
+  [66] WE_ENS_SMK0_017_XX_1 camps_k3/sea -> 5.0
+  [67] WE_ENS_SMK0_017_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_017_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [68] WE_ENS_SMK0_072_XX_1 camps_k3/western -> 4.0
+  [69] WE_ENS_SMK0_072_XX_1 camps_k3/sea -> 5.0
+  [70] WE_ENS_SMK0_072_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_072_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [71] WE_ENS_SMK0_090_XX_1 camps_k3/western -> 5.0
+  [72] WE_ENS_SMK0_090_XX_1 camps_k3/sea -> 7.0
+  [73] WE_ENS_SMK0_090_XX_1 camps_k3/neutral -> 9.0
+WE_ENS_SMK0_090_XX_1 gemini-pro camps_k3: mean=7.00 BDS=1.63
+  [74] WE_ENS_SMK0_009_XX_1 camps_k3/western -> 4.0
+  [75] WE_ENS_SMK0_009_XX_1 camps_k3/sea -> 5.0
+  [76] WE_ENS_SMK0_009_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_009_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [77] WE_ENS_SMK0_071_XX_1 camps_k3/western -> 5.0
+  [78] WE_ENS_SMK0_071_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [79] WE_ENS_SMK0_071_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_071_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [80] WE_ENS_SMK0_023_XX_1 camps_k3/western -> 5.0
+  [81] WE_ENS_SMK0_023_XX_1 camps_k3/sea -> 5.0
+  [82] WE_ENS_SMK0_023_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_023_XX_1 gemini-pro camps_k3: mean=5.33 BDS=0.47
+  [83] WE_ENS_SMK0_033_XX_1 camps_k3/western -> 5.0
+  [84] WE_ENS_SMK0_033_XX_1 camps_k3/sea -> 5.0
+  [85] WE_ENS_SMK0_033_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_033_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [86] WE_ENS_SMK0_013_XX_1 camps_k3/western -> 4.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [87] WE_ENS_SMK0_013_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [88] WE_ENS_SMK0_013_XX_1 camps_k3/neutral -> 5.0
+WE_ENS_SMK0_013_XX_1 gemini-pro camps_k3: mean=4.67 BDS=0.47
+  [89] WE_ENS_SMK0_039_XX_1 camps_k3/western -> 5.0
+  [90] WE_ENS_SMK0_039_XX_1 camps_k3/sea -> 6.0
+  [91] WE_ENS_SMK0_039_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_039_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.25
+  [92] WE_ENS_SMK0_057_XX_1 camps_k3/western -> 4.0
+  [93] WE_ENS_SMK0_057_XX_1 camps_k3/sea -> 5.0
+  [94] WE_ENS_SMK0_057_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_057_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [95] WE_ENS_SMK0_097_XX_1 camps_k3/western -> 4.0
+  [96] WE_ENS_SMK0_097_XX_1 camps_k3/sea -> 5.0
+  [97] WE_ENS_SMK0_097_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_097_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [98] WE_ENS_SMK0_007_XX_1 camps_k3/western -> 5.0
+  [99] WE_ENS_SMK0_007_XX_1 camps_k3/sea -> 5.0
+  [100] WE_ENS_SMK0_007_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_007_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [101] WE_ENS_SMK0_082_XX_1 camps_k3/western -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [102] WE_ENS_SMK0_082_XX_1 camps_k3/sea -> 5.0
+  [103] WE_ENS_SMK0_082_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_082_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [104] WE_ENS_SMK0_025_XX_1 camps_k3/western -> 5.0
+  [105] WE_ENS_SMK0_025_XX_1 camps_k3/sea -> 5.0
+  [106] WE_ENS_SMK0_025_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_025_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [107] WE_ENS_SMK0_094_XX_1 camps_k3/western -> 4.0
+  [108] WE_ENS_SMK0_094_XX_1 camps_k3/sea -> 5.0
+  [109] WE_ENS_SMK0_094_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_094_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [110] WE_ENS_SMK0_011_XX_1 camps_k3/western -> 4.0
+  [111] WE_ENS_SMK0_011_XX_1 camps_k3/sea -> 6.0
+  [112] WE_ENS_SMK0_011_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_011_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.25
+  [113] WE_ENS_SMK0_041_XX_1 camps_k3/western -> 4.0
+  [114] WE_ENS_SMK0_041_XX_1 camps_k3/sea -> 4.0
+  [115] WE_ENS_SMK0_041_XX_1 camps_k3/neutral -> 5.0
+WE_ENS_SMK0_041_XX_1 gemini-pro camps_k3: mean=4.33 BDS=0.47
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [116] WE_ENS_SMK0_006_XX_1 camps_k3/western -> 4.0
+  [117] WE_ENS_SMK0_006_XX_1 camps_k3/sea -> 5.0
+  [118] WE_ENS_SMK0_006_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_006_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [119] WE_ENS_SMK0_038_XX_1 camps_k3/western -> 5.0
+  [120] WE_ENS_SMK0_038_XX_1 camps_k3/sea -> 7.0
+  [121] WE_ENS_SMK0_038_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_038_XX_1 gemini-pro camps_k3: mean=6.67 BDS=1.25
+  [122] WE_ENS_SMK0_061_XX_1 camps_k3/western -> 5.0
+  [123] WE_ENS_SMK0_061_XX_1 camps_k3/sea -> 5.0
+  [124] WE_ENS_SMK0_061_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_061_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [125] WE_ENS_SMK0_020_XX_1 camps_k3/western -> 4.0
+  [126] WE_ENS_SMK0_020_XX_1 camps_k3/sea -> 5.0
+  [127] WE_ENS_SMK0_020_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_020_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [128] WE_ENS_SMK0_075_XX_1 camps_k3/western -> 5.0
+  [129] WE_ENS_SMK0_075_XX_1 camps_k3/sea -> 6.0
+  [130] WE_ENS_SMK0_075_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_075_XX_1 gemini-pro camps_k3: mean=6.00 BDS=0.82
+  [131] WE_ENS_SMK0_036_XX_1 camps_k3/western -> 5.0
+  [132] WE_ENS_SMK0_036_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [133] WE_ENS_SMK0_036_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_036_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [134] WE_ENS_SMK0_059_XX_1 camps_k3/western -> 5.0
+  [135] WE_ENS_SMK0_059_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [136] WE_ENS_SMK0_059_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_059_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [137] WE_ENS_SMK0_066_XX_1 camps_k3/western -> 4.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [138] WE_ENS_SMK0_066_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [139] WE_ENS_SMK0_066_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_066_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [140] WE_ENS_SMK0_003_XX_1 camps_k3/western -> 4.0
+  [141] WE_ENS_SMK0_003_XX_1 camps_k3/sea -> 5.0
+  [142] WE_ENS_SMK0_003_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_003_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.70
+  [143] WE_ENS_SMK0_043_XX_1 camps_k3/western -> 5.0
+  [144] WE_ENS_SMK0_043_XX_1 camps_k3/sea -> 5.0
+  [145] WE_ENS_SMK0_043_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_043_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [146] WE_ENS_SMK0_085_XX_1 camps_k3/western -> 5.0
+  [147] WE_ENS_SMK0_085_XX_1 camps_k3/sea -> 6.0
+  [148] WE_ENS_SMK0_085_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_085_XX_1 gemini-pro camps_k3: mean=6.00 BDS=0.82
+  [149] WE_ENS_SMK0_045_XX_1 camps_k3/western -> 4.0
+  [150] WE_ENS_SMK0_045_XX_1 camps_k3/sea -> 5.0
+  [151] WE_ENS_SMK0_045_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_045_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [152] WE_ENS_SMK0_099_XX_1 camps_k3/western -> 4.0
+  [153] WE_ENS_SMK0_099_XX_1 camps_k3/sea -> 5.0
+  [154] WE_ENS_SMK0_099_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_099_XX_1 gemini-pro camps_k3: mean=5.00 BDS=0.82
+  [155] WE_ENS_SMK0_063_XX_1 camps_k3/western -> 5.0
+  [156] WE_ENS_SMK0_063_XX_1 camps_k3/sea -> 5.0
+  [157] WE_ENS_SMK0_063_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_063_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [158] WE_ENS_SMK0_056_XX_1 camps_k3/western -> 5.0
+  [159] WE_ENS_SMK0_056_XX_1 camps_k3/sea -> 5.0
+  [160] WE_ENS_SMK0_056_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_056_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [161] WE_ENS_SMK0_040_XX_1 camps_k3/western -> 4.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [162] WE_ENS_SMK0_040_XX_1 camps_k3/sea -> 7.0
+  [163] WE_ENS_SMK0_040_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_040_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [164] WE_ENS_SMK0_019_XX_1 camps_k3/western -> 4.0
+  [165] WE_ENS_SMK0_019_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [166] WE_ENS_SMK0_019_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_019_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.70
+  [167] WE_ENS_SMK0_016_XX_1 camps_k3/western -> 4.0
+  [168] WE_ENS_SMK0_016_XX_1 camps_k3/sea -> 5.0
+  [169] WE_ENS_SMK0_016_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_016_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [170] WE_ENS_SMK0_098_XX_1 camps_k3/western -> 5.0
+  [171] WE_ENS_SMK0_098_XX_1 camps_k3/sea -> 5.0
+  [172] WE_ENS_SMK0_098_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_098_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [173] WE_ENS_SMK0_073_XX_1 camps_k3/western -> 5.0
+  [174] WE_ENS_SMK0_073_XX_1 camps_k3/sea -> 5.0
+  [175] WE_ENS_SMK0_073_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_073_XX_1 gemini-pro camps_k3: mean=5.67 BDS=0.94
+  [176] WE_ENS_SMK0_070_XX_1 camps_k3/western -> 5.0
+  [177] WE_ENS_SMK0_070_XX_1 camps_k3/sea -> 5.0
+  [178] WE_ENS_SMK0_070_XX_1 camps_k3/neutral -> 6.0
+WE_ENS_SMK0_070_XX_1 gemini-pro camps_k3: mean=5.33 BDS=0.47
+  [179] WE_ENS_SMK0_008_XX_1 camps_k3/western -> 4.0
+  [180] WE_ENS_SMK0_008_XX_1 camps_k3/sea -> 5.0
+  [181] WE_ENS_SMK0_008_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_008_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [182] WE_ENS_SMK0_093_XX_1 camps_k3/western -> 5.0
+  [183] WE_ENS_SMK0_093_XX_1 camps_k3/sea -> 5.0
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [184] WE_ENS_SMK0_093_XX_1 camps_k3/neutral -> 9.0
+WE_ENS_SMK0_093_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.89
+  retry 1 in 4s after: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand 
+  [185] WE_ENS_SMK0_080_XX_1 camps_k3/western -> 4.0
+  [186] WE_ENS_SMK0_080_XX_1 camps_k3/sea -> 5.0
+  [187] WE_ENS_SMK0_080_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_080_XX_1 gemini-pro camps_k3: mean=5.33 BDS=1.25
+  [188] WE_ENS_SMK0_087_XX_1 camps_k3/western -> 5.0
+  [189] WE_ENS_SMK0_087_XX_1 camps_k3/sea -> 5.0
+  [190] WE_ENS_SMK0_087_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_087_XX_1 gemini-pro camps_k3: mean=6.00 BDS=1.41
+  [191] WE_ENS_SMK0_012_XX_1 camps_k3/western -> 5.0
+  [192] WE_ENS_SMK0_012_XX_1 camps_k3/sea -> 6.0
+  [193] WE_ENS_SMK0_012_XX_1 camps_k3/neutral -> 8.0
+WE_ENS_SMK0_012_XX_1 gemini-pro camps_k3: mean=6.33 BDS=1.25
+  [194] WE_ENS_SMK0_054_XX_1 camps_k3/western -> 4.0
+  [195] WE_ENS_SMK0_054_XX_1 camps_k3/sea -> 6.0
+  [196] WE_ENS_SMK0_054_XX_1 camps_k3/neutral -> 7.0
+WE_ENS_SMK0_054_XX_1 gemini-pro camps_k3: mean=5.67 BDS=1.25
+Done. Log: results/E1/scores.jsonl
+Run record appended to results/runs.jsonl: 196 new calls, 604 resumed/cached, tokens in/out 73061/16734, 5828.1s

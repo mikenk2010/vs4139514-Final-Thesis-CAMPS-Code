@@ -1,0 +1,842 @@
+  [1] WE_TWN_PTJ0_005_B1_2 camps_k5/western -> 5.0
+  [2] WE_TWN_PTJ0_005_B1_2 camps_k5/sea -> 5.0
+  [3] WE_TWN_PTJ0_005_B1_2 camps_k5/east_asian -> 5.0
+  [4] WE_TWN_PTJ0_005_B1_2 camps_k5/mekong -> 5.0
+  [5] WE_TWN_PTJ0_005_B1_2 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_005_B1_2 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [6] WE_TWN_PTJ0_009_B1_1 camps_k5/western -> 4.0
+  [7] WE_TWN_PTJ0_009_B1_1 camps_k5/sea -> 4.0
+  [8] WE_TWN_PTJ0_009_B1_1 camps_k5/east_asian -> 4.0
+  [9] WE_TWN_PTJ0_009_B1_1 camps_k5/mekong -> 5.0
+  [10] WE_TWN_PTJ0_009_B1_1 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_009_B1_1 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [11] WE_CHN_PTJ0_009_B1_2 camps_k5/western -> 6.0
+  [12] WE_CHN_PTJ0_009_B1_2 camps_k5/sea -> 7.0
+  [13] WE_CHN_PTJ0_009_B1_2 camps_k5/east_asian -> 6.0
+  [14] WE_CHN_PTJ0_009_B1_2 camps_k5/mekong -> 6.0
+  [15] WE_CHN_PTJ0_009_B1_2 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_009_B1_2 gpt-4o camps_k5: mean=6.20 BDS=0.40
+  [16] WE_IDN_PTJ0_020_B1_2 camps_k5/western -> 3.0
+  [17] WE_IDN_PTJ0_020_B1_2 camps_k5/sea -> 4.0
+  [18] WE_IDN_PTJ0_020_B1_2 camps_k5/east_asian -> 3.0
+  [19] WE_IDN_PTJ0_020_B1_2 camps_k5/mekong -> 4.0
+  [20] WE_IDN_PTJ0_020_B1_2 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_020_B1_2 gpt-4o camps_k5: mean=3.60 BDS=0.49
+  [21] WE_THA_PTJ0_007_B1_2 camps_k5/western -> 3.0
+  [22] WE_THA_PTJ0_007_B1_2 camps_k5/sea -> 4.0
+  [23] WE_THA_PTJ0_007_B1_2 camps_k5/east_asian -> 4.0
+  [24] WE_THA_PTJ0_007_B1_2 camps_k5/mekong -> 4.0
+  [25] WE_THA_PTJ0_007_B1_2 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_007_B1_2 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [26] WE_KOR_PTJ0_057_B2_0 camps_k5/western -> 4.0
+  [27] WE_KOR_PTJ0_057_B2_0 camps_k5/sea -> 4.0
+  [28] WE_KOR_PTJ0_057_B2_0 camps_k5/east_asian -> 4.0
+  [29] WE_KOR_PTJ0_057_B2_0 camps_k5/mekong -> 4.0
+  [30] WE_KOR_PTJ0_057_B2_0 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_057_B2_0 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [31] WE_JPN_PTJ0_010_B1_2 camps_k5/western -> 5.0
+  [32] WE_JPN_PTJ0_010_B1_2 camps_k5/sea -> 5.0
+  [33] WE_JPN_PTJ0_010_B1_2 camps_k5/east_asian -> 5.0
+  [34] WE_JPN_PTJ0_010_B1_2 camps_k5/mekong -> 5.0
+  [35] WE_JPN_PTJ0_010_B1_2 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_010_B1_2 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [36] WE_ENS_PTJ0_001_XX_1 camps_k5/western -> 5.0
+  [37] WE_ENS_PTJ0_001_XX_1 camps_k5/sea -> 5.0
+  [38] WE_ENS_PTJ0_001_XX_1 camps_k5/east_asian -> 5.0
+  [39] WE_ENS_PTJ0_001_XX_1 camps_k5/mekong -> 6.0
+  [40] WE_ENS_PTJ0_001_XX_1 camps_k5/neutral -> 7.0
+WE_ENS_PTJ0_001_XX_1 gpt-4o camps_k5: mean=5.60 BDS=0.80
+  [41] WE_IDN_PTJ0_007_B1_1 camps_k5/western -> 3.0
+  [42] WE_IDN_PTJ0_007_B1_1 camps_k5/sea -> 4.0
+  [43] WE_IDN_PTJ0_007_B1_1 camps_k5/east_asian -> 4.0
+  [44] WE_IDN_PTJ0_007_B1_1 camps_k5/mekong -> 4.0
+  [45] WE_IDN_PTJ0_007_B1_1 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_007_B1_1 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [46] WE_KOR_PTJ0_024_B1_2 camps_k5/western -> 4.0
+  [47] WE_KOR_PTJ0_024_B1_2 camps_k5/sea -> 4.0
+  [48] WE_KOR_PTJ0_024_B1_2 camps_k5/east_asian -> 4.0
+  [49] WE_KOR_PTJ0_024_B1_2 camps_k5/mekong -> 4.0
+  [50] WE_KOR_PTJ0_024_B1_2 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_024_B1_2 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [51] WE_CHN_PTJ0_024_A2_0 camps_k5/western -> 5.0
+  [52] WE_CHN_PTJ0_024_A2_0 camps_k5/sea -> 5.0
+  [53] WE_CHN_PTJ0_024_A2_0 camps_k5/east_asian -> 5.0
+  [54] WE_CHN_PTJ0_024_A2_0 camps_k5/mekong -> 5.0
+  [55] WE_CHN_PTJ0_024_A2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_024_A2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [56] WE_IDN_PTJ0_002_B1_1 camps_k5/western -> 5.0
+  [57] WE_IDN_PTJ0_002_B1_1 camps_k5/sea -> 5.0
+  [58] WE_IDN_PTJ0_002_B1_1 camps_k5/east_asian -> 5.0
+  [59] WE_IDN_PTJ0_002_B1_1 camps_k5/mekong -> 5.0
+  [60] WE_IDN_PTJ0_002_B1_1 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_002_B1_1 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [61] WE_TWN_PTJ0_014_B1_2 camps_k5/western -> 4.0
+  [62] WE_TWN_PTJ0_014_B1_2 camps_k5/sea -> 5.0
+  [63] WE_TWN_PTJ0_014_B1_2 camps_k5/east_asian -> 5.0
+  [64] WE_TWN_PTJ0_014_B1_2 camps_k5/mekong -> 5.0
+  [65] WE_TWN_PTJ0_014_B1_2 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_014_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [66] WE_IDN_PTJ0_161_B2_0 camps_k5/western -> 5.0
+  [67] WE_IDN_PTJ0_161_B2_0 camps_k5/sea -> 6.0
+  [68] WE_IDN_PTJ0_161_B2_0 camps_k5/east_asian -> 5.0
+  [69] WE_IDN_PTJ0_161_B2_0 camps_k5/mekong -> 5.0
+  [70] WE_IDN_PTJ0_161_B2_0 camps_k5/neutral -> 6.0
+WE_IDN_PTJ0_161_B2_0 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [71] WE_THA_PTJ0_013_A2_0 camps_k5/western -> 3.0
+  [72] WE_THA_PTJ0_013_A2_0 camps_k5/sea -> 4.0
+  [73] WE_THA_PTJ0_013_A2_0 camps_k5/east_asian -> 4.0
+  [74] WE_THA_PTJ0_013_A2_0 camps_k5/mekong -> 4.0
+  [75] WE_THA_PTJ0_013_A2_0 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_013_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [76] WE_THA_PTJ0_024_B1_1 camps_k5/western -> 5.0
+  [77] WE_THA_PTJ0_024_B1_1 camps_k5/sea -> 5.0
+  [78] WE_THA_PTJ0_024_B1_1 camps_k5/east_asian -> 5.0
+  [79] WE_THA_PTJ0_024_B1_1 camps_k5/mekong -> 5.0
+  [80] WE_THA_PTJ0_024_B1_1 camps_k5/neutral -> 6.0
+WE_THA_PTJ0_024_B1_1 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [81] WE_ENS_PTJ0_006_XX_1 camps_k5/western -> 5.0
+  [82] WE_ENS_PTJ0_006_XX_1 camps_k5/sea -> 5.0
+  [83] WE_ENS_PTJ0_006_XX_1 camps_k5/east_asian -> 5.0
+  [84] WE_ENS_PTJ0_006_XX_1 camps_k5/mekong -> 6.0
+  [85] WE_ENS_PTJ0_006_XX_1 camps_k5/neutral -> 6.0
+WE_ENS_PTJ0_006_XX_1 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [86] WE_JPN_PTJ0_007_A2_0 camps_k5/western -> 5.0
+  [87] WE_JPN_PTJ0_007_A2_0 camps_k5/sea -> 5.0
+  [88] WE_JPN_PTJ0_007_A2_0 camps_k5/east_asian -> 5.0
+  [89] WE_JPN_PTJ0_007_A2_0 camps_k5/mekong -> 5.0
+  [90] WE_JPN_PTJ0_007_A2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_007_A2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [91] WE_JPN_PTJ0_001_B1_1 camps_k5/western -> 5.0
+  [92] WE_JPN_PTJ0_001_B1_1 camps_k5/sea -> 5.0
+  [93] WE_JPN_PTJ0_001_B1_1 camps_k5/east_asian -> 5.0
+  [94] WE_JPN_PTJ0_001_B1_1 camps_k5/mekong -> 5.0
+  [95] WE_JPN_PTJ0_001_B1_1 camps_k5/neutral -> 6.0
+WE_JPN_PTJ0_001_B1_1 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [96] WE_JPN_PTJ0_004_B2_0 camps_k5/western -> 5.0
+  [97] WE_JPN_PTJ0_004_B2_0 camps_k5/sea -> 5.0
+  [98] WE_JPN_PTJ0_004_B2_0 camps_k5/east_asian -> 5.0
+  [99] WE_JPN_PTJ0_004_B2_0 camps_k5/mekong -> 5.0
+  [100] WE_JPN_PTJ0_004_B2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_004_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [101] WE_TWN_PTJ0_003_B1_1 camps_k5/western -> 3.0
+  [102] WE_TWN_PTJ0_003_B1_1 camps_k5/sea -> 4.0
+  [103] WE_TWN_PTJ0_003_B1_1 camps_k5/east_asian -> 4.0
+  [104] WE_TWN_PTJ0_003_B1_1 camps_k5/mekong -> 4.0
+  [105] WE_TWN_PTJ0_003_B1_1 camps_k5/neutral -> 4.0
+WE_TWN_PTJ0_003_B1_1 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [106] WE_CHN_PTJ0_008_B1_2 camps_k5/western -> 4.0
+  [107] WE_CHN_PTJ0_008_B1_2 camps_k5/sea -> 5.0
+  [108] WE_CHN_PTJ0_008_B1_2 camps_k5/east_asian -> 5.0
+  [109] WE_CHN_PTJ0_008_B1_2 camps_k5/mekong -> 5.0
+  [110] WE_CHN_PTJ0_008_B1_2 camps_k5/neutral -> 4.0
+WE_CHN_PTJ0_008_B1_2 gpt-4o camps_k5: mean=4.60 BDS=0.49
+  [111] WE_KOR_PTJ0_011_B1_2 camps_k5/western -> 3.0
+  [112] WE_KOR_PTJ0_011_B1_2 camps_k5/sea -> 3.0
+  [113] WE_KOR_PTJ0_011_B1_2 camps_k5/east_asian -> 4.0
+  [114] WE_KOR_PTJ0_011_B1_2 camps_k5/mekong -> 4.0
+  [115] WE_KOR_PTJ0_011_B1_2 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_011_B1_2 gpt-4o camps_k5: mean=3.60 BDS=0.49
+  [116] WE_TWN_PTJ0_011_B1_2 camps_k5/western -> 5.0
+  [117] WE_TWN_PTJ0_011_B1_2 camps_k5/sea -> 5.0
+  [118] WE_TWN_PTJ0_011_B1_2 camps_k5/east_asian -> 5.0
+  [119] WE_TWN_PTJ0_011_B1_2 camps_k5/mekong -> 5.0
+  [120] WE_TWN_PTJ0_011_B1_2 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_011_B1_2 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [121] WE_TWN_PTJ0_006_A2_0 camps_k5/western -> 4.0
+  [122] WE_TWN_PTJ0_006_A2_0 camps_k5/sea -> 5.0
+  [123] WE_TWN_PTJ0_006_A2_0 camps_k5/east_asian -> 5.0
+  [124] WE_TWN_PTJ0_006_A2_0 camps_k5/mekong -> 4.0
+  [125] WE_TWN_PTJ0_006_A2_0 camps_k5/neutral -> 4.0
+WE_TWN_PTJ0_006_A2_0 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [126] WE_THA_PTJ0_021_B1_1 camps_k5/western -> 4.0
+  [127] WE_THA_PTJ0_021_B1_1 camps_k5/sea -> 4.0
+  [128] WE_THA_PTJ0_021_B1_1 camps_k5/east_asian -> 4.0
+  [129] WE_THA_PTJ0_021_B1_1 camps_k5/mekong -> 4.0
+  [130] WE_THA_PTJ0_021_B1_1 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_021_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [131] WE_KOR_PTJ0_026_A2_0 camps_k5/western -> 3.0
+  [132] WE_KOR_PTJ0_026_A2_0 camps_k5/sea -> 4.0
+  [133] WE_KOR_PTJ0_026_A2_0 camps_k5/east_asian -> 4.0
+  [134] WE_KOR_PTJ0_026_A2_0 camps_k5/mekong -> 4.0
+  [135] WE_KOR_PTJ0_026_A2_0 camps_k5/neutral -> 3.0
+WE_KOR_PTJ0_026_A2_0 gpt-4o camps_k5: mean=3.60 BDS=0.49
+  [136] WE_KOR_PTJ0_006_A2_0 camps_k5/western -> 4.0
+  [137] WE_KOR_PTJ0_006_A2_0 camps_k5/sea -> 4.0
+  [138] WE_KOR_PTJ0_006_A2_0 camps_k5/east_asian -> 4.0
+  [139] WE_KOR_PTJ0_006_A2_0 camps_k5/mekong -> 4.0
+  [140] WE_KOR_PTJ0_006_A2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_006_A2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [141] WE_JPN_PTJ0_027_A2_0 camps_k5/western -> 4.0
+  [142] WE_JPN_PTJ0_027_A2_0 camps_k5/sea -> 5.0
+  [143] WE_JPN_PTJ0_027_A2_0 camps_k5/east_asian -> 5.0
+  [144] WE_JPN_PTJ0_027_A2_0 camps_k5/mekong -> 5.0
+  [145] WE_JPN_PTJ0_027_A2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_027_A2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [146] WE_CHN_PTJ0_160_B2_0 camps_k5/western -> 5.0
+  [147] WE_CHN_PTJ0_160_B2_0 camps_k5/sea -> 5.0
+  [148] WE_CHN_PTJ0_160_B2_0 camps_k5/east_asian -> 5.0
+  [149] WE_CHN_PTJ0_160_B2_0 camps_k5/mekong -> 5.0
+  [150] WE_CHN_PTJ0_160_B2_0 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_160_B2_0 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [151] WE_TWN_PTJ0_007_B2_0 camps_k5/western -> 5.0
+  [152] WE_TWN_PTJ0_007_B2_0 camps_k5/sea -> 5.0
+  [153] WE_TWN_PTJ0_007_B2_0 camps_k5/east_asian -> 5.0
+  [154] WE_TWN_PTJ0_007_B2_0 camps_k5/mekong -> 5.0
+  [155] WE_TWN_PTJ0_007_B2_0 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_007_B2_0 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [156] WE_IDN_PTJ0_022_A2_0 camps_k5/western -> 3.0
+  [157] WE_IDN_PTJ0_022_A2_0 camps_k5/sea -> 4.0
+  [158] WE_IDN_PTJ0_022_A2_0 camps_k5/east_asian -> 4.0
+  [159] WE_IDN_PTJ0_022_A2_0 camps_k5/mekong -> 4.0
+  [160] WE_IDN_PTJ0_022_A2_0 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_022_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [161] WE_THA_PTJ0_022_B2_0 camps_k5/western -> 4.0
+  [162] WE_THA_PTJ0_022_B2_0 camps_k5/sea -> 5.0
+  [163] WE_THA_PTJ0_022_B2_0 camps_k5/east_asian -> 4.0
+  [164] WE_THA_PTJ0_022_B2_0 camps_k5/mekong -> 4.0
+  [165] WE_THA_PTJ0_022_B2_0 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_022_B2_0 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [166] WE_CHN_PTJ0_004_B1_2 camps_k5/western -> 4.0
+  [167] WE_CHN_PTJ0_004_B1_2 camps_k5/sea -> 5.0
+  [168] WE_CHN_PTJ0_004_B1_2 camps_k5/east_asian -> 5.0
+  [169] WE_CHN_PTJ0_004_B1_2 camps_k5/mekong -> 5.0
+  [170] WE_CHN_PTJ0_004_B1_2 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_004_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [171] WE_JPN_PTJ0_009_B2_0 camps_k5/western -> 5.0
+  [172] WE_JPN_PTJ0_009_B2_0 camps_k5/sea -> 5.0
+  [173] WE_JPN_PTJ0_009_B2_0 camps_k5/east_asian -> 6.0
+  [174] WE_JPN_PTJ0_009_B2_0 camps_k5/mekong -> 5.0
+  [175] WE_JPN_PTJ0_009_B2_0 camps_k5/neutral -> 6.0
+WE_JPN_PTJ0_009_B2_0 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [176] WE_KOR_PTJ0_004_B2_0 camps_k5/western -> 5.0
+  [177] WE_KOR_PTJ0_004_B2_0 camps_k5/sea -> 6.0
+  [178] WE_KOR_PTJ0_004_B2_0 camps_k5/east_asian -> 6.0
+  [179] WE_KOR_PTJ0_004_B2_0 camps_k5/mekong -> 6.0
+  [180] WE_KOR_PTJ0_004_B2_0 camps_k5/neutral -> 6.0
+WE_KOR_PTJ0_004_B2_0 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [181] WE_PHL_PTJ0_038_B2_0 camps_k5/western -> 4.0
+  [182] WE_PHL_PTJ0_038_B2_0 camps_k5/sea -> 5.0
+  [183] WE_PHL_PTJ0_038_B2_0 camps_k5/east_asian -> 5.0
+  [184] WE_PHL_PTJ0_038_B2_0 camps_k5/mekong -> 5.0
+  [185] WE_PHL_PTJ0_038_B2_0 camps_k5/neutral -> 5.0
+WE_PHL_PTJ0_038_B2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [186] WE_IDN_PTJ0_008_A2_0 camps_k5/western -> 4.0
+  [187] WE_IDN_PTJ0_008_A2_0 camps_k5/sea -> 5.0
+  [188] WE_IDN_PTJ0_008_A2_0 camps_k5/east_asian -> 5.0
+  [189] WE_IDN_PTJ0_008_A2_0 camps_k5/mekong -> 5.0
+  [190] WE_IDN_PTJ0_008_A2_0 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_008_A2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [191] WE_JPN_PTJ0_005_B2_0 camps_k5/western -> 4.0
+  [192] WE_JPN_PTJ0_005_B2_0 camps_k5/sea -> 4.0
+  [193] WE_JPN_PTJ0_005_B2_0 camps_k5/east_asian -> 4.0
+  [194] WE_JPN_PTJ0_005_B2_0 camps_k5/mekong -> 5.0
+  [195] WE_JPN_PTJ0_005_B2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_005_B2_0 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [196] WE_IDN_PTJ0_023_A2_0 camps_k5/western -> 4.0
+  [197] WE_IDN_PTJ0_023_A2_0 camps_k5/sea -> 4.0
+  [198] WE_IDN_PTJ0_023_A2_0 camps_k5/east_asian -> 4.0
+  [199] WE_IDN_PTJ0_023_A2_0 camps_k5/mekong -> 4.0
+  [200] WE_IDN_PTJ0_023_A2_0 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_023_A2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [201] WE_TWN_PTJ0_015_A2_0 camps_k5/western -> 5.0
+  [202] WE_TWN_PTJ0_015_A2_0 camps_k5/sea -> 5.0
+  [203] WE_TWN_PTJ0_015_A2_0 camps_k5/east_asian -> 5.0
+  [204] WE_TWN_PTJ0_015_A2_0 camps_k5/mekong -> 5.0
+  [205] WE_TWN_PTJ0_015_A2_0 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_015_A2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [206] WE_CHN_PTJ0_005_B1_2 camps_k5/western -> 5.0
+  [207] WE_CHN_PTJ0_005_B1_2 camps_k5/sea -> 6.0
+  [208] WE_CHN_PTJ0_005_B1_2 camps_k5/east_asian -> 5.0
+  [209] WE_CHN_PTJ0_005_B1_2 camps_k5/mekong -> 5.0
+  [210] WE_CHN_PTJ0_005_B1_2 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_005_B1_2 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [211] WE_JPN_PTJ0_002_B1_2 camps_k5/western -> 4.0
+  [212] WE_JPN_PTJ0_002_B1_2 camps_k5/sea -> 4.0
+  [213] WE_JPN_PTJ0_002_B1_2 camps_k5/east_asian -> 4.0
+  [214] WE_JPN_PTJ0_002_B1_2 camps_k5/mekong -> 4.0
+  [215] WE_JPN_PTJ0_002_B1_2 camps_k5/neutral -> 4.0
+WE_JPN_PTJ0_002_B1_2 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [216] WE_CHN_PTJ0_172_B2_0 camps_k5/western -> 5.0
+  [217] WE_CHN_PTJ0_172_B2_0 camps_k5/sea -> 5.0
+  [218] WE_CHN_PTJ0_172_B2_0 camps_k5/east_asian -> 5.0
+  [219] WE_CHN_PTJ0_172_B2_0 camps_k5/mekong -> 5.0
+  [220] WE_CHN_PTJ0_172_B2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_172_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [221] WE_IDN_PTJ0_015_B1_2 camps_k5/western -> 5.0
+  [222] WE_IDN_PTJ0_015_B1_2 camps_k5/sea -> 5.0
+  [223] WE_IDN_PTJ0_015_B1_2 camps_k5/east_asian -> 5.0
+  [224] WE_IDN_PTJ0_015_B1_2 camps_k5/mekong -> 5.0
+  [225] WE_IDN_PTJ0_015_B1_2 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_015_B1_2 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [226] WE_TWN_PTJ0_057_B2_0 camps_k5/western -> 5.0
+  [227] WE_TWN_PTJ0_057_B2_0 camps_k5/sea -> 6.0
+  [228] WE_TWN_PTJ0_057_B2_0 camps_k5/east_asian -> 5.0
+  [229] WE_TWN_PTJ0_057_B2_0 camps_k5/mekong -> 5.0
+  [230] WE_TWN_PTJ0_057_B2_0 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_057_B2_0 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [231] WE_CHN_PTJ0_010_B1_1 camps_k5/western -> 5.0
+  [232] WE_CHN_PTJ0_010_B1_1 camps_k5/sea -> 6.0
+  [233] WE_CHN_PTJ0_010_B1_1 camps_k5/east_asian -> 6.0
+  [234] WE_CHN_PTJ0_010_B1_1 camps_k5/mekong -> 6.0
+  [235] WE_CHN_PTJ0_010_B1_1 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_010_B1_1 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [236] WE_PHL_PTJ0_064_B2_0 camps_k5/western -> 5.0
+  [237] WE_PHL_PTJ0_064_B2_0 camps_k5/sea -> 6.0
+  [238] WE_PHL_PTJ0_064_B2_0 camps_k5/east_asian -> 5.0
+  [239] WE_PHL_PTJ0_064_B2_0 camps_k5/mekong -> 5.0
+  [240] WE_PHL_PTJ0_064_B2_0 camps_k5/neutral -> 6.0
+WE_PHL_PTJ0_064_B2_0 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [241] WE_IDN_PTJ0_005_B1_1 camps_k5/western -> 4.0
+  [242] WE_IDN_PTJ0_005_B1_1 camps_k5/sea -> 4.0
+  [243] WE_IDN_PTJ0_005_B1_1 camps_k5/east_asian -> 4.0
+  [244] WE_IDN_PTJ0_005_B1_1 camps_k5/mekong -> 4.0
+  [245] WE_IDN_PTJ0_005_B1_1 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_005_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [246] WE_JPN_PTJ0_012_B2_0 camps_k5/western -> 5.0
+  [247] WE_JPN_PTJ0_012_B2_0 camps_k5/sea -> 5.0
+  [248] WE_JPN_PTJ0_012_B2_0 camps_k5/east_asian -> 5.0
+  [249] WE_JPN_PTJ0_012_B2_0 camps_k5/mekong -> 5.0
+  [250] WE_JPN_PTJ0_012_B2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_012_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [251] WE_TWN_PTJ0_016_A2_0 camps_k5/western -> 3.0
+  [252] WE_TWN_PTJ0_016_A2_0 camps_k5/sea -> 3.0
+  [253] WE_TWN_PTJ0_016_A2_0 camps_k5/east_asian -> 3.0
+  [254] WE_TWN_PTJ0_016_A2_0 camps_k5/mekong -> 3.0
+  [255] WE_TWN_PTJ0_016_A2_0 camps_k5/neutral -> 3.0
+WE_TWN_PTJ0_016_A2_0 gpt-4o camps_k5: mean=3.00 BDS=0.00
+  [256] WE_PAK_PTJ0_114_B2_0 camps_k5/western -> 3.0
+  [257] WE_PAK_PTJ0_114_B2_0 camps_k5/sea -> 4.0
+  [258] WE_PAK_PTJ0_114_B2_0 camps_k5/east_asian -> 4.0
+  [259] WE_PAK_PTJ0_114_B2_0 camps_k5/mekong -> 4.0
+  [260] WE_PAK_PTJ0_114_B2_0 camps_k5/neutral -> 4.0
+WE_PAK_PTJ0_114_B2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [261] WE_JPN_PTJ0_015_B1_2 camps_k5/western -> 6.0
+  [262] WE_JPN_PTJ0_015_B1_2 camps_k5/sea -> 6.0
+  [263] WE_JPN_PTJ0_015_B1_2 camps_k5/east_asian -> 6.0
+  [264] WE_JPN_PTJ0_015_B1_2 camps_k5/mekong -> 6.0
+  [265] WE_JPN_PTJ0_015_B1_2 camps_k5/neutral -> 7.0
+WE_JPN_PTJ0_015_B1_2 gpt-4o camps_k5: mean=6.20 BDS=0.40
+  [266] WE_CHN_PTJ0_007_B1_1 camps_k5/western -> 5.0
+  [267] WE_CHN_PTJ0_007_B1_1 camps_k5/sea -> 6.0
+  [268] WE_CHN_PTJ0_007_B1_1 camps_k5/east_asian -> 5.0
+  [269] WE_CHN_PTJ0_007_B1_1 camps_k5/mekong -> 5.0
+  [270] WE_CHN_PTJ0_007_B1_1 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_007_B1_1 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [271] WE_KOR_PTJ0_003_B1_1 camps_k5/western -> 3.0
+  [272] WE_KOR_PTJ0_003_B1_1 camps_k5/sea -> 3.0
+  [273] WE_KOR_PTJ0_003_B1_1 camps_k5/east_asian -> 3.0
+  [274] WE_KOR_PTJ0_003_B1_1 camps_k5/mekong -> 3.0
+  [275] WE_KOR_PTJ0_003_B1_1 camps_k5/neutral -> 3.0
+WE_KOR_PTJ0_003_B1_1 gpt-4o camps_k5: mean=3.00 BDS=0.00
+  [276] WE_PHL_PTJ0_041_B2_0 camps_k5/western -> 5.0
+  [277] WE_PHL_PTJ0_041_B2_0 camps_k5/sea -> 6.0
+  [278] WE_PHL_PTJ0_041_B2_0 camps_k5/east_asian -> 5.0
+  [279] WE_PHL_PTJ0_041_B2_0 camps_k5/mekong -> 5.0
+  [280] WE_PHL_PTJ0_041_B2_0 camps_k5/neutral -> 6.0
+WE_PHL_PTJ0_041_B2_0 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [281] WE_IDN_PTJ0_027_B1_2 camps_k5/western -> 4.0
+  [282] WE_IDN_PTJ0_027_B1_2 camps_k5/sea -> 4.0
+  [283] WE_IDN_PTJ0_027_B1_2 camps_k5/east_asian -> 4.0
+  [284] WE_IDN_PTJ0_027_B1_2 camps_k5/mekong -> 4.0
+  [285] WE_IDN_PTJ0_027_B1_2 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_027_B1_2 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [286] WE_KOR_PTJ0_009_B1_1 camps_k5/western -> 4.0
+  [287] WE_KOR_PTJ0_009_B1_1 camps_k5/sea -> 5.0
+  [288] WE_KOR_PTJ0_009_B1_1 camps_k5/east_asian -> 5.0
+  [289] WE_KOR_PTJ0_009_B1_1 camps_k5/mekong -> 5.0
+  [290] WE_KOR_PTJ0_009_B1_1 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_009_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [291] WE_TWN_PTJ0_048_B2_0 camps_k5/western -> 4.0
+  [292] WE_TWN_PTJ0_048_B2_0 camps_k5/sea -> 5.0
+  [293] WE_TWN_PTJ0_048_B2_0 camps_k5/east_asian -> 5.0
+  [294] WE_TWN_PTJ0_048_B2_0 camps_k5/mekong -> 5.0
+  [295] WE_TWN_PTJ0_048_B2_0 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_048_B2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [296] WE_CHN_PTJ0_022_A2_0 camps_k5/western -> 4.0
+  [297] WE_CHN_PTJ0_022_A2_0 camps_k5/sea -> 5.0
+  [298] WE_CHN_PTJ0_022_A2_0 camps_k5/east_asian -> 5.0
+  [299] WE_CHN_PTJ0_022_A2_0 camps_k5/mekong -> 5.0
+  [300] WE_CHN_PTJ0_022_A2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_022_A2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [301] WE_JPN_PTJ0_003_A2_0 camps_k5/western -> 4.0
+  [302] WE_JPN_PTJ0_003_A2_0 camps_k5/sea -> 4.0
+  [303] WE_JPN_PTJ0_003_A2_0 camps_k5/east_asian -> 4.0
+  [304] WE_JPN_PTJ0_003_A2_0 camps_k5/mekong -> 4.0
+  [305] WE_JPN_PTJ0_003_A2_0 camps_k5/neutral -> 4.0
+WE_JPN_PTJ0_003_A2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [306] WE_THA_PTJ0_018_B1_1 camps_k5/western -> 4.0
+  [307] WE_THA_PTJ0_018_B1_1 camps_k5/sea -> 5.0
+  [308] WE_THA_PTJ0_018_B1_1 camps_k5/east_asian -> 5.0
+  [309] WE_THA_PTJ0_018_B1_1 camps_k5/mekong -> 5.0
+  [310] WE_THA_PTJ0_018_B1_1 camps_k5/neutral -> 5.0
+WE_THA_PTJ0_018_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [311] WE_TWN_PTJ0_012_B2_0 camps_k5/western -> 5.0
+  [312] WE_TWN_PTJ0_012_B2_0 camps_k5/sea -> 5.0
+  [313] WE_TWN_PTJ0_012_B2_0 camps_k5/east_asian -> 5.0
+  [314] WE_TWN_PTJ0_012_B2_0 camps_k5/mekong -> 5.0
+  [315] WE_TWN_PTJ0_012_B2_0 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_012_B2_0 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [316] WE_KOR_PTJ0_008_B1_1 camps_k5/western -> 5.0
+  [317] WE_KOR_PTJ0_008_B1_1 camps_k5/sea -> 5.0
+  [318] WE_KOR_PTJ0_008_B1_1 camps_k5/east_asian -> 6.0
+  [319] WE_KOR_PTJ0_008_B1_1 camps_k5/mekong -> 5.0
+  [320] WE_KOR_PTJ0_008_B1_1 camps_k5/neutral -> 6.0
+WE_KOR_PTJ0_008_B1_1 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [321] WE_IDN_PTJ0_021_B1_2 camps_k5/western -> 4.0
+  [322] WE_IDN_PTJ0_021_B1_2 camps_k5/sea -> 5.0
+  [323] WE_IDN_PTJ0_021_B1_2 camps_k5/east_asian -> 4.0
+  [324] WE_IDN_PTJ0_021_B1_2 camps_k5/mekong -> 4.0
+  [325] WE_IDN_PTJ0_021_B1_2 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_021_B1_2 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [326] WE_ENS_PTJ0_002_XX_1 camps_k5/western -> 3.0
+  [327] WE_ENS_PTJ0_002_XX_1 camps_k5/sea -> 4.0
+  [328] WE_ENS_PTJ0_002_XX_1 camps_k5/east_asian -> 4.0
+  [329] WE_ENS_PTJ0_002_XX_1 camps_k5/mekong -> 4.0
+  [330] WE_ENS_PTJ0_002_XX_1 camps_k5/neutral -> 5.0
+WE_ENS_PTJ0_002_XX_1 gpt-4o camps_k5: mean=4.00 BDS=0.63
+  [331] WE_JPN_PTJ0_014_B1_1 camps_k5/western -> 5.0
+  [332] WE_JPN_PTJ0_014_B1_1 camps_k5/sea -> 5.0
+  [333] WE_JPN_PTJ0_014_B1_1 camps_k5/east_asian -> 5.0
+  [334] WE_JPN_PTJ0_014_B1_1 camps_k5/mekong -> 5.0
+  [335] WE_JPN_PTJ0_014_B1_1 camps_k5/neutral -> 6.0
+WE_JPN_PTJ0_014_B1_1 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [336] WE_KOR_PTJ0_013_B2_0 camps_k5/western -> 4.0
+  [337] WE_KOR_PTJ0_013_B2_0 camps_k5/sea -> 4.0
+  [338] WE_KOR_PTJ0_013_B2_0 camps_k5/east_asian -> 4.0
+  [339] WE_KOR_PTJ0_013_B2_0 camps_k5/mekong -> 4.0
+  [340] WE_KOR_PTJ0_013_B2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_013_B2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [341] WE_IDN_PTJ0_025_A2_0 camps_k5/western -> 4.0
+  [342] WE_IDN_PTJ0_025_A2_0 camps_k5/sea -> 5.0
+  [343] WE_IDN_PTJ0_025_A2_0 camps_k5/east_asian -> 5.0
+  [344] WE_IDN_PTJ0_025_A2_0 camps_k5/mekong -> 5.0
+  [345] WE_IDN_PTJ0_025_A2_0 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_025_A2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [346] WE_IDN_PTJ0_178_B2_0 camps_k5/western -> 5.0
+  [347] WE_IDN_PTJ0_178_B2_0 camps_k5/sea -> 6.0
+  [348] WE_IDN_PTJ0_178_B2_0 camps_k5/east_asian -> 6.0
+  [349] WE_IDN_PTJ0_178_B2_0 camps_k5/mekong -> 6.0
+  [350] WE_IDN_PTJ0_178_B2_0 camps_k5/neutral -> 6.0
+WE_IDN_PTJ0_178_B2_0 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [351] WE_JPN_PTJ0_028_A2_0 camps_k5/western -> 4.0
+  [352] WE_JPN_PTJ0_028_A2_0 camps_k5/sea -> 5.0
+  [353] WE_JPN_PTJ0_028_A2_0 camps_k5/east_asian -> 4.0
+  [354] WE_JPN_PTJ0_028_A2_0 camps_k5/mekong -> 5.0
+  [355] WE_JPN_PTJ0_028_A2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_028_A2_0 gpt-4o camps_k5: mean=4.60 BDS=0.49
+  [356] WE_JPN_PTJ0_018_B1_1 camps_k5/western -> 4.0
+  [357] WE_JPN_PTJ0_018_B1_1 camps_k5/sea -> 5.0
+  [358] WE_JPN_PTJ0_018_B1_1 camps_k5/east_asian -> 5.0
+  [359] WE_JPN_PTJ0_018_B1_1 camps_k5/mekong -> 5.0
+  [360] WE_JPN_PTJ0_018_B1_1 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_018_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [361] WE_KOR_PTJ0_014_B1_1 camps_k5/western -> 4.0
+  [362] WE_KOR_PTJ0_014_B1_1 camps_k5/sea -> 5.0
+  [363] WE_KOR_PTJ0_014_B1_1 camps_k5/east_asian -> 5.0
+  [364] WE_KOR_PTJ0_014_B1_1 camps_k5/mekong -> 5.0
+  [365] WE_KOR_PTJ0_014_B1_1 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_014_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [366] WE_THA_PTJ0_012_A2_0 camps_k5/western -> 3.0
+  [367] WE_THA_PTJ0_012_A2_0 camps_k5/sea -> 3.0
+  [368] WE_THA_PTJ0_012_A2_0 camps_k5/east_asian -> 3.0
+  [369] WE_THA_PTJ0_012_A2_0 camps_k5/mekong -> 4.0
+  [370] WE_THA_PTJ0_012_A2_0 camps_k5/neutral -> 3.0
+WE_THA_PTJ0_012_A2_0 gpt-4o camps_k5: mean=3.20 BDS=0.40
+  [371] WE_HKG_PTJ0_015_B2_0 camps_k5/western -> 5.0
+  [372] WE_HKG_PTJ0_015_B2_0 camps_k5/sea -> 5.0
+  [373] WE_HKG_PTJ0_015_B2_0 camps_k5/east_asian -> 5.0
+  [374] WE_HKG_PTJ0_015_B2_0 camps_k5/mekong -> 5.0
+  [375] WE_HKG_PTJ0_015_B2_0 camps_k5/neutral -> 5.0
+WE_HKG_PTJ0_015_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [376] WE_JPN_PTJ0_016_B1_2 camps_k5/western -> 4.0
+  [377] WE_JPN_PTJ0_016_B1_2 camps_k5/sea -> 5.0
+  [378] WE_JPN_PTJ0_016_B1_2 camps_k5/east_asian -> 5.0
+  [379] WE_JPN_PTJ0_016_B1_2 camps_k5/mekong -> 5.0
+  [380] WE_JPN_PTJ0_016_B1_2 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_016_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [381] WE_IDN_PTJ0_017_A2_0 camps_k5/western -> 3.0
+  [382] WE_IDN_PTJ0_017_A2_0 camps_k5/sea -> 4.0
+  [383] WE_IDN_PTJ0_017_A2_0 camps_k5/east_asian -> 4.0
+  [384] WE_IDN_PTJ0_017_A2_0 camps_k5/mekong -> 4.0
+  [385] WE_IDN_PTJ0_017_A2_0 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_017_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [386] WE_THA_PTJ0_006_B1_2 camps_k5/western -> 4.0
+  [387] WE_THA_PTJ0_006_B1_2 camps_k5/sea -> 5.0
+  [388] WE_THA_PTJ0_006_B1_2 camps_k5/east_asian -> 4.0
+  [389] WE_THA_PTJ0_006_B1_2 camps_k5/mekong -> 5.0
+  [390] WE_THA_PTJ0_006_B1_2 camps_k5/neutral -> 5.0
+WE_THA_PTJ0_006_B1_2 gpt-4o camps_k5: mean=4.60 BDS=0.49
+  [391] WE_HKG_PTJ0_007_B2_0 camps_k5/western -> 5.0
+  [392] WE_HKG_PTJ0_007_B2_0 camps_k5/sea -> 5.0
+  [393] WE_HKG_PTJ0_007_B2_0 camps_k5/east_asian -> 5.0
+  [394] WE_HKG_PTJ0_007_B2_0 camps_k5/mekong -> 5.0
+  [395] WE_HKG_PTJ0_007_B2_0 camps_k5/neutral -> 5.0
+WE_HKG_PTJ0_007_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [396] WE_CHN_PTJ0_038_A2_0 camps_k5/western -> 4.0
+  [397] WE_CHN_PTJ0_038_A2_0 camps_k5/sea -> 4.0
+  [398] WE_CHN_PTJ0_038_A2_0 camps_k5/east_asian -> 5.0
+  [399] WE_CHN_PTJ0_038_A2_0 camps_k5/mekong -> 4.0
+  [400] WE_CHN_PTJ0_038_A2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_038_A2_0 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [401] WE_JPN_PTJ0_019_B1_2 camps_k5/western -> 4.0
+  [402] WE_JPN_PTJ0_019_B1_2 camps_k5/sea -> 5.0
+  [403] WE_JPN_PTJ0_019_B1_2 camps_k5/east_asian -> 5.0
+  [404] WE_JPN_PTJ0_019_B1_2 camps_k5/mekong -> 5.0
+  [405] WE_JPN_PTJ0_019_B1_2 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_019_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [406] WE_THA_PTJ0_002_B1_2 camps_k5/western -> 3.0
+  [407] WE_THA_PTJ0_002_B1_2 camps_k5/sea -> 4.0
+  [408] WE_THA_PTJ0_002_B1_2 camps_k5/east_asian -> 4.0
+  [409] WE_THA_PTJ0_002_B1_2 camps_k5/mekong -> 4.0
+  [410] WE_THA_PTJ0_002_B1_2 camps_k5/neutral -> 3.0
+WE_THA_PTJ0_002_B1_2 gpt-4o camps_k5: mean=3.60 BDS=0.49
+  [411] WE_THA_PTJ0_260_B2_0 camps_k5/western -> 4.0
+  [412] WE_THA_PTJ0_260_B2_0 camps_k5/sea -> 5.0
+  [413] WE_THA_PTJ0_260_B2_0 camps_k5/east_asian -> 5.0
+  [414] WE_THA_PTJ0_260_B2_0 camps_k5/mekong -> 5.0
+  [415] WE_THA_PTJ0_260_B2_0 camps_k5/neutral -> 5.0
+WE_THA_PTJ0_260_B2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [416] WE_CHN_PTJ0_001_B1_1 camps_k5/western -> 4.0
+  [417] WE_CHN_PTJ0_001_B1_1 camps_k5/sea -> 5.0
+  [418] WE_CHN_PTJ0_001_B1_1 camps_k5/east_asian -> 5.0
+  [419] WE_CHN_PTJ0_001_B1_1 camps_k5/mekong -> 5.0
+  [420] WE_CHN_PTJ0_001_B1_1 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_001_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [421] WE_KOR_PTJ0_030_B1_2 camps_k5/western -> 5.0
+  [422] WE_KOR_PTJ0_030_B1_2 camps_k5/sea -> 5.0
+  [423] WE_KOR_PTJ0_030_B1_2 camps_k5/east_asian -> 5.0
+  [424] WE_KOR_PTJ0_030_B1_2 camps_k5/mekong -> 5.0
+  [425] WE_KOR_PTJ0_030_B1_2 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_030_B1_2 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [426] WE_IDN_PTJ0_009_B1_2 camps_k5/western -> 4.0
+  [427] WE_IDN_PTJ0_009_B1_2 camps_k5/sea -> 5.0
+  [428] WE_IDN_PTJ0_009_B1_2 camps_k5/east_asian -> 5.0
+  [429] WE_IDN_PTJ0_009_B1_2 camps_k5/mekong -> 5.0
+  [430] WE_IDN_PTJ0_009_B1_2 camps_k5/neutral -> 5.0
+WE_IDN_PTJ0_009_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [431] WE_CHN_PTJ0_163_B2_0 camps_k5/western -> 4.0
+  [432] WE_CHN_PTJ0_163_B2_0 camps_k5/sea -> 5.0
+  [433] WE_CHN_PTJ0_163_B2_0 camps_k5/east_asian -> 5.0
+  [434] WE_CHN_PTJ0_163_B2_0 camps_k5/mekong -> 5.0
+  [435] WE_CHN_PTJ0_163_B2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_163_B2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [436] WE_THA_PTJ0_003_A2_0 camps_k5/western -> 3.0
+  [437] WE_THA_PTJ0_003_A2_0 camps_k5/sea -> 4.0
+  [438] WE_THA_PTJ0_003_A2_0 camps_k5/east_asian -> 4.0
+  [439] WE_THA_PTJ0_003_A2_0 camps_k5/mekong -> 4.0
+  [440] WE_THA_PTJ0_003_A2_0 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_003_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [441] WE_PHL_PTJ0_081_B2_0 camps_k5/western -> 5.0
+  [442] WE_PHL_PTJ0_081_B2_0 camps_k5/sea -> 6.0
+  [443] WE_PHL_PTJ0_081_B2_0 camps_k5/east_asian -> 6.0
+  [444] WE_PHL_PTJ0_081_B2_0 camps_k5/mekong -> 6.0
+  [445] WE_PHL_PTJ0_081_B2_0 camps_k5/neutral -> 6.0
+WE_PHL_PTJ0_081_B2_0 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [446] WE_THA_PTJ0_005_B1_2 camps_k5/western -> 4.0
+  [447] WE_THA_PTJ0_005_B1_2 camps_k5/sea -> 4.0
+  [448] WE_THA_PTJ0_005_B1_2 camps_k5/east_asian -> 4.0
+  [449] WE_THA_PTJ0_005_B1_2 camps_k5/mekong -> 4.0
+  [450] WE_THA_PTJ0_005_B1_2 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_005_B1_2 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [451] WE_TWN_PTJ0_004_B1_1 camps_k5/western -> 5.0
+  [452] WE_TWN_PTJ0_004_B1_1 camps_k5/sea -> 5.0
+  [453] WE_TWN_PTJ0_004_B1_1 camps_k5/east_asian -> 5.0
+  [454] WE_TWN_PTJ0_004_B1_1 camps_k5/mekong -> 5.0
+  [455] WE_TWN_PTJ0_004_B1_1 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_004_B1_1 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [456] WE_TWN_PTJ0_001_B1_2 camps_k5/western -> 5.0
+  [457] WE_TWN_PTJ0_001_B1_2 camps_k5/sea -> 6.0
+  [458] WE_TWN_PTJ0_001_B1_2 camps_k5/east_asian -> 6.0
+  [459] WE_TWN_PTJ0_001_B1_2 camps_k5/mekong -> 5.0
+  [460] WE_TWN_PTJ0_001_B1_2 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_001_B1_2 gpt-4o camps_k5: mean=5.60 BDS=0.49
+  [461] WE_SIN_PTJ0_005_B2_0 camps_k5/western -> 7.0
+  [462] WE_SIN_PTJ0_005_B2_0 camps_k5/sea -> 7.0
+  [463] WE_SIN_PTJ0_005_B2_0 camps_k5/east_asian -> 7.0
+  [464] WE_SIN_PTJ0_005_B2_0 camps_k5/mekong -> 7.0
+  [465] WE_SIN_PTJ0_005_B2_0 camps_k5/neutral -> 8.0
+WE_SIN_PTJ0_005_B2_0 gpt-4o camps_k5: mean=7.20 BDS=0.40
+  [466] WE_TWN_PTJ0_008_B1_1 camps_k5/western -> 4.0
+  [467] WE_TWN_PTJ0_008_B1_1 camps_k5/sea -> 4.0
+  [468] WE_TWN_PTJ0_008_B1_1 camps_k5/east_asian -> 4.0
+  [469] WE_TWN_PTJ0_008_B1_1 camps_k5/mekong -> 4.0
+  [470] WE_TWN_PTJ0_008_B1_1 camps_k5/neutral -> 4.0
+WE_TWN_PTJ0_008_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [471] WE_PAK_PTJ0_150_B2_0 camps_k5/western -> 4.0
+  [472] WE_PAK_PTJ0_150_B2_0 camps_k5/sea -> 4.0
+  [473] WE_PAK_PTJ0_150_B2_0 camps_k5/east_asian -> 4.0
+  [474] WE_PAK_PTJ0_150_B2_0 camps_k5/mekong -> 4.0
+  [475] WE_PAK_PTJ0_150_B2_0 camps_k5/neutral -> 4.0
+WE_PAK_PTJ0_150_B2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [476] WE_THA_PTJ0_017_B1_1 camps_k5/western -> 3.0
+  [477] WE_THA_PTJ0_017_B1_1 camps_k5/sea -> 4.0
+  [478] WE_THA_PTJ0_017_B1_1 camps_k5/east_asian -> 4.0
+  [479] WE_THA_PTJ0_017_B1_1 camps_k5/mekong -> 4.0
+  [480] WE_THA_PTJ0_017_B1_1 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_017_B1_1 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [481] WE_PAK_PTJ0_005_B1_2 camps_k5/western -> 3.0
+  [482] WE_PAK_PTJ0_005_B1_2 camps_k5/sea -> 4.0
+  [483] WE_PAK_PTJ0_005_B1_2 camps_k5/east_asian -> 4.0
+  [484] WE_PAK_PTJ0_005_B1_2 camps_k5/mekong -> 4.0
+  [485] WE_PAK_PTJ0_005_B1_2 camps_k5/neutral -> 4.0
+WE_PAK_PTJ0_005_B1_2 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [486] WE_TWN_PTJ0_019_B1_2 camps_k5/western -> 4.0
+  [487] WE_TWN_PTJ0_019_B1_2 camps_k5/sea -> 5.0
+  [488] WE_TWN_PTJ0_019_B1_2 camps_k5/east_asian -> 5.0
+  [489] WE_TWN_PTJ0_019_B1_2 camps_k5/mekong -> 5.0
+  [490] WE_TWN_PTJ0_019_B1_2 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_019_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [491] WE_SIN_PTJ0_014_B2_0 camps_k5/western -> 6.0
+  [492] WE_SIN_PTJ0_014_B2_0 camps_k5/sea -> 7.0
+  [493] WE_SIN_PTJ0_014_B2_0 camps_k5/east_asian -> 6.0
+  [494] WE_SIN_PTJ0_014_B2_0 camps_k5/mekong -> 6.0
+  [495] WE_SIN_PTJ0_014_B2_0 camps_k5/neutral -> 7.0
+WE_SIN_PTJ0_014_B2_0 gpt-4o camps_k5: mean=6.40 BDS=0.49
+  [496] WE_TWN_PTJ0_013_A2_0 camps_k5/western -> 3.0
+  [497] WE_TWN_PTJ0_013_A2_0 camps_k5/sea -> 4.0
+  [498] WE_TWN_PTJ0_013_A2_0 camps_k5/east_asian -> 4.0
+  [499] WE_TWN_PTJ0_013_A2_0 camps_k5/mekong -> 4.0
+  [500] WE_TWN_PTJ0_013_A2_0 camps_k5/neutral -> 4.0
+WE_TWN_PTJ0_013_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [501] WE_HKG_PTJ0_023_B2_0 camps_k5/western -> 5.0
+  [502] WE_HKG_PTJ0_023_B2_0 camps_k5/sea -> 5.0
+  [503] WE_HKG_PTJ0_023_B2_0 camps_k5/east_asian -> 5.0
+  [504] WE_HKG_PTJ0_023_B2_0 camps_k5/mekong -> 5.0
+  [505] WE_HKG_PTJ0_023_B2_0 camps_k5/neutral -> 5.0
+WE_HKG_PTJ0_023_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [506] WE_KOR_PTJ0_010_B1_2 camps_k5/western -> 3.0
+  [507] WE_KOR_PTJ0_010_B1_2 camps_k5/sea -> 4.0
+  [508] WE_KOR_PTJ0_010_B1_2 camps_k5/east_asian -> 4.0
+  [509] WE_KOR_PTJ0_010_B1_2 camps_k5/mekong -> 4.0
+  [510] WE_KOR_PTJ0_010_B1_2 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_010_B1_2 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [511] WE_CHN_PTJ0_028_B2_0 camps_k5/western -> 5.0
+  [512] WE_CHN_PTJ0_028_B2_0 camps_k5/sea -> 5.0
+  [513] WE_CHN_PTJ0_028_B2_0 camps_k5/east_asian -> 5.0
+  [514] WE_CHN_PTJ0_028_B2_0 camps_k5/mekong -> 5.0
+  [515] WE_CHN_PTJ0_028_B2_0 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_028_B2_0 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [516] WE_KOR_PTJ0_056_B2_0 camps_k5/western -> 4.0
+  [517] WE_KOR_PTJ0_056_B2_0 camps_k5/sea -> 4.0
+  [518] WE_KOR_PTJ0_056_B2_0 camps_k5/east_asian -> 4.0
+  [519] WE_KOR_PTJ0_056_B2_0 camps_k5/mekong -> 4.0
+  [520] WE_KOR_PTJ0_056_B2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_056_B2_0 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [521] WE_IDN_PTJ0_004_B1_1 camps_k5/western -> 4.0
+  [522] WE_IDN_PTJ0_004_B1_1 camps_k5/sea -> 4.0
+  [523] WE_IDN_PTJ0_004_B1_1 camps_k5/east_asian -> 4.0
+  [524] WE_IDN_PTJ0_004_B1_1 camps_k5/mekong -> 4.0
+  [525] WE_IDN_PTJ0_004_B1_1 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_004_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [526] WE_PAK_PTJ0_144_B2_0 camps_k5/western -> 3.0
+  [527] WE_PAK_PTJ0_144_B2_0 camps_k5/sea -> 4.0
+  [528] WE_PAK_PTJ0_144_B2_0 camps_k5/east_asian -> 4.0
+  [529] WE_PAK_PTJ0_144_B2_0 camps_k5/mekong -> 4.0
+  [530] WE_PAK_PTJ0_144_B2_0 camps_k5/neutral -> 4.0
+WE_PAK_PTJ0_144_B2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [531] WE_THA_PTJ0_010_A2_0 camps_k5/western -> 4.0
+  [532] WE_THA_PTJ0_010_A2_0 camps_k5/sea -> 5.0
+  [533] WE_THA_PTJ0_010_A2_0 camps_k5/east_asian -> 4.0
+  [534] WE_THA_PTJ0_010_A2_0 camps_k5/mekong -> 4.0
+  [535] WE_THA_PTJ0_010_A2_0 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_010_A2_0 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [536] WE_TWN_PTJ0_010_A2_0 camps_k5/western -> 4.0
+  [537] WE_TWN_PTJ0_010_A2_0 camps_k5/sea -> 4.0
+  [538] WE_TWN_PTJ0_010_A2_0 camps_k5/east_asian -> 5.0
+  [539] WE_TWN_PTJ0_010_A2_0 camps_k5/mekong -> 5.0
+  [540] WE_TWN_PTJ0_010_A2_0 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_010_A2_0 gpt-4o camps_k5: mean=4.60 BDS=0.49
+  [541] WE_HKG_PTJ0_008_B2_0 camps_k5/western -> 7.0
+  [542] WE_HKG_PTJ0_008_B2_0 camps_k5/sea -> 7.0
+  [543] WE_HKG_PTJ0_008_B2_0 camps_k5/east_asian -> 6.0
+  [544] WE_HKG_PTJ0_008_B2_0 camps_k5/mekong -> 6.0
+  [545] WE_HKG_PTJ0_008_B2_0 camps_k5/neutral -> 8.0
+WE_HKG_PTJ0_008_B2_0 gpt-4o camps_k5: mean=6.80 BDS=0.75
+  [546] WE_KOR_PTJ0_012_B1_2 camps_k5/western -> 4.0
+  [547] WE_KOR_PTJ0_012_B1_2 camps_k5/sea -> 4.0
+  [548] WE_KOR_PTJ0_012_B1_2 camps_k5/east_asian -> 4.0
+  [549] WE_KOR_PTJ0_012_B1_2 camps_k5/mekong -> 4.0
+  [550] WE_KOR_PTJ0_012_B1_2 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_012_B1_2 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [551] WE_CHN_PTJ0_006_B1_2 camps_k5/western -> 4.0
+  [552] WE_CHN_PTJ0_006_B1_2 camps_k5/sea -> 5.0
+  [553] WE_CHN_PTJ0_006_B1_2 camps_k5/east_asian -> 5.0
+  [554] WE_CHN_PTJ0_006_B1_2 camps_k5/mekong -> 5.0
+  [555] WE_CHN_PTJ0_006_B1_2 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_006_B1_2 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [556] WE_IDN_PTJ0_001_B1_1 camps_k5/western -> 4.0
+  [557] WE_IDN_PTJ0_001_B1_1 camps_k5/sea -> 4.0
+  [558] WE_IDN_PTJ0_001_B1_1 camps_k5/east_asian -> 4.0
+  [559] WE_IDN_PTJ0_001_B1_1 camps_k5/mekong -> 4.0
+  [560] WE_IDN_PTJ0_001_B1_1 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_001_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [561] WE_THA_PTJ0_001_B1_2 camps_k5/western -> 4.0
+  [562] WE_THA_PTJ0_001_B1_2 camps_k5/sea -> 4.0
+  [563] WE_THA_PTJ0_001_B1_2 camps_k5/east_asian -> 4.0
+  [564] WE_THA_PTJ0_001_B1_2 camps_k5/mekong -> 4.0
+  [565] WE_THA_PTJ0_001_B1_2 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_001_B1_2 gpt-4o camps_k5: mean=4.00 BDS=0.00
+  [566] WE_THA_PTJ0_008_A2_0 camps_k5/western -> 4.0
+  [567] WE_THA_PTJ0_008_A2_0 camps_k5/sea -> 4.0
+  [568] WE_THA_PTJ0_008_A2_0 camps_k5/east_asian -> 4.0
+  [569] WE_THA_PTJ0_008_A2_0 camps_k5/mekong -> 5.0
+  [570] WE_THA_PTJ0_008_A2_0 camps_k5/neutral -> 5.0
+WE_THA_PTJ0_008_A2_0 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [571] WE_TWN_PTJ0_068_B2_0 camps_k5/western -> 5.0
+  [572] WE_TWN_PTJ0_068_B2_0 camps_k5/sea -> 6.0
+  [573] WE_TWN_PTJ0_068_B2_0 camps_k5/east_asian -> 6.0
+  [574] WE_TWN_PTJ0_068_B2_0 camps_k5/mekong -> 5.0
+  [575] WE_TWN_PTJ0_068_B2_0 camps_k5/neutral -> 6.0
+WE_TWN_PTJ0_068_B2_0 gpt-4o camps_k5: mean=5.60 BDS=0.49
+  [576] WE_JPN_PTJ0_008_B1_1 camps_k5/western -> 5.0
+  [577] WE_JPN_PTJ0_008_B1_1 camps_k5/sea -> 5.0
+  [578] WE_JPN_PTJ0_008_B1_1 camps_k5/east_asian -> 5.0
+  [579] WE_JPN_PTJ0_008_B1_1 camps_k5/mekong -> 5.0
+  [580] WE_JPN_PTJ0_008_B1_1 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_008_B1_1 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [581] WE_THA_PTJ0_020_B1_1 camps_k5/western -> 3.0
+  [582] WE_THA_PTJ0_020_B1_1 camps_k5/sea -> 4.0
+  [583] WE_THA_PTJ0_020_B1_1 camps_k5/east_asian -> 4.0
+  [584] WE_THA_PTJ0_020_B1_1 camps_k5/mekong -> 4.0
+  [585] WE_THA_PTJ0_020_B1_1 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_020_B1_1 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [586] WE_JPN_PTJ0_011_B2_0 camps_k5/western -> 4.0
+  [587] WE_JPN_PTJ0_011_B2_0 camps_k5/sea -> 5.0
+  [588] WE_JPN_PTJ0_011_B2_0 camps_k5/east_asian -> 5.0
+  [589] WE_JPN_PTJ0_011_B2_0 camps_k5/mekong -> 5.0
+  [590] WE_JPN_PTJ0_011_B2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_011_B2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [591] WE_THA_PTJ0_014_A2_0 camps_k5/western -> 2.0
+  [592] WE_THA_PTJ0_014_A2_0 camps_k5/sea -> 3.0
+  [593] WE_THA_PTJ0_014_A2_0 camps_k5/east_asian -> 3.0
+  [594] WE_THA_PTJ0_014_A2_0 camps_k5/mekong -> 3.0
+  [595] WE_THA_PTJ0_014_A2_0 camps_k5/neutral -> 3.0
+WE_THA_PTJ0_014_A2_0 gpt-4o camps_k5: mean=2.80 BDS=0.40
+  [596] WE_JPN_PTJ0_006_B1_1 camps_k5/western -> 4.0
+  [597] WE_JPN_PTJ0_006_B1_1 camps_k5/sea -> 5.0
+  [598] WE_JPN_PTJ0_006_B1_1 camps_k5/east_asian -> 5.0
+  [599] WE_JPN_PTJ0_006_B1_1 camps_k5/mekong -> 5.0
+  [600] WE_JPN_PTJ0_006_B1_1 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_006_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [601] WE_ENS_PTJ0_003_XX_1 camps_k5/western -> 5.0
+  [602] WE_ENS_PTJ0_003_XX_1 camps_k5/sea -> 6.0
+  [603] WE_ENS_PTJ0_003_XX_1 camps_k5/east_asian -> 6.0
+  [604] WE_ENS_PTJ0_003_XX_1 camps_k5/mekong -> 6.0
+  [605] WE_ENS_PTJ0_003_XX_1 camps_k5/neutral -> 6.0
+WE_ENS_PTJ0_003_XX_1 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [606] WE_CHN_PTJ0_002_B1_1 camps_k5/western -> 4.0
+  [607] WE_CHN_PTJ0_002_B1_1 camps_k5/sea -> 5.0
+  [608] WE_CHN_PTJ0_002_B1_1 camps_k5/east_asian -> 5.0
+  [609] WE_CHN_PTJ0_002_B1_1 camps_k5/mekong -> 5.0
+  [610] WE_CHN_PTJ0_002_B1_1 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_002_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [611] WE_JPN_PTJ0_013_A2_0 camps_k5/western -> 4.0
+  [612] WE_JPN_PTJ0_013_A2_0 camps_k5/sea -> 5.0
+  [613] WE_JPN_PTJ0_013_A2_0 camps_k5/east_asian -> 5.0
+  [614] WE_JPN_PTJ0_013_A2_0 camps_k5/mekong -> 5.0
+  [615] WE_JPN_PTJ0_013_A2_0 camps_k5/neutral -> 5.0
+WE_JPN_PTJ0_013_A2_0 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [616] WE_SIN_PTJ0_006_B2_0 camps_k5/western -> 6.0
+  [617] WE_SIN_PTJ0_006_B2_0 camps_k5/sea -> 8.0
+  [618] WE_SIN_PTJ0_006_B2_0 camps_k5/east_asian -> 7.0
+  [619] WE_SIN_PTJ0_006_B2_0 camps_k5/mekong -> 6.0
+  [620] WE_SIN_PTJ0_006_B2_0 camps_k5/neutral -> 8.0
+WE_SIN_PTJ0_006_B2_0 gpt-4o camps_k5: mean=7.00 BDS=0.89
+  [621] WE_CHN_PTJ0_003_B1_1 camps_k5/western -> 5.0
+  [622] WE_CHN_PTJ0_003_B1_1 camps_k5/sea -> 6.0
+  [623] WE_CHN_PTJ0_003_B1_1 camps_k5/east_asian -> 5.0
+  [624] WE_CHN_PTJ0_003_B1_1 camps_k5/mekong -> 5.0
+  [625] WE_CHN_PTJ0_003_B1_1 camps_k5/neutral -> 6.0
+WE_CHN_PTJ0_003_B1_1 gpt-4o camps_k5: mean=5.40 BDS=0.49
+  [626] WE_IDN_PTJ0_177_B2_0 camps_k5/western -> 5.0
+  [627] WE_IDN_PTJ0_177_B2_0 camps_k5/sea -> 6.0
+  [628] WE_IDN_PTJ0_177_B2_0 camps_k5/east_asian -> 6.0
+  [629] WE_IDN_PTJ0_177_B2_0 camps_k5/mekong -> 6.0
+  [630] WE_IDN_PTJ0_177_B2_0 camps_k5/neutral -> 6.0
+WE_IDN_PTJ0_177_B2_0 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [631] WE_CHN_PTJ0_182_B2_0 camps_k5/western -> 5.0
+  [632] WE_CHN_PTJ0_182_B2_0 camps_k5/sea -> 5.0
+  [633] WE_CHN_PTJ0_182_B2_0 camps_k5/east_asian -> 5.0
+  [634] WE_CHN_PTJ0_182_B2_0 camps_k5/mekong -> 5.0
+  [635] WE_CHN_PTJ0_182_B2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_182_B2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [636] WE_KOR_PTJ0_020_B2_0 camps_k5/western -> 3.0
+  [637] WE_KOR_PTJ0_020_B2_0 camps_k5/sea -> 4.0
+  [638] WE_KOR_PTJ0_020_B2_0 camps_k5/east_asian -> 4.0
+  [639] WE_KOR_PTJ0_020_B2_0 camps_k5/mekong -> 4.0
+  [640] WE_KOR_PTJ0_020_B2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_020_B2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [641] WE_KOR_PTJ0_001_A2_0 camps_k5/western -> 4.0
+  [642] WE_KOR_PTJ0_001_A2_0 camps_k5/sea -> 4.0
+  [643] WE_KOR_PTJ0_001_A2_0 camps_k5/east_asian -> 5.0
+  [644] WE_KOR_PTJ0_001_A2_0 camps_k5/mekong -> 5.0
+  [645] WE_KOR_PTJ0_001_A2_0 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_001_A2_0 gpt-4o camps_k5: mean=4.60 BDS=0.49
+  [646] WE_TWN_PTJ0_002_B1_1 camps_k5/western -> 4.0
+  [647] WE_TWN_PTJ0_002_B1_1 camps_k5/sea -> 4.0
+  [648] WE_TWN_PTJ0_002_B1_1 camps_k5/east_asian -> 4.0
+  [649] WE_TWN_PTJ0_002_B1_1 camps_k5/mekong -> 5.0
+  [650] WE_TWN_PTJ0_002_B1_1 camps_k5/neutral -> 5.0
+WE_TWN_PTJ0_002_B1_1 gpt-4o camps_k5: mean=4.40 BDS=0.49
+  [651] WE_IDN_PTJ0_024_B1_2 camps_k5/western -> 5.0
+  [652] WE_IDN_PTJ0_024_B1_2 camps_k5/sea -> 5.0
+  [653] WE_IDN_PTJ0_024_B1_2 camps_k5/east_asian -> 5.0
+  [654] WE_IDN_PTJ0_024_B1_2 camps_k5/mekong -> 5.0
+  [655] WE_IDN_PTJ0_024_B1_2 camps_k5/neutral -> 6.0
+WE_IDN_PTJ0_024_B1_2 gpt-4o camps_k5: mean=5.20 BDS=0.40
+  [656] WE_KOR_PTJ0_021_A2_0 camps_k5/western -> 3.0
+  [657] WE_KOR_PTJ0_021_A2_0 camps_k5/sea -> 4.0
+  [658] WE_KOR_PTJ0_021_A2_0 camps_k5/east_asian -> 4.0
+  [659] WE_KOR_PTJ0_021_A2_0 camps_k5/mekong -> 4.0
+  [660] WE_KOR_PTJ0_021_A2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_021_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [661] WE_THA_PTJ0_009_B1_1 camps_k5/western -> 3.0
+  [662] WE_THA_PTJ0_009_B1_1 camps_k5/sea -> 4.0
+  [663] WE_THA_PTJ0_009_B1_1 camps_k5/east_asian -> 4.0
+  [664] WE_THA_PTJ0_009_B1_1 camps_k5/mekong -> 4.0
+  [665] WE_THA_PTJ0_009_B1_1 camps_k5/neutral -> 4.0
+WE_THA_PTJ0_009_B1_1 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [666] WE_CHN_PTJ0_026_A2_0 camps_k5/western -> 4.0
+  [667] WE_CHN_PTJ0_026_A2_0 camps_k5/sea -> 4.0
+  [668] WE_CHN_PTJ0_026_A2_0 camps_k5/east_asian -> 4.0
+  [669] WE_CHN_PTJ0_026_A2_0 camps_k5/mekong -> 4.0
+  [670] WE_CHN_PTJ0_026_A2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_026_A2_0 gpt-4o camps_k5: mean=4.20 BDS=0.40
+  [671] WE_THA_PTJ0_004_B1_2 camps_k5/western -> 3.0
+  [672] WE_THA_PTJ0_004_B1_2 camps_k5/sea -> 3.0
+  [673] WE_THA_PTJ0_004_B1_2 camps_k5/east_asian -> 4.0
+  [674] WE_THA_PTJ0_004_B1_2 camps_k5/mekong -> 4.0
+  [675] WE_THA_PTJ0_004_B1_2 camps_k5/neutral -> 3.0
+WE_THA_PTJ0_004_B1_2 gpt-4o camps_k5: mean=3.40 BDS=0.49
+  [676] WE_KOR_PTJ0_015_B1_1 camps_k5/western -> 4.0
+  [677] WE_KOR_PTJ0_015_B1_1 camps_k5/sea -> 5.0
+  [678] WE_KOR_PTJ0_015_B1_1 camps_k5/east_asian -> 5.0
+  [679] WE_KOR_PTJ0_015_B1_1 camps_k5/mekong -> 5.0
+  [680] WE_KOR_PTJ0_015_B1_1 camps_k5/neutral -> 5.0
+WE_KOR_PTJ0_015_B1_1 gpt-4o camps_k5: mean=4.80 BDS=0.40
+  [681] WE_CHN_PTJ0_021_A2_0 camps_k5/western -> 5.0
+  [682] WE_CHN_PTJ0_021_A2_0 camps_k5/sea -> 5.0
+  [683] WE_CHN_PTJ0_021_A2_0 camps_k5/east_asian -> 5.0
+  [684] WE_CHN_PTJ0_021_A2_0 camps_k5/mekong -> 5.0
+  [685] WE_CHN_PTJ0_021_A2_0 camps_k5/neutral -> 5.0
+WE_CHN_PTJ0_021_A2_0 gpt-4o camps_k5: mean=5.00 BDS=0.00
+  [686] WE_KOR_PTJ0_031_A2_0 camps_k5/western -> 3.0
+  [687] WE_KOR_PTJ0_031_A2_0 camps_k5/sea -> 4.0
+  [688] WE_KOR_PTJ0_031_A2_0 camps_k5/east_asian -> 4.0
+  [689] WE_KOR_PTJ0_031_A2_0 camps_k5/mekong -> 4.0
+  [690] WE_KOR_PTJ0_031_A2_0 camps_k5/neutral -> 4.0
+WE_KOR_PTJ0_031_A2_0 gpt-4o camps_k5: mean=3.80 BDS=0.40
+  [691] WE_SIN_PTJ0_004_B2_0 camps_k5/western -> 5.0
+  [692] WE_SIN_PTJ0_004_B2_0 camps_k5/sea -> 6.0
+  [693] WE_SIN_PTJ0_004_B2_0 camps_k5/east_asian -> 6.0
+  [694] WE_SIN_PTJ0_004_B2_0 camps_k5/mekong -> 6.0
+  [695] WE_SIN_PTJ0_004_B2_0 camps_k5/neutral -> 6.0
+WE_SIN_PTJ0_004_B2_0 gpt-4o camps_k5: mean=5.80 BDS=0.40
+  [696] WE_IDN_PTJ0_003_B1_1 camps_k5/western -> 4.0
+  [697] WE_IDN_PTJ0_003_B1_1 camps_k5/sea -> 4.0
+  [698] WE_IDN_PTJ0_003_B1_1 camps_k5/east_asian -> 4.0
+  [699] WE_IDN_PTJ0_003_B1_1 camps_k5/mekong -> 4.0
+  [700] WE_IDN_PTJ0_003_B1_1 camps_k5/neutral -> 4.0
+WE_IDN_PTJ0_003_B1_1 gpt-4o camps_k5: mean=4.00 BDS=0.00
+Done. Log: results/E3/scores.jsonl
+Run record appended to results/runs.jsonl: 700 new calls, 0 resumed/cached, tokens in/out 294710/68730, 1704.6s

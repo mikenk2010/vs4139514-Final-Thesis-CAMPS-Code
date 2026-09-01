@@ -1,8 +1,9 @@
-"""Provider adapters: deterministic, JSON-scored essay evaluation calls.
+"""Provider adapters for JSON-scored essay evaluation calls.
 
-Every call: temperature 0.0, JSON response, retried with backoff, and
-cached on disk keyed by (model, condition, agent, essay_id, prompt hash),
-so re-runs are free and results reproducible.
+Calls use temperature 0.0 where the provider supports sampling controls,
+retry with backoff, and cache responses on disk keyed by model, agent,
+essay ID, and prompt hash. Anthropic's current models do not expose a
+temperature control through the Messages API.
 """
 from __future__ import annotations
 
@@ -188,7 +189,7 @@ class ScoringClient:
             import anthropic
             client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
             r = client.messages.create(
-                model=self.model_id, max_tokens=1024, temperature=0.0,
+                model=self.model_id, max_tokens=1024,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}])
             return r.content[0].text, {"in": r.usage.input_tokens,

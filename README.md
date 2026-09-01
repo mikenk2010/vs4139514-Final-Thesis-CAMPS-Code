@@ -9,7 +9,8 @@ essay-ID manifests, configs, prompts, and aggregate results are committed.
 - `src/sample_icnale.py` — builds the stratified sampling manifest from the
   ICNALE download (per official file-naming rules)
 - `src/models.py` — provider adapters (OpenAI / Anthropic / Google / Together),
-  t=0.0, JSON output, disk cache
+  t=0.0 where supported, JSON output, disk cache; current Anthropic Messages
+  models do not expose a temperature control
 - `src/run_experiment.py` — essay × model × condition runner with JSON logging
 - `src/metrics.py` — QWK, bootstrap CIs, Fisher z, BDS, ROC
 - `prompts/` — CRI system prompts (verbatim copies go to thesis Appendix A)
