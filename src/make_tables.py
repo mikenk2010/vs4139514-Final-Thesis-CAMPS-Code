@@ -110,7 +110,8 @@ ablation over panel size $k$ and the meta-adjudicator (model:
 \small
 \begin{tabular}{lccc}
 \hline
-Configuration & QWK\textsubscript{SEA} & QWK\textsubscript{native} & Gap \\
+Configuration & Mean score\textsubscript{SEA} &
+Mean score\textsubscript{native} & Gap [95\% CI] \\
 \hline
 %%BODY%%
 \hline
@@ -142,18 +143,20 @@ def table_e2(df: pd.DataFrame, out: Path, model: str) -> None:
                 continue
         else:
             agg = consensus_and_bds(sub)
-        cells = {}
-        for cohort in ("sea", "native"):
-            g = agg[agg.cohort == cohort]
-            if g.empty:
-                continue
-            h = truth.loc[g.essay_id].to_numpy()
-            m = np.rint(g.consensus.to_numpy())
-            cells[cohort] = bootstrap_ci(h, m)
-        if {"sea", "native"} <= cells.keys():
-            gap = cells["native"][0] - cells["sea"][0]
-            rows.append(f"{labels[cond]} & {fmt_ci(*cells['sea'])} & "
-                        f"{fmt_ci(*cells['native'])} & {gap:.3f} \\\\")
+        sea = agg[agg.cohort == "sea"].consensus.to_numpy()
+        nat = agg[agg.cohort == "native"].consensus.to_numpy()
+        if len(sea) == 0 or len(nat) == 0:
+            continue
+        # completeness guard as in table_e1: never publish partial cells
+        if len(sea) < 100 or len(nat) < 100:
+            print(f"  SKIP partial cell {model}/{cond}: "
+                  f"sea={len(sea)} nat={len(nat)}")
+            continue
+        point, lo, hi = gap_ci(sea, nat)
+        rows.append(
+            f"{labels[cond]} & {sea.mean():.2f} ($n$={len(sea)}) & "
+            f"{nat.mean():.2f} ($n$={len(nat)}) & "
+            f"{point:.2f} [{lo:.2f}, {hi:.2f}] \\\\")
     out.write_text(TABLE_E2_TEMPLATE.replace("%%BODY%%", "\n".join(rows))
                    .replace("%%MODEL%%", model))
     print(f"wrote {out} ({len(rows)} rows)")
@@ -238,6 +241,13 @@ def main() -> None:
         raise SystemExit(f"No log at {log} - run the experiment first.")
     df = pd.DataFrame([json.loads(l) for l in
                        log.read_text().splitlines()])
+    if args.experiment == "E2":
+        # the E2 ablation table includes the k=1/k=3 rows for comparison
+        e1 = Path("results/E1/scores.jsonl")
+        if e1.exists():
+            df = pd.concat([df, pd.DataFrame(
+                [json.loads(l) for l in e1.read_text().splitlines()])],
+                ignore_index=True)
     tables = Path(args.tables_dir)
     if args.experiment == "E1":
         table_e1(df, tables / "table_e1_qwk.tex")
