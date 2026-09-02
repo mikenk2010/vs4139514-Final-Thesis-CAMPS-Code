@@ -2156,3 +2156,31 @@ Traceback (most recent call last):
   File "/opt/miniconda3/lib/python3.13/site-packages/anthropic/_base_client.py", line 1174, in request
     raise self._make_status_error_from_response(response) from None
 anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CebtxedRgRma8z7wuvxib'}
+Resuming: 3949 calls already logged
+  [adj] WE_ENS_PTJ0_020_XX_1 -> 5.0 (conf=0.91)
+  [2] WE_ENS_PTJ0_013_XX_1 camps_k5_adj/western -> 5.0
+  [3] WE_ENS_PTJ0_013_XX_1 camps_k5_adj/sea -> 6.0
+  [4] WE_ENS_PTJ0_013_XX_1 camps_k5_adj/east_asian -> 6.0
+  [5] WE_ENS_PTJ0_013_XX_1 camps_k5_adj/mekong -> 6.0
+  [6] WE_ENS_PTJ0_013_XX_1 camps_k5_adj/neutral -> 6.0
+  [adj] WE_ENS_PTJ0_013_XX_1 -> 6.0 (conf=0.82)
+WE_ENS_PTJ0_013_XX_1 claude-sonnet camps_k5_adj: mean=5.80 BDS=0.40
+  [8] WE_ENS_PTJ0_079_XX_1 camps_k5_adj/western -> 6.0
+  [9] WE_ENS_PTJ0_079_XX_1 camps_k5_adj/sea -> 6.0
+  [10] WE_ENS_PTJ0_079_XX_1 camps_k5_adj/east_asian -> 6.0
+  [11] WE_ENS_PTJ0_079_XX_1 camps_k5_adj/mekong -> 6.0
+  [12] WE_ENS_PTJ0_079_XX_1 camps_k5_adj/neutral -> 7.0
+  [adj] WE_ENS_PTJ0_079_XX_1 -> 6.0 (conf=0.82)
+WE_ENS_PTJ0_079_XX_1 claude-sonnet camps_k5_adj: mean=6.20 BDS=0.40
+  [14] WE_ENS_PTJ0_002_XX_1 camps_k5_adj/western -> 2.0
+  [15] WE_ENS_PTJ0_002_XX_1 camps_k5_adj/sea -> 2.0
+  [16] WE_ENS_PTJ0_002_XX_1 camps_k5_adj/east_asian -> 2.0
+  [17] WE_ENS_PTJ0_002_XX_1 camps_k5_adj/mekong -> 2.0
+  [18] WE_ENS_PTJ0_002_XX_1 camps_k5_adj/neutral -> 3.0
+  [adj] WE_ENS_PTJ0_002_XX_1 -> 2.0 (conf=0.85)
+WE_ENS_PTJ0_002_XX_1 claude-sonnet camps_k5_adj: mean=2.20 BDS=0.40
+  [20] WE_ENS_PTJ0_068_XX_1 camps_k5_adj/western -> 4.0
+  [21] WE_ENS_PTJ0_068_XX_1 camps_k5_adj/sea -> 5.0
+  [22] WE_ENS_PTJ0_068_XX_1 camps_k5_adj/east_asian -> 5.0
+  [23] WE_ENS_PTJ0_068_XX_1 camps_k5_adj/mekong -> 6.0
+  [24] WE_ENS_PTJ0_068_XX_1 camps_k5_adj/neutral -> 5.0

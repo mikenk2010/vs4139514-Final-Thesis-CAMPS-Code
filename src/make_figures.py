@@ -138,37 +138,80 @@ def fig_e2_ablation(e1: pd.DataFrame, e2: pd.DataFrame,
 
 
 def fig_e3_roc(e3: pd.DataFrame, dispersion: pd.Series, out: Path,
-               model: str = "gpt-4o", seed: int = 4139514) -> None:
+               seed: int = 4139514) -> None:
     """E3: ROC of BDS against top-quartile human dispersion, held-out
-    split, plus the BDS-vs-dispersion scatter."""
+    split, per model, plus the BDS-vs-dispersion scatter."""
     from sklearn.metrics import roc_curve, roc_auc_score
-    sub = e3[(e3.model == model) & (e3.cohort == "gra")]
-    agg = consensus_and_bds(sub).set_index("essay_id")
-    common = agg.index.intersection(dispersion.index)
-    agg = agg.loc[common]
-    disp = dispersion.loc[common]
-    contested = (disp >= disp.quantile(0.75)).astype(int)
-    rng = np.random.default_rng(seed)
-    idx = rng.permutation(len(agg))
-    hold = idx[len(idx) // 2:]
-    y, s = contested.to_numpy()[hold], agg.bds.to_numpy()[hold]
-    fpr, tpr, _ = roc_curve(y, s)
-    auc = roc_auc_score(y, s)
+    colours = {"gpt-4o": "#4c72b0", "claude-sonnet": "#c44e52"}
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.6, 4.0))
-    ax1.plot(fpr, tpr, color="#4c72b0", lw=1.8,
-             label=f"BDS (AUC = {auc:.2f})")
-    ax1.plot([0, 1], [0, 1], "--", color="grey", lw=1,
-             label="chance")
+    n_hold = None
+    for model, colour in colours.items():
+        sub = e3[(e3.model == model) & (e3.cohort == "gra")]
+        if sub.empty:
+            continue
+        agg = consensus_and_bds(sub).set_index("essay_id")
+        common = agg.index.intersection(dispersion.index)
+        agg = agg.loc[common]
+        disp = dispersion.loc[common]
+        contested = (disp >= disp.quantile(0.75)).astype(int)
+        rng = np.random.default_rng(seed)
+        idx = rng.permutation(len(agg))
+        hold = idx[len(idx) // 2:]
+        n_hold = len(hold)
+        y, s = contested.to_numpy()[hold], agg.bds.to_numpy()[hold]
+        fpr, tpr, _ = roc_curve(y, s)
+        auc = roc_auc_score(y, s)
+        ax1.plot(fpr, tpr, color=colour, lw=1.8,
+                 label=f"{MODEL_LABEL[model]} (AUC = {auc:.2f})")
+        r = np.corrcoef(disp, agg.bds)[0, 1]
+        ax2.scatter(disp, agg.bds, s=12, alpha=0.55, color=colour,
+                    label=f"{MODEL_LABEL[model]} ($r$={r:.2f})")
+    ax1.plot([0, 1], [0, 1], "--", color="grey", lw=1, label="chance")
     ax1.set_xlabel("False-positive rate")
     ax1.set_ylabel("Sensitivity")
-    ax1.set_title(f"ROC, held-out GRA split ($n$={len(hold)})")
+    ax1.set_title(f"ROC, held-out GRA split ($n$={n_hold})")
     ax1.legend()
-    ax2.scatter(disp, agg.bds, s=14, alpha=0.6, color="#4c72b0")
     ax2.set_xlabel("Human rating dispersion (SD across 80 raters)")
     ax2.set_ylabel("BDS ($k$=5 panel)")
-    r = np.corrcoef(disp, agg.bds)[0, 1]
-    ax2.set_title(f"BDS vs human dispersion ($n$={len(agg)}, "
-                  f"$r$={r:.2f})")
+    ax2.set_title("BDS vs human dispersion (all 136 matched essays)")
+    ax2.legend()
+    fig.tight_layout()
+    fig.savefig(out)
+    print(f"wrote {out}")
+
+
+def fig_lens_radar(e2: pd.DataFrame, out: Path) -> None:
+    """Radar chart: mean lens-level score per cohort, per model, on the
+    five-lens panel -- the visual signature of cultural divergence."""
+    agents = ["western", "sea", "east_asian", "mekong", "neutral"]
+    labels = ["Western", "SEA", "East Asian", "Mekong", "Neutral"]
+    models = [m for m in MODEL_LABEL if m in set(e2.model)]
+    angles = np.linspace(0, 2 * np.pi, len(agents),
+                         endpoint=False).tolist()
+    angles += angles[:1]
+    fig, axes = plt.subplots(1, len(models), figsize=(9.6, 4.4),
+                             subplot_kw={"projection": "polar"})
+    if len(models) == 1:
+        axes = [axes]
+    for ax, mdl in zip(axes, models):
+        sub = e2[(e2.model == mdl) & (e2.condition == "camps_k5")
+                 & (e2.agent != "adjudicator")]
+        for cohort, colour in [("native", "#c44e52"), ("sea", "#4c72b0")]:
+            g = sub[sub.cohort == cohort]
+            vals = [g[g.agent == a].score.mean() for a in agents]
+            vals += vals[:1]
+            ax.plot(angles, vals, color=colour, lw=1.8,
+                    label={"native": "Native cohort",
+                           "sea": "SEA cohort"}[cohort])
+            ax.fill(angles, vals, color=colour, alpha=0.12)
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(labels, fontsize=9)
+        ax.set_ylim(3, 7)
+        ax.set_yticks([3, 4, 5, 6, 7])
+        ax.tick_params(axis="y", labelsize=7)
+        ax.set_title(MODEL_LABEL[mdl], pad=16)
+    axes[0].legend(loc="upper center", bbox_to_anchor=(1.12, -0.08),
+                   ncol=2, frameon=False)
     fig.tight_layout()
     fig.savefig(out)
     print(f"wrote {out}")
@@ -192,6 +235,7 @@ def main() -> None:
         e2 = pd.DataFrame([json.loads(l)
                            for l in e2p.read_text().splitlines()])
         fig_e2_ablation(df, e2, figs / "fig-e2-ablation.pdf")
+        fig_lens_radar(e2, figs / "fig-e2-lens-radar.pdf")
     dp = Path("results/gra_dispersion.csv")
     if e3p.exists() and dp.exists():
         e3 = pd.DataFrame([json.loads(l)
