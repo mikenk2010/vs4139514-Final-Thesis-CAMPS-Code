@@ -40,7 +40,7 @@ def main() -> None:
     # --- locate corpus files
     files = {p.stem: p for p in CORPUS_ROOT.rglob("WE_*_PTJ0_*.txt")
              if "Unclassified_Unmerged" in str(p)}
-    rows, missing = [], []
+    rows, missing, id_map = [], [], {}
     for e in essays:
         eid = corpus_id(e["orig"])
         p = files.get(eid)
@@ -55,6 +55,7 @@ def main() -> None:
         if p is None:
             missing.append(eid)
             continue
+        id_map[corpus_id(e["orig"])] = eid
         rows.append({"essay_id": eid, "module": "WE", "region": e["region"],
                      "task": "PTJ0", "student_id": eid.split("_")[3],
                      "cefr": "_".join(eid.split("_")[4:]),
@@ -89,7 +90,11 @@ def main() -> None:
             hol = float(row[holc])
         except (TypeError, ValueError):
             continue
-        per.setdefault(corpus_id(str(row[oc])), []).append((cm, hol))
+        key = corpus_id(str(row[oc]))
+        # ENS rating rows carry no band (W_ENS_001_ENS -> WE_ENSD_..._ENS);
+        # key them by the corpus id the manifest resolved for that essay
+        key = id_map.get(key, key)
+        per.setdefault(key, []).append((cm, hol))
     out = pd.DataFrame([
         {"essay_id": k, "n_raters": len(v),
          "content_mean": statistics.mean(x[0] for x in v),

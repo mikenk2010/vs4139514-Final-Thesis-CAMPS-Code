@@ -173,7 +173,7 @@ def fig_e3_roc(e3: pd.DataFrame, dispersion: pd.Series, out: Path,
     ax1.legend()
     ax2.set_xlabel("Human rating dispersion (SD across 80 raters)")
     ax2.set_ylabel("BDS ($k$=5 panel)")
-    ax2.set_title("BDS vs human dispersion (all 136 matched essays)")
+    ax2.set_title(f"BDS vs human dispersion (all {len(agg)} matched essays)")
     ax2.legend()
     fig.tight_layout()
     fig.savefig(out)
