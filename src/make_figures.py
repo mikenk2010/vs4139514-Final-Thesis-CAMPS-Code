@@ -259,6 +259,47 @@ def fig_dose_response(agg: pd.DataFrame, out: Path,
     print(f"wrote {out}")
 
 
+def fig_case_study(e1: pd.DataFrame, e2: pd.DataFrame, out: Path,
+                   essay: str = "WE_PHL_PTJ0_087_B1_2") -> None:
+    """One essay, every lens, every model: a score grid showing the
+    Western lens as the consistent low scorer on a proverb-opening,
+    inductively organised essay."""
+    df = pd.concat([e1, e2], ignore_index=True)
+    df = df[df.essay_id == essay]
+    agents = ["neutral_single", "western", "sea", "east_asian", "mekong",
+              "neutral", "adjudicator"]
+    labels = ["single evaluator\n(baseline)", "Western lens", "SEA lens",
+              "East Asian lens", "Mekong lens", "Neutral lens",
+              "adjudicator"]
+    models = [m for m in MODEL_LABEL if m in set(df.model)]
+    grid = np.full((len(agents), len(models)), np.nan)
+    for j, m in enumerate(models):
+        for i, a in enumerate(agents):
+            s = df[(df.model == m) & (df.agent == a)].score
+            if len(s):
+                grid[i, j] = s.iloc[-1]   # k5 rows supersede k3 duplicates
+    fig, ax = plt.subplots(figsize=(6.6, 4.4))
+    im = ax.imshow(grid, cmap="RdYlBu", vmin=4, vmax=8, aspect="auto")
+    for i in range(len(agents)):
+        for j in range(len(models)):
+            v = grid[i, j]
+            ax.text(j, i, "–" if np.isnan(v) else f"{v:.1f}",
+                    ha="center", va="center", fontsize=11,
+                    color="black", fontweight="bold" if agents[i] == "western" else "normal")
+    ax.set_xticks(range(len(models)))
+    ax.set_xticklabels([MODEL_LABEL[m] for m in models])
+    ax.set_yticks(range(len(agents)))
+    ax.set_yticklabels(labels, fontsize=9)
+    ax.set_title(f"One essay, every lens: {essay}\n"
+                 "(proverb opening, thesis emerges inductively; band 1–9)",
+                 fontsize=10)
+    cb = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02)
+    cb.set_label("band")
+    fig.tight_layout()
+    fig.savefig(out)
+    print(f"wrote {out}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results/E1")
@@ -278,6 +319,7 @@ def main() -> None:
         e2 = pd.DataFrame([json.loads(l)
                            for l in e2p.read_text().splitlines()])
         fig_e2_ablation(df, e2, figs / "fig-e2-ablation.pdf")
+        fig_case_study(df, e2, figs / "fig-case-study.pdf")
         fig_lens_radar(e2, figs / "fig-e2-lens-radar.pdf")
     dp = Path("results/gra_dispersion.csv")
     if e3p.exists() and dp.exists():
