@@ -29,7 +29,8 @@ def fig_gaps(agg: pd.DataFrame, out: Path) -> None:
     conds = [("baseline", "Baseline (single evaluator)", "#c44e52"),
              ("camps_k3", "CAMPS $k$=3 panel", "#4c72b0")]
     width = 0.36
-    fig, ax = plt.subplots(figsize=(7.2, 4.2))
+    vals = {}
+    fig, ax = plt.subplots(figsize=(7.2, 4.4))
     for j, (cond, label, colour) in enumerate(conds):
         xs, ys, los, his = [], [], [], []
         for i, m in enumerate(models):
@@ -43,6 +44,26 @@ def fig_gaps(agg: pd.DataFrame, out: Path) -> None:
             ys.append(point); los.append(point - lo); his.append(hi - point)
         ax.bar(xs, ys, width, label=label, color=colour,
                yerr=[los, his], capsize=4)
+        for x, y, h in zip(xs, ys, his):
+            ax.text(x, y + h + 0.03, f"{y:.2f}", ha="center", va="bottom",
+                    fontsize=8.5)
+        vals[cond] = dict(zip(models, ys))
+    # change annotation above each model's pair
+    ymax = ax.get_ylim()[1]
+    for i, m in enumerate(models):
+        b, k = vals["baseline"].get(m), vals["camps_k3"].get(m)
+        if b is None or k is None:
+            continue
+        pct = (b - k) / b * 100
+        if k > b * 1.5:
+            txt, col = "widened", "#c44e52"
+        elif abs(pct) < 20:
+            txt, col = "no change", "#666666"
+        else:
+            txt, col = f"$-${pct:.0f}%", "#2e7d32"
+        ax.text(i, ymax * 0.97, txt, ha="center", va="top", fontsize=9.5,
+                fontstyle="italic", color=col)
+    ax.set_ylim(top=ymax * 1.08)
     ax.axhline(0, color="black", lw=0.8)
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in models])
@@ -125,13 +146,17 @@ def fig_e2_ablation(e1: pd.DataFrame, e2: pd.DataFrame,
         if xs:
             ax.bar(xs, ys, width, label=label, color=colours[j],
                    yerr=[los, his], capsize=3)
+            for x, y, h in zip(xs, ys, his):
+                ax.text(x, y + h + 0.02, f"{y:.2f}", ha="center",
+                        va="bottom", fontsize=7.5)
     ax.axhline(0, color="black", lw=0.8)
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in models])
     ax.set_ylabel("Native $-$ SEA score gap (bands)")
     ax.set_title("E2 ablation: cohort gap by panel configuration "
                  "(95% bootstrap CIs)")
-    ax.legend(title="Configuration")
+    ax.set_ylim(top=ax.get_ylim()[1] * 1.15)
+    ax.legend(loc="upper center", ncol=4, fontsize=8.5, frameon=False)
     fig.tight_layout()
     fig.savefig(out)
     print(f"wrote {out}")
