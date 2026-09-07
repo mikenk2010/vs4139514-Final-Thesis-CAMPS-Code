@@ -217,6 +217,48 @@ def fig_lens_radar(e2: pd.DataFrame, out: Path) -> None:
     print(f"wrote {out}")
 
 
+def fig_dose_response(agg: pd.DataFrame, out: Path,
+                      n_boot: int = 10_000, seed: int = 4139514) -> None:
+    """E1: change in cohort gap under the k=3 panel against the baseline
+    gap, one point per model, with paired-bootstrap 95% CIs -- the
+    dose-response picture (reduce / inert / over-correct)."""
+    rng = np.random.default_rng(seed)
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    for m in [x for x in MODEL_LABEL if x in set(agg.model)]:
+        g = agg[agg.model == m]
+        piv = g.pivot_table(index=["essay_id", "cohort"],
+                            columns="condition", values="consensus")
+        if "baseline" not in piv or "camps_k3" not in piv:
+            continue
+        piv = piv.dropna().reset_index()
+        nat, sea = piv[piv.cohort == "native"], piv[piv.cohort == "sea"]
+        base = nat.baseline.mean() - sea.baseline.mean()
+        red = base - (nat.camps_k3.mean() - sea.camps_k3.mean())
+        boots = np.empty(n_boot)
+        for b in range(n_boot):
+            ni = rng.integers(0, len(nat), len(nat))
+            si = rng.integers(0, len(sea), len(sea))
+            gb = nat.baseline.values[ni].mean() - sea.baseline.values[si].mean()
+            gk = nat.camps_k3.values[ni].mean() - sea.camps_k3.values[si].mean()
+            boots[b] = gb - gk
+        lo, hi = np.percentile(boots, [2.5, 97.5])
+        colour = "#4c72b0" if red > 0 and lo > 0 else (
+            "#c44e52" if hi < 0 else "#8c8c8c")
+        ax.errorbar(base, red, yerr=[[red - lo], [hi - red]], fmt="o",
+                    ms=8, color=colour, capsize=4, lw=1.4)
+        ax.annotate(MODEL_LABEL[m], (base, red), xytext=(8, 6),
+                    textcoords="offset points", fontsize=10)
+    ax.axhline(0, color="black", lw=0.8)
+    ax.set_xlabel("Baseline native $-$ SEA gap (bands)")
+    ax.set_ylabel("Gap reduction under $k$=3 panel (bands)")
+    ax.set_title("Mitigation is dose-dependent: reduction vs baseline gap\n"
+                 "(paired bootstrap 95% CIs; blue = reduced, red = widened)")
+    ax.set_xlim(left=0)
+    fig.tight_layout()
+    fig.savefig(out)
+    print(f"wrote {out}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results/E1")
@@ -230,6 +272,7 @@ def main() -> None:
     figs = Path(args.figures_dir)
     fig_gaps(agg, figs / "fig-e1-gaps.pdf")
     fig_band(df, agg, figs / "fig-e1-gap-by-band.pdf")
+    fig_dose_response(agg, figs / "fig-e1-dose-response.pdf")
     e2p, e3p = Path("results/E2/scores.jsonl"), Path("results/E3/scores.jsonl")
     if e2p.exists():
         e2 = pd.DataFrame([json.loads(l)
