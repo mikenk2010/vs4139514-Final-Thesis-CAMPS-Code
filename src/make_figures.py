@@ -12,10 +12,13 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams.update({"font.size": 11, "axes.labelsize": 11,
+                     "xtick.labelsize": 10, "ytick.labelsize": 10,
+                     "legend.fontsize": 10})
 import numpy as np
 import pandas as pd
 
-from metrics import consensus_and_bds
+from metrics import consensus_and_bds, gap_ci_cluster, paired_reduction_cluster
 from make_tables import gap_ci
 
 MODEL_LABEL = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
@@ -39,7 +42,7 @@ def fig_gaps(agg: pd.DataFrame, out: Path) -> None:
             nat = g[g.cohort == "native"].consensus.to_numpy()
             if len(sea) < 50 or len(nat) < 50:
                 continue
-            point, lo, hi = gap_ci(sea, nat)
+            point, lo, hi = gap_ci_cluster(g)
             xs.append(i + (j - 0.5) * width)
             ys.append(point); los.append(point - lo); his.append(hi - point)
         ax.bar(xs, ys, width, label=label, color=colour,
@@ -68,8 +71,8 @@ def fig_gaps(agg: pd.DataFrame, out: Path) -> None:
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in models])
     ax.set_ylabel("Native $-$ SEA score gap (bands)")
-    ax.set_title("Cohort score gap by model and condition "
-                 "(95% bootstrap CIs, $n$=100/cohort)")
+    ax.set_title("Cohort score gap by model and condition\n"
+                 "(95% writer-cluster bootstrap CIs, $n$=100 per cohort)")
     ax.legend()
     fig.tight_layout()
     fig.savefig(out)
@@ -98,11 +101,14 @@ def fig_band(df: pd.DataFrame, agg: pd.DataFrame, out: Path) -> None:
         label = "SEA B1 upper ($n$=74)" if band == "B1_2" \
             else "SEA B2+ ($n$=26)"
         ax.bar(xs, ys, width, label=label, color=colours[band])
+        for x, y in zip(xs, ys):
+            ax.text(x, y + 0.02, f"{y:.2f}", ha="center", va="bottom",
+                    fontsize=9)
     ax.axhline(0, color="black", lw=0.8)
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in models])
     ax.set_ylabel("Baseline gap vs native cohort (bands)")
-    ax.set_title("The bias concentrates on mid-proficiency writing")
+    ax.set_title("Baseline gap is largest for mid-proficiency (B1 upper) writing")
     ax.legend()
     fig.tight_layout()
     fig.savefig(out)
@@ -140,7 +146,7 @@ def fig_e2_ablation(e1: pd.DataFrame, e2: pd.DataFrame,
             nat = agg[agg.cohort == "native"].consensus.to_numpy()
             if len(sea) < 100 or len(nat) < 100:
                 continue
-            point, lo, hi = gap_ci(sea, nat)
+            point, lo, hi = gap_ci_cluster(agg)
             xs.append(i + (j - 1.5) * width)
             ys.append(point); los.append(point - lo); his.append(hi - point)
         if xs:
@@ -153,8 +159,8 @@ def fig_e2_ablation(e1: pd.DataFrame, e2: pd.DataFrame,
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in models])
     ax.set_ylabel("Native $-$ SEA score gap (bands)")
-    ax.set_title("E2 ablation: cohort gap by panel configuration "
-                 "(95% bootstrap CIs)")
+    ax.set_title("E2 ablation: cohort gap by panel configuration\n"
+                 "(95% writer-cluster bootstrap CIs)")
     ax.set_ylim(top=ax.get_ylim()[1] * 1.15)
     ax.legend(loc="upper center", ncol=4, fontsize=8.5, frameon=False)
     fig.tight_layout()
@@ -245,30 +251,19 @@ def fig_lens_radar(e2: pd.DataFrame, out: Path) -> None:
 def fig_dose_response(agg: pd.DataFrame, out: Path,
                       n_boot: int = 10_000, seed: int = 4139514) -> None:
     """E1: change in cohort gap under the k=3 panel against the baseline
-    gap, one point per model, with paired-bootstrap 95% CIs -- the
-    dose-response picture (reduce / inert / over-correct)."""
-    rng = np.random.default_rng(seed)
+    gap, one point per model, writer-cluster paired-bootstrap 95% CIs.
+    Descriptive: four model-level observations; the baseline gap enters
+    both axes, so the picture is a summary, not a fitted dose-response."""
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
     for m in [x for x in MODEL_LABEL if x in set(agg.model)]:
         g = agg[agg.model == m]
-        piv = g.pivot_table(index=["essay_id", "cohort"],
-                            columns="condition", values="consensus")
-        if "baseline" not in piv or "camps_k3" not in piv:
+        a, b = g[g.condition == "baseline"], g[g.condition == "camps_k3"]
+        if a.empty or b.empty:
             continue
-        piv = piv.dropna().reset_index()
-        nat, sea = piv[piv.cohort == "native"], piv[piv.cohort == "sea"]
-        base = nat.baseline.mean() - sea.baseline.mean()
-        red = base - (nat.camps_k3.mean() - sea.camps_k3.mean())
-        boots = np.empty(n_boot)
-        for b in range(n_boot):
-            ni = rng.integers(0, len(nat), len(nat))
-            si = rng.integers(0, len(sea), len(sea))
-            gb = nat.baseline.values[ni].mean() - sea.baseline.values[si].mean()
-            gk = nat.camps_k3.values[ni].mean() - sea.camps_k3.values[si].mean()
-            boots[b] = gb - gk
-        lo, hi = np.percentile(boots, [2.5, 97.5])
-        colour = "#4c72b0" if red > 0 and lo > 0 else (
-            "#c44e52" if hi < 0 else "#8c8c8c")
+        base = (a[a.cohort == "native"].consensus.mean()
+                - a[a.cohort == "sea"].consensus.mean())
+        red, lo, hi, _ = paired_reduction_cluster(a, b, n_boot, seed)
+        colour = "#4c72b0" if lo > 0 else ("#c44e52" if hi < 0 else "#8c8c8c")
         ax.errorbar(base, red, yerr=[[red - lo], [hi - red]], fmt="o",
                     ms=8, color=colour, capsize=4, lw=1.4)
         ax.annotate(MODEL_LABEL[m], (base, red), xytext=(8, 6),
@@ -276,8 +271,8 @@ def fig_dose_response(agg: pd.DataFrame, out: Path,
     ax.axhline(0, color="black", lw=0.8)
     ax.set_xlabel("Baseline native $-$ SEA gap (bands)")
     ax.set_ylabel("Gap reduction under $k$=3 panel (bands)")
-    ax.set_title("Mitigation is dose-dependent: reduction vs baseline gap\n"
-                 "(paired bootstrap 95% CIs; blue = reduced, red = widened)")
+    ax.set_title("Model-dependent panel effect\n"
+                 "(paired-bootstrap 95% CIs; blue = reduced, red = widened)")
     ax.set_xlim(left=0)
     fig.tight_layout()
     fig.savefig(out)

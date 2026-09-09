@@ -99,3 +99,80 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# ---------------------------------------------------------------------
+# Writer-level clustering (ICNALE writers contribute up to two essays,
+# one per topic; the unit of independence is the writer, not the essay)
+
+def writer_id(essay_id: str) -> str:
+    """WE_PHL_PTJ0_087_B1_2 -> WE_PHL_087 (country + student number)."""
+    p = essay_id.split("_")
+    return f"{p[0]}_{p[1]}_{p[3]}"
+
+
+def gap_ci_cluster(agg: pd.DataFrame, n_boot: int = 10_000,
+                   seed: int = 4139514) -> tuple[float, float, float]:
+    """Native-minus-SEA mean consensus gap with a writer-cluster
+    percentile bootstrap CI. `agg` has essay_id, cohort, consensus."""
+    rng = np.random.default_rng(seed)
+    out = {}
+    for cohort in ("sea", "native"):
+        g = agg[agg.cohort == cohort].copy()
+        g["w"] = g.essay_id.map(writer_id)
+        groups = [grp.consensus.to_numpy() for _, grp in g.groupby("w")]
+        out[cohort] = groups
+    point = (np.concatenate(out["native"]).mean()
+             - np.concatenate(out["sea"]).mean())
+    boots = np.empty(n_boot)
+    for b in range(n_boot):
+        means = []
+        for cohort in ("native", "sea"):
+            grp = out[cohort]
+            pick = rng.integers(0, len(grp), len(grp))
+            means.append(np.concatenate([grp[i] for i in pick]).mean())
+        boots[b] = means[0] - means[1]
+    lo, hi = np.percentile(boots, [2.5, 97.5])
+    return float(point), float(lo), float(hi)
+
+
+def paired_reduction_cluster(aggA: pd.DataFrame, aggB: pd.DataFrame,
+                             n_boot: int = 10_000, seed: int = 4139514):
+    """Gap(A) - Gap(B) on the same essays, writer-cluster bootstrap.
+    Returns (reduction, lo, hi, p_one_sided_no_reduction)."""
+    rng = np.random.default_rng(seed)
+    piv = (pd.concat([aggA.assign(c="A"), aggB.assign(c="B")])
+             .pivot_table(index=["essay_id", "cohort"], columns="c",
+                          values="consensus").dropna().reset_index())
+    piv["w"] = piv.essay_id.map(writer_id)
+    cl = {}
+    for cohort in ("sea", "native"):
+        g = piv[piv.cohort == cohort]
+        cl[cohort] = [(grp.A.to_numpy(), grp.B.to_numpy())
+                      for _, grp in g.groupby("w")]
+    def gaps(sel):
+        nA = np.concatenate([cl["native"][i][0] for i in sel["native"]])
+        nB = np.concatenate([cl["native"][i][1] for i in sel["native"]])
+        sA = np.concatenate([cl["sea"][i][0] for i in sel["sea"]])
+        sB = np.concatenate([cl["sea"][i][1] for i in sel["sea"]])
+        return (nA.mean() - sA.mean()) - (nB.mean() - sB.mean())
+    full = {c: np.arange(len(cl[c])) for c in cl}
+    point = gaps(full)
+    boots = np.empty(n_boot)
+    for b in range(n_boot):
+        sel = {c: rng.integers(0, len(cl[c]), len(cl[c])) for c in cl}
+        boots[b] = gaps(sel)
+    lo, hi = np.percentile(boots, [2.5, 97.5])
+    return float(point), float(lo), float(hi), float((boots <= 0).mean())
+
+
+def band_association(agg: pd.DataFrame, band_map: dict) -> float:
+    """Spearman rho between panel score and the CEFR band ordinal on
+    the banded (SEA) cohort. Replaces QWK, which compared a 1-9 score
+    scale with 1-4 band codes and was therefore not an agreement
+    statistic on a common category system."""
+    from scipy.stats import spearmanr
+    g = agg[agg.cohort == "sea"]
+    if g.empty:
+        return float("nan")
+    return float(spearmanr(g.band.to_numpy(), g.consensus.to_numpy()).correlation)

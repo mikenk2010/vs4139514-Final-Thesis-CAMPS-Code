@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 
 from metrics import qwk
+from scipy.stats import spearmanr
 
 BAND_MAP = {"A2_0": 1, "B1_1": 2, "B1_2": 3, "B2_0": 4}
 
@@ -62,7 +63,11 @@ def main() -> None:
     out_rows = []
     for w in simplex_grid(len(agents), args.step):
         cons = S @ w
-        q_sea = qwk(h[sea_m], np.rint(cons[sea_m])) if sea_m.any() else np.nan
+        # band association: Spearman rho between panel score and the
+        # CEFR band ordinal on the banded SEA cohort (QWK was unsuitable:
+        # it compared a 1-9 score scale with 1-4 band codes)
+        q_sea = (spearmanr(h[sea_m], cons[sea_m]).correlation
+                 if sea_m.any() else np.nan)
         gap = (cons[nat_m].mean() - cons[sea_m].mean()
                if nat_m.any() and sea_m.any() else np.nan)
         out_rows.append([*w, q_sea, gap])
@@ -91,8 +96,8 @@ def main() -> None:
     ax.plot(fx, fy, "-o", ms=3.5, color="#2A2A35", lw=1.2,
             label="Pareto frontier")
     ax.set_xlabel("|native $-$ SEA| cohort score gap (bands)")
-    ax.set_ylabel("QWK vs CEFR bands (SEA cohort)")
-    ax.set_title(f"Fairness–accuracy frontier: {args.model}")
+    ax.set_ylabel("Spearman $\\rho$ (panel score vs CEFR band, SEA cohort)")
+    ax.set_title(f"Gap vs band association under reweighting: {args.model}")
     ax.legend()
     fig.tight_layout()
     fig_path = (Path("../s4139514-Final-Thesis-CAMPS/figures")
@@ -101,12 +106,18 @@ def main() -> None:
     print(f"frontier figure -> {fig_path}")
     # console summary for the thesis prose
     i = out.gap.abs().idxmin()
-    print(f"equal weights: gap {eq.gap:.3f}, QWK_sea {eq.qwk_sea:.3f}")
+    print(f"equal weights: gap {eq.gap:.3f}, rho_sea {eq.qwk_sea:.3f}")
     print(f"min |gap| vector: gap {out.loc[i].gap:.3f}, "
-          f"QWK_sea {out.loc[i].qwk_sea:.3f}, weights "
+          f"rho_sea {out.loc[i].qwk_sea:.3f}, weights "
           f"{dict(zip(agents, out.loc[i][agents].round(2)))}")
-    print(f"max QWK_sea: {out.qwk_sea.max():.3f} at gap "
+    print(f"max rho_sea: {out.qwk_sea.max():.3f} at gap "
           f"{out.loc[out.qwk_sea.idxmax()].gap:.3f}")
+    # is the equal-weight point dominated (some vector with smaller |gap|
+    # AND higher rho)?
+    dom = out[(out.gap.abs() < abs(eq.gap)) & (out.qwk_sea > eq.qwk_sea)]
+    print(f"equal weights dominated by {len(dom)} vectors; "
+          f"pareto points: {len(fx)}; pareto rho range "
+          f"{min(fy):.3f}-{max(fy):.3f}, |gap| range {min(fx):.3f}-{max(fx):.3f}")
 
 
 if __name__ == "__main__":
