@@ -12,7 +12,7 @@ essay-ID manifests, configs, prompts, and aggregate results are committed.
   t=0.0 where supported, JSON output, disk cache; current Anthropic Messages
   models do not expose a temperature control
 - `src/run_experiment.py` — essay × model × condition runner with JSON logging
-- `src/metrics.py` — QWK, bootstrap CIs, Fisher z, BDS, ROC
+- `src/metrics.py` — cohort gaps with writer-cluster bootstrap CIs, paired reduction tests, Spearman band association, BDS, ROC calibration (QWK retained for reference only)
 - `prompts/` — CRI system prompts (verbatim copies go to thesis Appendix A)
 
 ## Setup
