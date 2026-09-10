@@ -1,0 +1,186 @@
+{
+ "models": [
+  {
+   "model": "gpt-4o",
+   "label": "GPT-4o",
+   "baseline_gap": 0.8,
+   "baseline_ci": [
+    0.59,
+    1.02
+   ],
+   "k3_gap": 0.573,
+   "k3_ci": [
+    0.36,
+    0.79
+   ],
+   "reduction": 0.227,
+   "reduction_ci": [
+    0.12,
+    0.33
+   ],
+   "reduction_pct": 28.3,
+   "p_tail": 0.0,
+   "mean_sea_base": 5.03,
+   "mean_nat_base": 5.83,
+   "mean_sea_k3": 4.7,
+   "mean_nat_k3": 5.27
+  },
+  {
+   "model": "claude-sonnet",
+   "label": "Claude Sonnet",
+   "baseline_gap": 1.18,
+   "baseline_ci": [
+    0.83,
+    1.54
+   ],
+   "k3_gap": 0.91,
+   "k3_ci": [
+    0.58,
+    1.23
+   ],
+   "reduction": 0.27,
+   "reduction_ci": [
+    0.06,
+    0.48
+   ],
+   "reduction_pct": 22.9,
+   "p_tail": 0.0053,
+   "mean_sea_base": 4.44,
+   "mean_nat_base": 5.62,
+   "mean_sea_k3": 3.73,
+   "mean_nat_k3": 4.64
+  },
+  {
+   "model": "qwen3-local",
+   "label": "Qwen3 14B (local)",
+   "baseline_gap": 0.23,
+   "baseline_ci": [
+    0.06,
+    0.4
+   ],
+   "k3_gap": 0.268,
+   "k3_ci": [
+    0.13,
+    0.4
+   ],
+   "reduction": -0.038,
+   "reduction_ci": [
+    -0.16,
+    0.08
+   ],
+   "reduction_pct": -16.7,
+   "p_tail": 0.7276,
+   "mean_sea_base": 5.64,
+   "mean_nat_base": 5.88,
+   "mean_sea_k3": 5.6,
+   "mean_nat_k3": 5.87
+  },
+  {
+   "model": "gemini-pro",
+   "label": "Gemini Pro",
+   "baseline_gap": 0.19,
+   "baseline_ci": [
+    0.06,
+    0.31
+   ],
+   "k3_gap": 0.45,
+   "k3_ci": [
+    0.29,
+    0.61
+   ],
+   "reduction": -0.26,
+   "reduction_ci": [
+    -0.39,
+    -0.13
+   ],
+   "reduction_pct": -136.8,
+   "p_tail": 0.9999,
+   "mean_sea_base": 4.83,
+   "mean_nat_base": 5.02,
+   "mean_sea_k3": 5.24,
+   "mean_nat_k3": 5.69
+  }
+ ],
+ "e2": {
+  "gpt-4o": {
+   "k5_gap": 0.55,
+   "k5_ci": [
+    0.36,
+    0.75
+   ],
+   "adj_gap": 0.52,
+   "adj_ci": [
+    0.31,
+    0.73
+   ],
+   "k3_to_k5": [
+    0.023,
+    -0.02,
+    0.06
+   ],
+   "k3_to_adj": [
+    0.053,
+    -0.03,
+    0.14
+   ]
+  },
+  "claude-sonnet": {
+   "k5_gap": 1.012,
+   "k5_ci": [
+    0.68,
+    1.33
+   ],
+   "adj_gap": 1.01,
+   "adj_ci": [
+    0.66,
+    1.35
+   ],
+   "k3_to_k5": [
+    -0.102,
+    -0.15,
+    -0.06
+   ],
+   "k3_to_adj": [
+    -0.1,
+    -0.18,
+    -0.02
+   ]
+  }
+ },
+ "lens_gaps": {
+  "gpt-4o": {
+   "east_asian": 0.51,
+   "mekong": 0.52,
+   "neutral": 0.86,
+   "sea": 0.32,
+   "western": 0.54
+  },
+  "claude-sonnet": {
+   "east_asian": 1.19,
+   "mekong": 1.14,
+   "neutral": 1.06,
+   "sea": 0.79,
+   "western": 0.88
+  }
+ },
+ "e3": {
+  "gpt-4o": {
+   "constrained_tau": 0.63,
+   "sens": "1/18",
+   "fpr": "0/52",
+   "youden_sens": "15/18",
+   "youden_fpr": "32/52",
+   "auc": 0.639
+  },
+  "claude-sonnet": {
+   "constrained_tau": 0.8,
+   "sens": "0/18",
+   "fpr": "1/52",
+   "youden_sens": "15/18",
+   "youden_fpr": "45/52",
+   "auc": 0.481
+  },
+  "youden_tau": 0.4,
+  "target": "sensitivity >= 90% at FPR <= 5%"
+ }
+}
