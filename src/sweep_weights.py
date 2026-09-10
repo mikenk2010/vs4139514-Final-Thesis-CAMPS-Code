@@ -80,6 +80,9 @@ def main() -> None:
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    plt.rcParams.update({"font.size": 12, "axes.labelsize": 12,
+                         "axes.titlesize": 12, "legend.fontsize": 11,
+                         "xtick.labelsize": 11, "ytick.labelsize": 11})
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
     ax.scatter(out.gap.abs(), out.qwk_sea, s=6, alpha=0.25, color="#4878CF",
                label="weight vectors")
@@ -94,9 +97,9 @@ def main() -> None:
         if r.qwk_sea > best:
             best = r.qwk_sea; fx.append(r.agap); fy.append(r.qwk_sea)
     ax.plot(fx, fy, "-o", ms=3.5, color="#2A2A35", lw=1.2,
-            label="Pareto frontier")
+            label="non-dominated set")
     ax.set_xlabel("|native $-$ SEA| cohort score gap (bands)")
-    ax.set_ylabel("Spearman $\\rho$ (panel score vs CEFR band, SEA cohort)")
+    ax.set_ylabel("Spearman $\\rho$ vs CEFR band (SEA cohort)")
     ax.set_title(f"Gap vs band association under reweighting: {args.model}")
     ax.legend()
     fig.tight_layout()
