@@ -61,7 +61,7 @@ def fig_gaps(agg: pd.DataFrame, out: Path) -> None:
         if k > b * 1.5:
             txt, col = "widened", "#c44e52"
         elif abs(pct) < 20:
-            txt, col = "no change", "#666666"
+            txt, col = "no clear change", "#666666"
         else:
             txt, col = f"$-${pct:.0f}%", "#2e7d32"
         ax.text(i, ymax * 0.97, txt, ha="center", va="top", fontsize=9.5,
