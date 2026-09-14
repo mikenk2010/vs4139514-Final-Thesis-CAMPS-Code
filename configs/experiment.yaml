@@ -30,8 +30,8 @@ models:                        # personal API accounts; exact IDs pinned before 
   - {name: llama-70b,     provider: together,  id: "meta-llama/Llama-3.3-70B-Instruct-Turbo"}
 
 generation:
-  # Applied where supported. Anthropic's current Messages API models do not
-  # expose temperature, top_p, or top_k sampling controls.
+  # Applied where supported. The pinned Anthropic SDK interface used for
+  # these runs did not expose temperature, top_p, or top_k controls.
   temperature: 0.0
   response_format: json
   max_retries: 10
