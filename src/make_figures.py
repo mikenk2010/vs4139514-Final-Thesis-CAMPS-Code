@@ -21,7 +21,7 @@ import pandas as pd
 from metrics import consensus_and_bds, gap_ci_cluster, paired_reduction_cluster
 from make_tables import gap_ci
 
-MODEL_LABEL = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
+MODEL_LABEL = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude 4.6",
                "gemini-pro": "Gemini Pro", "qwen3-local": "Qwen3 14B"}
 BAND_MAP = {"A2_0": 1, "B1_1": 2, "B1_2": 3, "B2_0": 4}
 

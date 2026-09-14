@@ -48,7 +48,7 @@ def table_e1(df: pd.DataFrame, out: Path) -> None:
     cond_label = {"baseline": "Baseline", "camps_k3": "CAMPS $k{=}3$",
                   "camps_k5": "CAMPS $k{=}5$",
                   "camps_k5_adj": "CAMPS $k{=}5$+adj."}
-    model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
+    model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude 4.6",
                    "gemini-pro": "Gemini Pro", "qwen3-local": "Qwen3 14B",
                    "llama-70b": "Llama 3.3 70B"}
     # Completeness guard: a (model, condition) cell is published only if
@@ -133,7 +133,7 @@ def table_e2(df: pd.DataFrame, out: Path, model: str) -> None:
               "camps_k3": "CAMPS $k{=}3$",
               "camps_k5": "CAMPS $k{=}5$",
               "camps_k5_adj": "CAMPS $k{=}5$ + adjudicator"}
-    model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet"}
+    model_label = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude 4.6"}
     rows = []
     for mdl in [m for m in model_label if m in set(df.model)]:
         sub_all = df[df.model == mdl]
@@ -176,7 +176,7 @@ held-out GRA split, per model.}
 \small
 \begin{tabular}{lcc}
 \hline
-Quantity & GPT-4o & Claude Sonnet \\
+Quantity & GPT-4o & Claude 4.6 \\
 \hline
 %%BODY%%
 \hline
