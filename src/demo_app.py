@@ -39,7 +39,7 @@ LENS = {"western": "Western", "sea": "Southeast Asian",
 COLOUR = {"western": "#4A69BD", "sea": "#C96A28", "east_asian": "#2A9D8F",
           "mekong": "#B8503F", "neutral": "#7f7f7f",
           "neutral_single": "#16161A", "adjudicator": "#6E6A5E"}
-MODEL_LABEL = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet",
+MODEL_LABEL = {"gpt-4o": "GPT-4o", "claude-sonnet": "Claude Sonnet 4.6",
                "qwen3-local": "Qwen3 14B (local)", "gemini-pro": "Gemini Pro"}
 E2_MODELS = ["gpt-4o", "claude-sonnet"]
 TAU_YOUDEN = 0.40          # thesis Section 4.3: Youden threshold, k = 5
@@ -54,7 +54,7 @@ FEATURED = [
      "convention by another."),
     ("WE_THA_PTJ0_237_B1_2",
      "B. Thai essay, B1 upper - largest lens disagreement on Claude",
-     "Claude Sonnet's three lenses split by two bands on this essay."),
+     "Claude Sonnet 4.6's three lenses split by two bands on this essay."),
     ("WE_ENS_SMK0_073_XX_1",
      "C. Native-English essay - the lenses disagree here too",
      "Divergence is not confined to Southeast Asian essays; on average "
@@ -258,7 +258,7 @@ with tab1:
                 st.markdown(f"Consensus **{cons5:.2f}** - BDS **{bds5:.2f}**"
                             + (f" - adjudicator **{adjv:.1f}**" if adjv is not None else ""))
             else:
-                st.caption("The 5-lens panel (E2) ran on GPT-4o and Claude Sonnet only.")
+                st.caption("The 5-lens panel (E2) ran on GPT-4o and Claude Sonnet 4.6 only.")
 
         # verdict on the richest panel available
         if not k5_rows.empty:

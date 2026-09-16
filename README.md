@@ -236,12 +236,13 @@ in E3. Reconciliation (thesis Table B.1):
 | Name in config | Identifier | Provider | Used in |
 |---|---|---|---|
 | `gpt-4o` | gpt-4o | OpenAI | E1, E2, E3 |
-| `claude-sonnet` | claude-sonnet-4-6 | Anthropic | E1, E2, E3 |
+| `claude-sonnet` | claude-sonnet-4-6 (Claude Sonnet 4.6) | Anthropic | E1, E2, E3 |
 | `gemini-pro` | gemini-3.1-pro-preview | Google | E1 (rerun after gemini-2.5-pro was withdrawn; 249 archived calls excluded) |
 | `qwen3-local` | qwen3:14b | Ollama, local | E1 |
 
-Scoring ran 18 Aug – 2 Sep 2026. Temperature 0, structured JSON; Qwen3 returned half-bands in
-295/800 calls, GPT-4o in 34/3,700.
+Scoring ran 18 Aug – 2 Sep 2026. Temperature 0 where the provider client exposes it (the pinned
+Anthropic client used its default generation settings), JSON output requested in every call; Qwen3
+returned half-bands in 295/800 calls, GPT-4o in 34/3,700.
 
 ---
 
