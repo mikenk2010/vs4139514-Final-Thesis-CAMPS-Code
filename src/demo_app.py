@@ -599,11 +599,14 @@ with tab3:
                 "five lens prompts, all asking for an IELTS Coherence & Cohesion band (1-9). Thesis essays "
                 "are served from the archived cache (instant, identical to the logs); pasted or Vietnamese "
                 "WEP essays call the model live.")
-    lm = st.selectbox("Model", [m["name"] for m in cfg["models"]],
-                      index=1, format_func=lambda n: MODEL_LABEL.get(n, n), key="live_model")
+    _live_models = [m["name"] for m in cfg["models"]]
+    lm = st.selectbox("Model", _live_models,
+                      index=_live_models.index("qwen3-local") if "qwen3-local" in _live_models else 0,
+                      format_func=lambda n: MODEL_LABEL.get(n, n), key="live_model")
     model_cfg = next(m for m in cfg["models"] if m["name"] == lm)
     if model_cfg["provider"] == "ollama":
-        st.warning("Local model: expect 30-90 s per call (6 calls). Use a cloud model in the seminar.")
+        st.info("Local open-weight model via Ollama: no API key, no network, no cost. Expect 30-90 s per call "
+                "(6 calls), so start it before you need it; cloud models answer in seconds.")
 
     src_kind = st.radio("Essay source", ["Paste text", "Vietnamese WEP essay (not in thesis experiments)",
                                          "Thesis essay by ID (cache-served)"], horizontal=True)
