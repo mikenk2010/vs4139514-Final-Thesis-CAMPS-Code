@@ -13,9 +13,11 @@ python3 -c "import streamlit, plotly, yaml, pandas" 2>/dev/null || {
 }
 
 [ -f results/demo_summary.json ] || python3 src/make_demo_summary.py
+python3 src/build_showcase.py && open demo/showcase.html   # full-screen showcase (arrow keys; F = fullscreen)
 
 echo
-echo "CAMPS demo starting at http://localhost:8501"
+echo "Showcase opened in the browser (arrow keys to advance, M = switch model, F = fullscreen)."
+echo "CAMPS explorer/live app starting at http://localhost:8501"
 echo "Tab 1: featured case A, model GPT-4o  ->  Western 5 / SEA 7 / Neutral 7, BDS 0.94"
 echo "Press Ctrl+C in this window to stop."
 echo

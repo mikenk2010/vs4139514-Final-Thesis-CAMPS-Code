@@ -95,10 +95,23 @@ on all four models.
 ## 3. Seminar demo
 
 ```bash
+bash run_demo.command          # builds and opens the showcase, then starts the Streamlit app
+```
+or step by step:
+```bash
 pip install streamlit plotly
 python src/make_demo_summary.py      # once; regenerates results/demo_summary.json from the logs
+python src/build_showcase.py         # -> demo/showcase.html (offline, self-contained; gitignored: embeds essay text)
 streamlit run src/demo_app.py
 ```
+
+**Showcase (`demo/showcase.html`)** — the 90-second stage piece: eight full-screen scenes with animated
+reveals, driven by the logs. → / ← advance, **M** switches model, **1–3** switch featured essay,
+**F** fullscreen. Scenes: title → the essay (opening highlighted) → one standard grader → five lenses
+(cards + the two extreme rationales) → consensus and BDS with the honesty note → the same essay under
+four graders → E1 at scale (animated bars with CIs) → the four verdicts.
+
+**Explorer app (Streamlit)** for Q&A:
 
 | Tab | What it shows | API calls |
 |---|---|---|

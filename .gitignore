@@ -6,3 +6,4 @@ results/**/raw/
 *.zip
 results/cache/
 results/demo_history.jsonl
+demo/showcase.html
