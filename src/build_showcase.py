@@ -64,7 +64,21 @@ def main() -> None:
                        "region": str(meta.region), "band": ("native, unbanded" if str(meta.cefr).startswith("XX") else str(meta.cefr)),
                        "cohort": str(meta.cohort), "words": len(text.split()), "models": per_model}
 
-    data = {"essays": essays, "featured": FEATURED, "models": MODELS, "label": LABEL,
+    # GRA: 140 essays x 80 human raters vs the five-lens panel (E3)
+    from metrics import consensus_and_bds
+    from scipy.stats import pearsonr, spearmanr
+    e3 = pd.DataFrame([json.loads(l) for l in Path("results/E3/scores.jsonl").read_text().splitlines()])
+    gd = pd.read_csv("results/gra_dispersion.csv")
+    thr = float(gd.dispersion.quantile(0.75))
+    a3 = consensus_and_bds(e3).merge(gd, on="essay_id")
+    gra = {}
+    for mdl in ["gpt-4o", "claude-sonnet"]:
+        x = a3[a3.model == mdl]
+        gra[mdl] = {"r": round(float(pearsonr(x.consensus, x.content_mean)[0]), 2),
+                    "rho": round(float(spearmanr(x.consensus, x.content_mean)[0]), 2),
+                    "pts": [{"h": round(float(r.content_mean), 2), "p": round(float(r.consensus), 2),
+                             "c": int(r.dispersion >= thr), "id": r.essay_id} for r in x.itertuples()]}
+    data = {"gra": gra, "essays": essays, "featured": FEATURED, "models": MODELS, "label": LABEL,
             "e1": summary["models"], "e2": summary["e2"], "lens_gaps": summary["lens_gaps"], "e3": summary["e3"]}
     html = TEMPLATE.replace("__DATA__", json.dumps(data, ensure_ascii=False))
     out = Path("demo/showcase.html"); out.parent.mkdir(exist_ok=True)
@@ -138,6 +152,8 @@ h1 em{font-style:italic;color:var(--orange)} h1 em.red{color:var(--red)} h1 em.b
 .verd .v{font-family:"JetBrains Mono",Menlo,monospace;font-size:1.5vh;letter-spacing:.1em;text-transform:uppercase}
 .ok{color:var(--blue)} .bad{color:var(--red)} .mid{color:var(--mute)}
 .hint{position:absolute;right:6vw;top:4vh;font-family:"JetBrains Mono",Menlo,monospace;font-size:1.2vh;letter-spacing:.15em;color:var(--mute2)}
+.sc{width:100%;height:100%} .sc .dot{opacity:0;transition:opacity .35s} .sc .dot.in{opacity:.85}
+.sc text{font-family:Inter,Helvetica,sans-serif;font-size:2.2px;fill:#6E6A5E} .sc .ax{stroke:#D8D2C2;stroke-width:.3}
 .gauge{height:1.6vh;background:var(--line);border-radius:999px;overflow:hidden;margin-top:1.2vh;position:relative}
 .gauge i{display:block;height:100%;width:0;background:var(--orange);transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
 .gauge b{position:absolute;top:-.6vh;width:2px;height:2.8vh;background:var(--ink);left:0}
@@ -158,7 +174,7 @@ const n0=x=>Number.isInteger(x)?x.toFixed(0):x.toFixed(1);
 function cur(){return D.essays[essayId].models[model];}
 function modelbar(){return `<div class="modelbar">`+D.models.map(m=>`<button class="mbtn ${m===model?'on':''}" onclick="setModel('${m}')" ${D.essays[essayId].models[m]?'':'disabled style="opacity:.35"'}>${D.label[m]}</button>`).join("")+`</div>`;}
 function setModel(m){model=m;render();}
-function foot(l,n){return `<div class="foot"><span>${l}</span><span>${n} / 8 &nbsp;·&nbsp; → next · ← back · M model</span></div>`;}
+function foot(l,n){return `<div class="foot"><span>${l}</span><span>${n} / 9 &nbsp;·&nbsp; → next · ← back · M model</span></div>`;}
 
 const scenes=[
 ()=>`<div class="scene dark on"><div class="kicker">RMIT Vietnam · COSC2993 · Minor thesis seminar · September 2026</div>
@@ -217,7 +233,25 @@ const scenes=[
  <div class="sub">An <b>unadjusted disparity</b>: the cohorts were not matched on human-judged quality, so this is consistent with cultural filtering but does not prove it. The panel narrows the gap by marking both cohorts down, the native cohort more.</div>
  ${foot("Thesis Figure 4-1 · Table 4.1 · writer-cluster bootstrap, 10,000 resamples","7")}<div class="band bot"></div></div>`;},
 
-()=>`<div class="scene dark on"><div class="kicker">07 · Four hypotheses, four answers</div>
+()=>{const g=D.gra[model==="claude-sonnet"?"claude-sonnet":"gpt-4o"];const mdl=model==="claude-sonnet"?"claude-sonnet":"gpt-4o";
+ const W=100,H=62,x0=10,y0=6,x1=96,y1=54;const sx=h=>x0+(h/10)*(x1-x0);const sy=p=>y1-((p-1)/8)*(y1-y0);
+ const pts=g.pts.map((q,i)=>`<circle class="dot" data-i="${Math.floor(i/6)}" cx="${sx(q.h).toFixed(2)}" cy="${sy(q.p).toFixed(2)}" r="1.1" fill="${q.c?'#B8503F':'#4A69BD'}"><title>${q.id}: human ${q.h}/10 · panel ${q.p}/9</title></circle>`).join("");
+ const ticksX=[0,2,4,6,8,10].map(v=>`<line class="ax" x1="${sx(v)}" y1="${y1}" x2="${sx(v)}" y2="${y1+1}"/><text x="${sx(v)}" y="${y1+4}" text-anchor="middle">${v}</text>`).join("");
+ const ticksY=[1,3,5,7,9].map(v=>`<line class="ax" x1="${x0-1}" y1="${sy(v)}" x2="${x0}" y2="${sy(v)}"/><text x="${x0-2}" y="${sy(v)+0.8}" text-anchor="end">${v}</text>`).join("");
+ return `<div class="scene on"><div class="band top"></div><div class="kicker">07 · Human raters vs the AI panel · 140 GRA essays × 80 raters each</div>
+ <h1>Where humans exist, the panel tracks them <em class="blue">closely</em> — in rank, not in level.</h1>
+ <div class="modelbar"><button class="mbtn ${mdl==='gpt-4o'?'on':''}" onclick="setModel('gpt-4o')">GPT-4o</button><button class="mbtn ${mdl==='claude-sonnet'?'on':''}" onclick="setModel('claude-sonnet')">Claude Sonnet 4.6</button></div>
+ <div class="row" style="flex:1;min-height:0;margin-top:1.5vh;gap:2.5vw">
+  <div style="flex:1.35;min-width:0"><svg class="sc" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet"><rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}" fill="#F8F5EE" stroke="#D8D2C2" stroke-width=".3"/>${ticksX}${ticksY}
+   <text x="${(x0+x1)/2}" y="${H-0.5}" text-anchor="middle">80-rater human mean, Content (0–10)</text><text transform="translate(2.5 ${(y0+y1)/2}) rotate(-90)" text-anchor="middle">panel consensus, IELTS C&amp;C band (1–9)</text>${pts}</svg></div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:1.6vh">
+   <div class="card" data-i="0"><div class="lbl">association with 80 human raters</div><div class="num" style="color:var(--blue)">r = ${g.r.toFixed(2)}</div><div class="desc">Spearman ρ = ${g.rho.toFixed(2)} · ${D.label[mdl]}</div></div>
+   <div class="card" data-i="1"><div class="lbl">what this does and does not show</div><div class="rat" style="border:0;padding:0;margin:0">The panel <b>orders</b> essays much as 80 humans do. It does <b>not</b> show calibration (different scales, different rubric: humans rated Content, lenses rated Coherence &amp; Cohesion), and it cannot settle the native−SEA question: this set has only four native essays.</div></div>
+   <div class="card" data-i="2" style="border-top:.6vh solid var(--red)"><div class="lbl">the red dots</div><div class="rat" style="border:0;padding:0;margin:0"><span style="color:var(--red)">●</span> top-quartile human disagreement — the "contested" essays BDS was supposed to find. At the specified 5% false-positive rate it found 1 of 18 (GPT-4o) and 0 of 18 (Claude).</div></div>
+  </div></div>
+ ${foot("Thesis §4.4 human-anchored check (exploratory) · §4.3 Experiment 3","8")}<div class="band bot"></div></div>`;},
+
+()=>`<div class="scene dark on"><div class="kicker">08 · Four hypotheses, four answers</div>
  <h1 style="color:var(--cream)">Two survived scrutiny. Two did not. <em>Both kinds are findings.</em></h1>
  <div class="verd" style="border-color:#333">
   <div class="h" data-i="0">H1 · a native−SEA gap on ≥ 4 models</div><div class="v ok" data-i="0">Supported — as an unadjusted disparity</div><div data-i="0">0.19 – 1.18 bands; every interval excludes zero; cultural cause not isolated</div>
@@ -226,11 +260,11 @@ const scenes=[
   <div class="h" data-i="3">H4 · a fairness–accuracy boundary</div><div class="v mid" data-i="3">Not testable against graded truth · small trade-off on a proxy</div><div data-i="3">10,626 weightings; equal weighting dominated; exploratory</div>
  </div>
  <div class="sub" style="margin-top:3vh;font-size:2.2vh;color:var(--cream)">The scoring gap is real and uneven; it is partially narrowable today, without retraining — and not yet self-diagnosing. Neither a single judge nor a diverse panel should be presumed fair without a test like this one.</div>
- ${foot("Thesis Table 5.1 · code and logs: github.com/mikenk2010/vs4139514-Final-Thesis-CAMPS-Code","8")}</div>`
+ ${foot("Thesis Table 5.1 · code and logs: github.com/mikenk2010/vs4139514-Final-Thesis-CAMPS-Code","9")}</div>`
 ];
 
 function render(){const st=document.getElementById("stage");st.innerHTML=scenes[scene]();
- const els=[...st.querySelectorAll("[data-i]")];els.forEach(el=>setTimeout(()=>el.classList.add("in"),120+180*(+el.dataset.i)));
+ const els=[...st.querySelectorAll("[data-i]")];els.forEach(el=>setTimeout(()=>el.classList.add("in"),120+(el.classList.contains("dot")?60:180)*(+el.dataset.i)));
  st.querySelectorAll(".card:not([data-i]),.dcard:not([data-i])").forEach(el=>el.classList.add("in"));
  st.querySelectorAll(".chip:not(.in)").forEach((el,i)=>setTimeout(()=>el.classList.add("in"),150*i));
  st.querySelectorAll(".bar").forEach((b,i)=>setTimeout(()=>b.style.height=b.dataset.h+"%",200+120*i));
