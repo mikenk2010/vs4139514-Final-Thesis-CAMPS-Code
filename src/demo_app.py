@@ -62,6 +62,84 @@ FEATURED = [
      "detector (thesis Section 4.4)."),
 ]
 
+LENS_DESC = {
+    "western": ("thesis first · linear progression · explicit links",
+                "Kaplan 1966 · Connor 2011"),
+    "sea": ("thesis may emerge gradually · hedging as courtesy",
+            "Connor 2011 · Ishikawa 2023"),
+    "east_asian": ("reader-responsible · late or implied thesis", "Hinds 1987"),
+    "mekong": ("proverb-anchored claims · indirectness as politeness",
+               "regional relevance · Vietnam, Thailand, Laos, Cambodia"),
+    "neutral": ("argumentative merit, regardless of ordering",
+                "a regulatory ideal · Fricker 2007"),
+    "neutral_single": ("plain IELTS Coherence & Cohesion prompt, no cultural framing",
+                       "the baseline every panel is compared with"),
+    "adjudicator": ("reads the essay and all five rationales, then rules",
+                    "optional; tested in Experiment 2"),
+}
+
+
+def lens_card(agent: str, score: float | None, rationale: str | None,
+              in_panel: bool = True) -> str:
+    """One card per evaluator, styled like slide 6 of the seminar deck."""
+    import html as _html
+    col = COLOUR[agent]
+    desc, src = LENS_DESC[agent]
+    sc = "—" if score is None else f"{score:.1f}"
+    rat = "" if not rationale else _html.escape(rationale)
+    border = f"2px solid {col}" if in_panel else f"2px dashed {col}"
+    return (
+        f'<div style="border:{border};border-radius:8px;padding:10px 12px;'
+        f'background:#F8F5EE;height:100%;font-family:Inter,Helvetica,Arial,sans-serif;">'
+        f'<div style="display:flex;justify-content:space-between;align-items:baseline;">'
+        f'<span style="font-family:monospace;letter-spacing:1px;font-size:11px;'
+        f'text-transform:uppercase;color:{col};font-weight:700;">{LENS[agent]}</span>'
+        f'<span style="font-size:26px;font-weight:700;color:{col};">{sc}</span></div>'
+        f'<div style="font-style:italic;font-size:12px;color:#333;margin-top:2px;">{desc}</div>'
+        f'<div style="font-family:monospace;font-size:10px;color:#6E6A5E;margin-top:2px;">{src}</div>'
+        + (f'<hr style="margin:6px 0;border:0;border-top:1px solid #D8D2C2;">'
+           f'<div style="font-size:12px;line-height:1.45;color:#222;">{rat}</div>' if rat else "")
+        + '</div>')
+
+
+def render_panel_cards(rows: pd.DataFrame, panel: list[str], baseline_row, adj_row) -> None:
+    """Standard grader | five lens cards | consensus box - the slide-6 picture, filled in."""
+    st.markdown("**The panel, essay by essay** — same model, same essay, one system prompt per lens; "
+                "the agents never see each other.")
+    cols = st.columns([1] + [1] * len(panel), gap="small")
+    with cols[0]:
+        if baseline_row is not None:
+            st.markdown(lens_card("neutral_single", float(baseline_row.score),
+                                  baseline_row.rationale, in_panel=False),
+                        unsafe_allow_html=True)
+    for c, a in zip(cols[1:], panel):
+        r = rows[rows.agent == a]
+        with c:
+            if r.empty:
+                st.markdown(lens_card(a, None, "not run on this model"), unsafe_allow_html=True)
+            else:
+                st.markdown(lens_card(a, float(r.iloc[0].score), r.iloc[0].rationale),
+                            unsafe_allow_html=True)
+    scores = [float(rows[rows.agent == a].iloc[0].score) for a in panel if not rows[rows.agent == a].empty]
+    if scores:
+        cons, b = bds_of(scores)
+        adj_txt = ""
+        if adj_row is not None:
+            adj_txt = (f' &nbsp;·&nbsp; <span style="color:#9BA0B5;">adjudicator</span> '
+                       f'<b>{float(adj_row.score):.1f}</b>')
+        st.markdown(
+            f'<div style="background:#16161A;color:#EFEBE2;border-radius:8px;padding:10px 16px;'
+            f'margin-top:8px;font-family:Inter,Helvetica,Arial,sans-serif;">'
+            f'<span style="font-family:monospace;font-size:11px;letter-spacing:1px;color:#9BA0B5;">CONSENSUS</span> '
+            f'&nbsp; weighted mean <b>S* = {cons:.2f}</b> &nbsp;·&nbsp; '
+            f'<span style="color:#C96A28;">disagreement</span> <b>BDS = {b:.2f}</b>'
+            f'{adj_txt}'
+            f' &nbsp;·&nbsp; <span style="font-size:12px;color:#9BA0B5;">'
+            f'lens scores {", ".join(f"{x:.0f}" if x == int(x) else f"{x:.1f}" for x in scores)}'
+            f' → mean {cons:.2f}; BDS = √(mean of squared deviations)</span></div>',
+            unsafe_allow_html=True)
+
+
 def thesis_user_prompt(essay: str) -> str:
     """Byte-identical to run_experiment.py so thesis essays hit the cache."""
     return ("Score the following essay. Respond with JSON: "
@@ -235,7 +313,28 @@ with tab1:
         k3_rows = rows[(rows.condition == "camps_k3")]
         k5_rows = rows[(rows.condition == "camps_k5")]
         adj_rows = rows[(rows.agent == "adjudicator")]
-        c1, c2 = st.columns(2)
+        src = k5_rows if not k5_rows.empty else k3_rows
+        panel = PANEL5 if not k5_rows.empty else PANEL3
+        base_row = rows[rows.agent == "neutral_single"].iloc[0] if len(base) else None
+        adj_row = adj_rows.iloc[0] if not adj_rows.empty else None
+        render_panel_cards(src, panel, base_row, adj_row)
+        if not k5_rows.empty:
+            cons5, bds5 = bds_of([float(k5_rows[k5_rows.agent == a].score.iloc[0]) for a in PANEL5
+                                  if a in set(k5_rows.agent)])
+            verdict_box(bds5, model, 5)
+        elif not k3_rows.empty:
+            cons3, bds3 = bds_of([float(k3_rows[k3_rows.agent == a].score.iloc[0]) for a in PANEL3
+                                  if a in set(k3_rows.agent)])
+            verdict_box(bds3, model, 3)
+        if not k5_rows.empty and not k3_rows.empty:
+            l3 = {a: float(k3_rows[k3_rows.agent == a].score.iloc[0]) for a in PANEL3
+                  if a in set(k3_rows.agent)}
+            _, b3 = bds_of(list(l3.values()))
+            st.caption(f"Three-lens pilot panel (Experiment 1) on the same essay: "
+                       f"Western {l3.get('western', float('nan')):.0f} · SEA {l3.get('sea', float('nan')):.0f} · "
+                       f"Neutral {l3.get('neutral', float('nan')):.0f} → BDS {b3:.2f}.")
+        charts = st.expander("Score charts (E1 three-lens panel, E2 five-lens panel + adjudicator)")
+        c1, c2 = charts.columns(2)
         with c1:
             if not k3_rows.empty:
                 l3 = {a: float(k3_rows[k3_rows.agent == a].score.iloc[0]) for a in PANEL3
@@ -260,16 +359,14 @@ with tab1:
             else:
                 st.caption("The 5-lens panel (E2) ran on GPT-4o and Claude Sonnet 4.6 only.")
 
-        # verdict on the richest panel available
-        if not k5_rows.empty:
-            verdict_box(bds5, model, 5)
-        elif not k3_rows.empty:
-            verdict_box(bds3, model, 3)
-
-        st.markdown("**What each lens said** (verbatim rationales from the logs)")
-        src = k5_rows if not k5_rows.empty else k3_rows
-        order = [a for a in ["neutral_single"] + PANEL5 + ["adjudicator"]]
-        rationale_panel(pd.concat([rows[rows.agent == "neutral_single"], src, adj_rows]), order)
+        if adj_row is not None:
+            with st.expander(f"Meta-adjudicator - band {float(adj_row.score):.1f} (reads the essay and all five rationales)"):
+                st.write(adj_row.rationale)
+        with st.expander("The five system prompts, verbatim (thesis Appendix A)"):
+            for a in PANEL5:
+                txt = Path(f"prompts/cri_{a}.txt").read_text().strip()
+                st.markdown(f"**{LENS[a]}**")
+                st.code(txt, language=None, wrap_lines=True)
 
 # ================================================================= TAB 2
 with tab2:
