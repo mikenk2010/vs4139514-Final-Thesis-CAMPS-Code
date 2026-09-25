@@ -105,7 +105,7 @@ def lens_card(agent: str, score: float | None, rationale: str | None,
 def render_panel_cards(rows: pd.DataFrame, panel: list[str], baseline_row, adj_row) -> None:
     """Standard grader | five lens cards | consensus box - the slide-6 picture, filled in."""
     st.markdown("**The panel, essay by essay** — same model, same essay, one system prompt per lens; "
-                "the agents never see each other.")
+                "the agents never see each other. Scores are IELTS Coherence & Cohesion bands (1-9).")
     cols = st.columns([1] + [1] * len(panel), gap="small")
     with cols[0]:
         if baseline_row is not None:
@@ -459,9 +459,10 @@ with tab2:
 
 # ================================================================= TAB 3
 with tab3:
-    st.markdown("Runs the **exact thesis prompts** (Appendix A). Thesis essays are served "
-                "from the archived cache (instant, identical to the logs); pasted or "
-                "Vietnamese WEP essays call the model live.")
+    st.markdown("Runs the **exact thesis prompts** (Appendix A): the plain standard-grader prompt and the "
+                "five lens prompts, all asking for an IELTS Coherence & Cohesion band (1-9). Thesis essays "
+                "are served from the archived cache (instant, identical to the logs); pasted or Vietnamese "
+                "WEP essays call the model live.")
     lm = st.selectbox("Model", [m["name"] for m in cfg["models"]],
                       index=1, format_func=lambda n: MODEL_LABEL.get(n, n), key="live_model")
     model_cfg = next(m for m in cfg["models"] if m["name"] == lm)
@@ -470,7 +471,7 @@ with tab3:
 
     src_kind = st.radio("Essay source", ["Paste text", "Vietnamese WEP essay (not in thesis experiments)",
                                          "Thesis essay by ID (cache-served)"], horizontal=True)
-    essay_text, essay_id, label = None, None, None
+    essay_text, essay_id, label, live_meta = None, None, None, None
     if src_kind == "Paste text":
         t = st.text_area("Essay (English, 150+ words)", height=180)
         if t.strip():
@@ -478,13 +479,23 @@ with tab3:
     elif src_kind.startswith("Vietnamese"):
         vn = sorted(mf[(mf.cohort == "mekong_validation") & (mf.region == "VNM")].index)
         essay_id = st.selectbox("WEP essay", vn)
-        essay_text, label = read_essay(cfg, mf, essay_id), essay_id
+        essay_text, label, live_meta = read_essay(cfg, mf, essay_id), essay_id, mf.loc[essay_id]
     else:
         essay_id = st.text_input("Essay ID", "WE_PHL_PTJ0_087_B1_2").strip()
         if essay_id in mf.index:
-            essay_text, label = read_essay(cfg, mf, essay_id), essay_id
+            essay_text, label, live_meta = read_essay(cfg, mf, essay_id), essay_id, mf.loc[essay_id]
         else:
             st.error("Unknown essay ID.")
+
+    if essay_text and src_kind != "Paste text":
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Essay", essay_id.replace("_", " "))
+        m2.metric("Region", str(live_meta.region))
+        m3.metric("CEFR band", "native (unbanded)" if str(live_meta.cefr).startswith("XX") else str(live_meta.cefr))
+        with st.expander("Essay text", expanded=False):
+            st.markdown('<div style="max-height:220px;overflow:auto;line-height:1.6;padding:8px;'
+                        'border:1px solid #ddd;border-radius:6px;">' + essay_text.replace("\n", "<br>")
+                        + "</div>", unsafe_allow_html=True)
 
     hist_path = Path("results/demo_history.jsonl")
     run = st.button("Score with standard grader + 5 lenses", type="primary",
@@ -493,26 +504,49 @@ with tab3:
         client = ScoringClient(model_cfg["provider"], model_cfg["id"],
                                Path(cfg["paths"]["cache"]), cfg["generation"]["max_retries"])
         uprompt = thesis_user_prompt(essay_text)
-        status = st.status("Scoring...", expanded=True)
-        results = {}
-        for agent in ["neutral_single"] + PANEL5:
+        order = ["neutral_single"] + PANEL5
+        # live card row: each card fills in as its call returns
+        st.markdown("**The panel, live** — one system prompt per evaluator, called independently; "
+                    "scores are IELTS Coherence & Cohesion bands (1-9).")
+        slots = st.columns([1] * len(order), gap="small")
+        for c, a in zip(slots, order):
+            c.markdown(lens_card(a, None, "waiting...", in_panel=(a != "neutral_single")),
+                       unsafe_allow_html=True)
+        prog = st.progress(0.0, "Scoring...")
+        results, timings = {}, {}
+        for i_a, (c, a) in enumerate(zip(slots, order)):
+            prog.progress(i_a / len(order), f"{LENS[a]}: calling {model_cfg['id']} ...")
             t0 = time.time()
-            r = client.score(essay_id, agent,
-                             Path(f"prompts/cri_{agent}.txt").read_text(), uprompt)
-            dt = time.time() - t0
-            results[agent] = r
-            status.write(f"{LENS[agent]}: {r.score:.1f} ({'cached' if dt < 0.5 else f'{dt:.1f}s'})")
-        status.update(label="Done", state="complete", expanded=False)
-        lens_scores = {a: results[a].score for a in PANEL5}
+            r = client.score(essay_id, a, Path(f"prompts/cri_{a}.txt").read_text(), uprompt)
+            timings[a] = time.time() - t0
+            results[a] = r
+            c.empty()
+            c.markdown(lens_card(a, float(r.score), r.rationale, in_panel=(a != "neutral_single")),
+                       unsafe_allow_html=True)
+        prog.progress(1.0, "Done")
+        lens_scores = {a: float(results[a].score) for a in PANEL5}
         cons, bds = bds_of(list(lens_scores.values()))
-        st.plotly_chart(score_chart(results["neutral_single"].score, lens_scores, None,
-                                    f"{MODEL_LABEL.get(lm, lm)} - {label}"), use_container_width=True)
+        st.markdown(
+            f'<div style="background:#16161A;color:#EFEBE2;border-radius:8px;padding:10px 16px;'
+            f'margin-top:8px;font-family:Inter,Helvetica,Arial,sans-serif;">'
+            f'<span style="font-family:monospace;font-size:11px;letter-spacing:1px;color:#9BA0B5;">CONSENSUS</span> '
+            f'&nbsp; weighted mean <b>S* = {cons:.2f}</b> &nbsp;·&nbsp; '
+            f'<span style="color:#C96A28;">disagreement</span> <b>BDS = {bds:.2f}</b> &nbsp;·&nbsp; '
+            f'<span style="color:#9BA0B5;">standard grader</span> <b>{float(results["neutral_single"].score):.1f}</b>'
+            f' &nbsp;·&nbsp; <span style="font-size:12px;color:#9BA0B5;">lens scores '
+            f'{", ".join(f"{x:.0f}" if x == int(x) else f"{x:.1f}" for x in lens_scores.values())}'
+            f' → mean {cons:.2f}; BDS = √(mean of squared deviations)</span></div>',
+            unsafe_allow_html=True)
         verdict_box(bds, lm, 5)
-        for a in ["neutral_single"] + PANEL5:
-            with st.expander(f"{LENS[a]} - band {results[a].score:.1f}", expanded=(a in ("western", "sea"))):
-                st.write(results[a].rationale)
+        cached = [a for a in order if timings[a] < 0.5]
+        st.caption("Call times: " + ", ".join(
+            f"{LENS[a]} {'cached' if timings[a] < 0.5 else f'{timings[a]:.1f}s'}" for a in order)
+            + (". Cached = identical to the archived thesis run." if cached else "."))
+        with st.expander("Score chart"):
+            st.plotly_chart(score_chart(float(results["neutral_single"].score), lens_scores, None,
+                                        f"{MODEL_LABEL.get(lm, lm)} - {label}"), use_container_width=True)
         rec = {"ts": _dt.datetime.now().isoformat(timespec="seconds"), "label": label,
-               "essay_id": essay_id, "model": lm, "baseline": results["neutral_single"].score,
+               "essay_id": essay_id, "model": lm, "baseline": float(results["neutral_single"].score),
                "lens": lens_scores, "consensus": round(cons, 2), "bds": round(bds, 2)}
         with hist_path.open("a") as f:
             f.write(json.dumps(rec) + "\n")
