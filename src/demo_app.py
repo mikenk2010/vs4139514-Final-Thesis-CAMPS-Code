@@ -244,10 +244,44 @@ def rationale_panel(rows: pd.DataFrame, order: list[str]) -> None:
 
 
 # ----------------------------------------------------------------- app
-st.set_page_config(page_title="CAMPS demo", layout="wide")
-st.title("CAMPS - Culturally-Aware Multi-Perspective Scoring")
-st.caption("Bao Nguyen, s4139514 - RMIT Vietnam. Every number on this page "
-           "is read from the thesis experiment logs; nothing is simulated.")
+st.set_page_config(page_title="CAMPS demo", layout="wide", initial_sidebar_state="collapsed")
+st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+#MainMenu, footer, header[data-testid="stHeader"] {visibility:hidden; height:0;}
+.block-container {padding-top:1.2rem; padding-bottom:2rem; max-width:1500px;}
+html, body, [class*="css"] {font-family:Inter,Helvetica,Arial,sans-serif;}
+.camps-kicker {font-family:"JetBrains Mono",Menlo,monospace; font-size:12px; letter-spacing:2px;
+  text-transform:uppercase; color:#C96A28; margin-bottom:4px;}
+.camps-h1 {font-family:"Playfair Display",Georgia,serif; font-size:40px; line-height:1.15; color:#16161A; margin:0 0 6px 0;}
+.camps-h1 em {color:#C96A28;}
+.camps-h1 em.red {color:#B8503F;}
+.camps-h1 em.blue {color:#4A69BD;}
+.camps-sub {font-size:15px; color:#6E6A5E; margin-bottom:14px;}
+.camps-rule {border:0; border-top:1px solid #D8D2C2; margin:14px 0;}
+.camps-foot {font-family:"JetBrains Mono",Menlo,monospace; font-size:11px; color:#6E6A5E; letter-spacing:1px; margin-top:10px;}
+.big-num {font-family:"Playfair Display",Georgia,serif; font-style:italic; font-size:52px; line-height:1; color:#16161A;}
+.big-num.orange {color:#C96A28;} .big-num.blue {color:#4A69BD;} .big-num.red {color:#B8503F;}
+.stat-card {background:#F8F5EE; border:1px solid #D8D2C2; border-radius:10px; padding:16px 18px; height:100%;}
+.stat-card .lbl {font-family:"JetBrains Mono",Menlo,monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#6E6A5E;}
+.stat-card .txt {font-size:13px; color:#333; margin-top:6px; line-height:1.45;}
+.dark-card {background:#1E2333; border-radius:10px; padding:16px 18px; color:#EFEBE2; height:100%;}
+.dark-card .lbl {font-family:"JetBrains Mono",Menlo,monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#9BA0B5;}
+.dark-card .q {font-family:"Playfair Display",Georgia,serif; font-style:italic; font-size:17px; line-height:1.45; margin-top:8px;}
+.essay-box {background:#F8F5EE; border:1px solid #D8D2C2; border-radius:10px; padding:18px 22px;
+  font-family:"Playfair Display",Georgia,serif; font-size:17px; line-height:1.65; color:#222; max-height:420px; overflow:auto;}
+.essay-box mark {background:#F5D9BF; color:#16161A; padding:0 3px; border-radius:3px;}
+.essay-box .ttl {font-family:Inter,sans-serif; font-size:12px; color:#6E6A5E; margin-bottom:8px;}
+.chip {display:inline-block; border-radius:999px; padding:8px 16px; margin:4px 6px 4px 0; font-family:Inter,sans-serif; font-size:14px; color:#fff;}
+.chip b {font-family:"Playfair Display",Georgia,serif; font-size:20px; margin-left:8px;}
+.stTabs [data-baseweb="tab"] {font-family:"JetBrains Mono",Menlo,monospace; font-size:12px; letter-spacing:1px; text-transform:uppercase;}
+div[data-testid="stMetricValue"] {font-family:"Playfair Display",Georgia,serif;}
+</style>
+""", unsafe_allow_html=True)
+st.markdown('<div class="camps-kicker">RMIT Vietnam · COSC2993 · Minor thesis seminar · Bao Nguyen s4139514</div>'
+            '<div class="camps-h1">CAMPS — Culturally-Aware <em>Multi-Perspective</em> Scoring</div>'
+            '<div class="camps-sub">Every number on this screen is read from the thesis experiment logs. Nothing is simulated.</div>',
+            unsafe_allow_html=True)
 
 cfg = yaml.safe_load(Path("configs/experiment.yaml").read_text())
 logs = load_logs()
@@ -255,9 +289,98 @@ mf = load_manifest(cfg["paths"]["manifest"])
 gra = load_gra()
 summary = load_summary()
 
-tab1, tab2, tab3 = st.tabs(["1 - Essay explorer (archived, instant)",
-                            "2 - What the thesis found",
-                            "3 - Live scoring"])
+tab0, tab1, tab2, tab3 = st.tabs(["Showcase · one essay, five lenses",
+                                  "Essay explorer (archived)",
+                                  "What the thesis found",
+                                  "Live scoring"])
+
+
+def first_sentence_highlight(text: str, n_chars: int = 900) -> str:
+    """Essay excerpt with the opening sentence highlighted (the proverb / context-first move)."""
+    import html as _html, re
+    t = text.strip()
+    m = re.search(r"[.!?](\s|$)", t)
+    cut = m.end() if m else min(len(t), 120)
+    head, rest = t[:cut], t[cut:]
+    if len(rest) > n_chars:
+        rest = rest[:n_chars].rsplit(" ", 1)[0] + " …"
+    return (f'<div class="essay-box"><div class="ttl">Opening sentence highlighted — the move the lenses '
+            f'read differently</div><mark>{_html.escape(head)}</mark>{_html.escape(rest).replace(chr(10), "<br>")}</div>')
+
+
+def scores_for(essay_id: str, model: str):
+    rows = logs[(logs.essay_id == essay_id) & (logs.model == model)]
+    base = rows[rows.agent == "neutral_single"]
+    k5 = rows[rows.condition == "camps_k5"]
+    k3 = rows[rows.condition == "camps_k3"]
+    adj = rows[rows.agent == "adjudicator"]
+    src = k5 if not k5.empty else k3
+    panel = PANEL5 if not k5.empty else PANEL3
+    lens = {a: src[src.agent == a].iloc[0] for a in panel if not src[src.agent == a].empty}
+    return (base.iloc[0] if not base.empty else None), lens, (adj.iloc[0] if not adj.empty else None), panel
+
+
+# ================================================================= TAB 0 (showcase)
+with tab0:
+    sc_left, sc_right = st.columns([1.15, 1], gap="large")
+    with sc_left:
+        st.markdown('<div class="camps-kicker">01 · One essay. Two verdicts.</div>'
+                    '<div class="camps-h1">The same essay. Five readers. <em class="red">Two bands apart.</em></div>'
+                    '<div class="camps-sub">A real Philippine essay from the ICNALE corpus (band B1 upper, 300 words). '
+                    'It opens with a proverb and lets its position emerge — the way many Asian traditions teach.</div>',
+                    unsafe_allow_html=True)
+        sc_model = st.segmented_control("Model", [m for m in MODEL_LABEL if m in set(logs.model)],
+                                        format_func=MODEL_LABEL.get, default="gpt-4o", key="sc_model")
+        sc_step = st.segmented_control("Reveal", ["1 · the essay", "2 · one AI grader", "3 · five cultural lenses",
+                                                  "4 · consensus & disagreement"],
+                                       default="4 · consensus & disagreement", key="sc_step")
+        step = int((sc_step or "4")[0])
+        try:
+            sc_text = read_essay(cfg, mf, "WE_PHL_PTJ0_087_B1_2")
+            st.markdown(first_sentence_highlight(sc_text), unsafe_allow_html=True)
+        except Exception:
+            st.warning("Essay text not available on this machine.")
+    with sc_right:
+        base_r, lens_r, adj_r, panel_used = scores_for("WE_PHL_PTJ0_087_B1_2", sc_model or "gpt-4o")
+        if step >= 2 and base_r is not None:
+            st.markdown('<div class="camps-kicker">02 · A standard AI grader</div>', unsafe_allow_html=True)
+            c1, c2 = st.columns([1, 2.2])
+            c1.markdown(f'<div class="big-num">{float(base_r.score):.0f}<span style="font-size:22px;color:#6E6A5E;"> / 9</span></div>'
+                        '<div class="camps-foot">IELTS C&C band</div>', unsafe_allow_html=True)
+            c2.markdown(f'<div class="stat-card"><div class="lbl">its rationale</div>'
+                        f'<div class="txt">{base_r.rationale}</div></div>', unsafe_allow_html=True)
+        if step >= 3 and lens_r:
+            st.markdown('<div class="camps-kicker" style="margin-top:14px;">03 · Five cultural lenses, same essay, same model</div>',
+                        unsafe_allow_html=True)
+            chips = "".join(
+                f'<span class="chip" style="background:{COLOUR[a]};">{LENS[a]}<b>{float(r.score):.0f}</b></span>'
+                for a, r in lens_r.items())
+            st.markdown(chips, unsafe_allow_html=True)
+            lo = min(lens_r, key=lambda a: float(lens_r[a].score)); hi = max(lens_r, key=lambda a: float(lens_r[a].score))
+            q1, q2 = st.columns(2)
+            q1.markdown(f'<div class="dark-card"><div class="lbl" style="color:{COLOUR[lo]};">{LENS[lo]} lens · band {float(lens_r[lo].score):.0f}</div>'
+                        f'<div class="q">“{lens_r[lo].rationale}”</div></div>', unsafe_allow_html=True)
+            q2.markdown(f'<div class="dark-card"><div class="lbl" style="color:{COLOUR[hi]};">{LENS[hi]} lens · band {float(lens_r[hi].score):.0f}</div>'
+                        f'<div class="q">“{lens_r[hi].rationale}”</div></div>', unsafe_allow_html=True)
+        if step >= 4 and lens_r:
+            vals = [float(r.score) for r in lens_r.values()]
+            cons, b = bds_of(vals)
+            st.markdown('<div class="camps-kicker" style="margin-top:14px;">04 · Consensus and disagreement</div>', unsafe_allow_html=True)
+            k1, k2, k3c = st.columns(3)
+            k1.markdown(f'<div class="stat-card"><div class="lbl">panel consensus S*</div><div class="big-num blue">{cons:.2f}</div>'
+                        f'<div class="txt">mean of {", ".join(f"{v:.0f}" for v in vals)}</div></div>', unsafe_allow_html=True)
+            k2.markdown(f'<div class="stat-card"><div class="lbl">disagreement · BDS</div><div class="big-num orange">{b:.2f}</div>'
+                        f'<div class="txt">spread of the lens scores, in bands</div></div>', unsafe_allow_html=True)
+            flagged = b >= TAU_YOUDEN
+            k3c.markdown(f'<div class="stat-card" style="border-color:{"#B8503F" if flagged else "#2A9D8F"};"><div class="lbl">review trigger (τ = 0.40)</div>'
+                         f'<div class="big-num {"red" if flagged else ""}" style="font-size:30px;padding-top:8px;">{"FLAG for a human" if flagged else "accept"}</div>'
+                         f'<div class="txt">proposed by the framework; Experiment 3 found it does <b>not</b> yet work reliably at scale</div></div>',
+                         unsafe_allow_html=True)
+            if adj_r is not None:
+                st.caption(f"Meta-adjudicator (reads the essay and all five rationales): band {float(adj_r.score):.0f}. "
+                           f"Scores are IELTS Coherence & Cohesion bands, 1–9.")
+    st.markdown('<hr class="camps-rule"><div class="camps-foot">Switch the model above to see the same essay under a different grader — the effect is model-dependent. '
+                'Full archive: Essay explorer · results at scale: What the thesis found</div>', unsafe_allow_html=True)
 
 # ================================================================= TAB 1
 with tab1:
@@ -373,9 +496,21 @@ with tab2:
     if summary is None:
         st.error("results/demo_summary.json missing - run `python src/make_demo_summary.py`.")
     else:
-        st.markdown("#### Experiment 1 - every model scored native-English essays above "
-                    "upper-band Southeast Asian essays (n = 100 per cohort)")
         ms = summary["models"]
+        st.markdown('<div class="camps-kicker">The results at scale · 200 essays · 4 model families · 80 human raters</div>'
+                    '<div class="camps-h1" style="font-size:32px;">Every model scored Southeast Asian writing <em class="red">lower.</em></div>',
+                    unsafe_allow_html=True)
+        b1, b2, b3, b4 = st.columns(4)
+        b1.markdown('<div class="stat-card"><div class="lbl">largest gap</div><div class="big-num red">1.18</div>'
+                    '<div class="txt">bands, Claude Sonnet 4.6 — more than a full band</div></div>', unsafe_allow_html=True)
+        b2.markdown('<div class="stat-card"><div class="lbl">variation across vendors</div><div class="big-num">6×</div>'
+                    '<div class="txt">in raw bands (≈3× standardised); model choice is a fairness decision</div></div>', unsafe_allow_html=True)
+        b3.markdown('<div class="stat-card"><div class="lbl">3-lens panel</div><div class="big-num blue">−23–28%</div>'
+                    '<div class="txt">gap on the two largest-gap models; amplified on Gemini</div></div>', unsafe_allow_html=True)
+        b4.markdown('<div class="stat-card"><div class="lbl">BDS as a trigger</div><div class="big-num orange">1 / 18</div>'
+                    '<div class="txt">contested essays caught at ≤5% false positives (GPT-4o); 0/18 on Claude</div></div>', unsafe_allow_html=True)
+        st.markdown("#### Experiment 1 — the native−SEA gap under a standard grader and under the 3-lens panel "
+                    "(n = 100 per cohort, 95% writer-cluster CIs)")
         fig = go.Figure()
         fig.add_trace(go.Bar(name="Standard grader", x=[m["label"] for m in ms],
                              y=[m["baseline_gap"] for m in ms], marker_color="#B8503F",
@@ -390,9 +525,10 @@ with tab2:
                                           arrayminus=[m["k3_gap"] - m["k3_ci"][0] for m in ms]),
                              text=[f"{m['k3_gap']:.2f}" for m in ms], textposition="outside"))
         fig.add_hline(y=0, line_color="black", line_width=0.8)
-        fig.update_layout(barmode="group", height=420,
-                          yaxis_title="native - SEA score gap (bands), 95% writer-cluster CI",
-                          margin=dict(t=30, b=10))
+        fig.update_layout(barmode="group", height=440, paper_bgcolor="#EFEBE2", plot_bgcolor="#F8F5EE",
+                          font=dict(family="Inter, Helvetica, Arial", size=14, color="#16161A"),
+                          yaxis_title="native − SEA score gap (bands), 95% writer-cluster CI",
+                          legend=dict(orientation="h", y=1.08), margin=dict(t=30, b=10))
         st.plotly_chart(fig, use_container_width=True)
 
         tbl = pd.DataFrame([{
