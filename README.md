@@ -141,7 +141,7 @@ Each lens is a plain-text **system prompt** in `prompts/` (20–114 words), sent
 user turn containing the essay. The five lenses differ only in their four numbered rhetorical
 conventions; they are called independently and never see each other. Side-by-side comparison of all
 six evaluators, the shared prompt skeleton, the case essay read by two lenses, and what the prompts do
-*not* contain: **[docs/HOW-THE-LENSES-GRADE.md](docs/HOW-THE-LENSES-GRADE.md)**.
+*not* contain: **[docs/HOW-THE-LENSES-GRADE.md](docs/HOW-THE-LENSES-GRADE.md)**. One file per lens — verbatim prompt, the four conventions and what each changes, the case essay's rationale on two models, and the lens's own gap at scale — in **[docs/lenses/](docs/lenses/README.md)**.
 
 ## 4. Repository layout
 
@@ -171,6 +171,7 @@ results/
   cache/                     5,971 distinct API responses (gitignored)
 docs/img/                    figures used in this README
 docs/HOW-THE-LENSES-GRADE.md the six evaluators' prompts side by side
+docs/lenses/                 one file per lens (01-western … 05-neutral)
 ```
 
 ---
