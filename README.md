@@ -135,6 +135,14 @@ thesis.
 
 ---
 
+## 3b. How the lenses grade
+
+Each lens is a plain-text **system prompt** in `prompts/` (20–114 words), sent with a byte-identical
+user turn containing the essay. The five lenses differ only in their four numbered rhetorical
+conventions; they are called independently and never see each other. Side-by-side comparison of all
+six evaluators, the shared prompt skeleton, the case essay read by two lenses, and what the prompts do
+*not* contain: **[docs/HOW-THE-LENSES-GRADE.md](docs/HOW-THE-LENSES-GRADE.md)**.
+
 ## 4. Repository layout
 
 ```
@@ -162,6 +170,7 @@ results/
   demo_summary.json          numbers for the demo's Findings tab
   cache/                     5,971 distinct API responses (gitignored)
 docs/img/                    figures used in this README
+docs/HOW-THE-LENSES-GRADE.md the six evaluators' prompts side by side
 ```
 
 ---
