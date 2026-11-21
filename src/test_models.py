@@ -1,8 +1,11 @@
 """Provider-adapter regression tests that never call external APIs."""
+import json
 import sys
 from types import SimpleNamespace
 
-from models import ScoringClient
+import pytest
+
+from models import CacheMiss, ScoringClient, _cache_key
 
 
 def test_anthropic_v1_call_omits_removed_temperature(monkeypatch, tmp_path):
@@ -39,3 +42,31 @@ def test_anthropic_v1_call_omits_removed_temperature(monkeypatch, tmp_path):
     }
     assert raw == '{"score": 5}'
     assert usage == {"in": 10, "out": 4}
+
+
+def test_offline_miss_does_not_call_provider(monkeypatch, tmp_path):
+    client = ScoringClient("openai", "gpt-4o", tmp_path)
+
+    def boom(*_args, **_kwargs):
+        raise AssertionError("offline mode called the provider")
+
+    monkeypatch.setattr(client, "_call", boom)
+    with pytest.raises(CacheMiss):
+        client.score("essay-1", "western", "system", "user", offline=True)
+
+
+def test_offline_hit_returns_the_stored_score(monkeypatch, tmp_path):
+    client = ScoringClient("openai", "gpt-4o", tmp_path)
+
+    def boom(*_args, **_kwargs):
+        raise AssertionError("offline mode called the provider")
+
+    monkeypatch.setattr(client, "_call", boom)
+    key = _cache_key("gpt-4o", "western", "essay-1", "system", "user")
+    (tmp_path / f"{key}.json").write_text(json.dumps({
+        "essay_id": "essay-1", "model": "gpt-4o", "agent": "western",
+        "score": 6.0, "rationale": "stored", "raw": "{}", "usage": None,
+    }))
+    res = client.score("essay-1", "western", "system", "user", offline=True)
+    assert res.score == 6.0
+    assert res.rationale == "stored"

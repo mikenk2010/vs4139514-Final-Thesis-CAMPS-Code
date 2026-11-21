@@ -35,6 +35,8 @@ def main() -> None:
     ap.add_argument("--models", nargs="*", help="subset of model names")
     ap.add_argument("--limit", type=int, default=None,
                     help="smoke test: only score the first N essays")
+    ap.add_argument("--offline", action="store_true",
+                    help="serve only cached responses; never call a provider")
     args = ap.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     exp = cfg["experiments"][args.experiment]
@@ -96,7 +98,8 @@ def main() -> None:
                             continue
                         try:
                             res = client.score(row.essay_id, agent,
-                                               load_prompt(agent), user_prompt)
+                                               load_prompt(agent), user_prompt,
+                                               offline=args.offline)
                         except Exception:
                             run_rec["errors"] += 1
                             raise
@@ -144,11 +147,12 @@ def main() -> None:
                                 "Give your adjudicated score as JSON: "
                                 '{"score": <band>, "confidence": <0-1>, '
                                 '"rationale": "<3-4 sentences>"}')
-                            res = client.score(row.essay_id, "adjudicator",
-                                               load_prompt("adjudicator")
-                                               if Path("prompts/cri_adjudicator.txt").exists()
-                                               else Path("prompts/adjudicator.txt").read_text(),
-                                               adj_user)
+                            res = client.score(
+                                row.essay_id, "adjudicator",
+                                load_prompt("adjudicator")
+                                if Path("prompts/cri_adjudicator.txt").exists()
+                                else Path("prompts/adjudicator.txt").read_text(),
+                                adj_user, offline=args.offline)
                             run_rec["calls_new"] += 1
                             if res.usage:
                                 run_rec["tokens_in"] += res.usage.get("in", 0)

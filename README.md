@@ -160,6 +160,7 @@ src/
   make_figures.py            Figures 4-1 … 4-8 from the logs
   sweep_weights.py           10,626-vector consensus-weight sweep (H4) + frontier figure
   h2_direct.py               direct H2 comparison: adjudicated k=5 vs k=3, writer-cluster CIs
+  replay_check.py            offline replay: cache vs the logs, no provider calls
   make_demo_summary.py       precomputes results/demo_summary.json for the demo
   build_showcase.py          nine-scene seminar page (demo/showcase.html, gitignored)
   demo_app.py                Streamlit seminar demo
@@ -220,6 +221,37 @@ python src/sweep_weights.py --model gpt-4o --out results/E2/weight_sweep_gpt-4o.
 python src/sweep_weights.py --model claude-sonnet --out results/E2/weight_sweep_claude.csv
 python src/h2_direct.py
 ```
+
+### Checked again on 21 November 2026, with no API calls
+
+The provider accounts were not used. The check reads the archived logs and `results/cache/`.
+
+```bash
+python src/replay_check.py
+python src/make_tables.py --experiment E1 --results results/E1 --tables-dir /tmp/camps-tables
+python src/make_tables.py --experiment E2 --results results/E2 --tables-dir /tmp/camps-tables
+python src/make_tables.py --experiment E3 --results results/E3 --tables-dir /tmp/camps-tables
+python src/h2_direct.py
+```
+
+`replay_check.py` rebuilt the thesis prompts for 78 archived calls (the case essay on every logged model and condition, plus five SEA and five native essays on GPT-4o in E1). The disk cache returned the logged score on all 78. A miss would have stopped the script rather than call a provider. `run_experiment.py --offline` is the same guard if you resume a run.
+
+The three Chapter 4 tables were regenerated from the logs. They matched the files in the thesis repo (`tables/table_e1_qwk.tex`, `table_e2_ablation.tex`, `table_e3_bds.tex`). Nothing in those tables was edited by hand.
+
+`h2_direct.py` printed the same direct comparison as Chapter 5. GPT-4o gap reduction 0.053 [−0.03, 0.14]. Claude Sonnet 4.6 gap reduction −0.100 [−0.18, −0.02].
+
+The case essay `WE_PHL_PTJ0_087_B1_2`, read back from the cache:
+
+| Model | Standard grader | Western | SEA | Other lenses | Panel mean | BDS |
+|---|---:|---:|---:|---|---:|---:|
+| GPT-4o | 6 | 5 | 7 | East Asian 6, Mekong 6, Neutral 7 | 6.20 | 0.75 |
+| Claude Sonnet 4.6 | 6 | 5 | 6 | East Asian 6, Mekong 6, Neutral 6 | 5.80 | 0.40 |
+| Gemini 3.1 Pro | 7 | 6 | 6 | 3-lens panel only; Neutral 8 | 6.67 | 0.94 |
+| Qwen3 14B | 6.5 | 6.5 | 7 | 3-lens panel only; Neutral 7 | 6.83 | 0.24 |
+
+On GPT-4o and Claude the meta-adjudicator scored this essay 6. The Western lens was the lowest score on both, and joint-lowest on Gemini. That is one essay. The cohort gaps in Section 2 are the result that carries the claim.
+
+Unit tests for the metrics and for the offline cache guard: 9 passed (`pytest` on `src/test_metrics.py` and `src/test_models.py`).
 
 Two senses of reproducibility (thesis Appendix B): every table and figure is **exactly**
 reproducible from the archived outputs in `results/`; regenerating the outputs through provider

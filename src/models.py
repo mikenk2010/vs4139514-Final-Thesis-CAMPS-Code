@@ -75,6 +75,10 @@ def _cache_key(model_id: str, agent: str, essay_id: str, system_prompt: str,
     return h.hexdigest()[:32]
 
 
+class CacheMiss(RuntimeError):
+    """Raised when offline mode is asked for a call that is not on disk."""
+
+
 class ScoringClient:
     """Uniform interface over the four providers."""
 
@@ -87,11 +91,15 @@ class ScoringClient:
         cache_dir.mkdir(parents=True, exist_ok=True)
 
     def score(self, essay_id: str, agent: str, system_prompt: str,
-              user_prompt: str) -> ScoreResult:
+              user_prompt: str, offline: bool = False) -> ScoreResult:
         key = _cache_key(self.model_id, agent, essay_id, system_prompt, user_prompt)
         cached = self.cache_dir / f"{key}.json"
         if cached.exists():
             d = json.loads(cached.read_text())
+        elif offline:
+            raise CacheMiss(
+                f"No cached response for {self.model_id} / {agent} / {essay_id}. "
+                "Offline mode does not call the provider.")
         else:
             raw, usage = self._call_with_retry(system_prompt, user_prompt)
             d = {"essay_id": essay_id, "model": self.model_id, "agent": agent,
