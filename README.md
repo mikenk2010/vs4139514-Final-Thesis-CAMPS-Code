@@ -105,11 +105,12 @@ python src/build_showcase.py         # -> demo/showcase.html (offline, self-cont
 streamlit run src/demo_app.py
 ```
 
-**Showcase (`demo/showcase.html`)** — the 90-second stage piece: eight full-screen scenes with animated
+**Showcase (`demo/showcase.html`)** — the stage piece: nine full-screen scenes with animated
 reveals, driven by the logs. → / ← advance, **M** switches model, **1–3** switch featured essay,
 **F** fullscreen. Scenes: title → the essay (opening highlighted) → one standard grader → five lenses
-(cards + the two extreme rationales) → consensus and BDS with the honesty note → the same essay under
-four graders → E1 at scale (animated bars with CIs) → the four verdicts.
+(cards + the two extreme rationales) → consensus and BDS, with the note that E3 did not validate the
+trigger → the same essay under four graders → E1 at scale (animated bars with CIs) → human raters
+against the panel (140 GRA essays, 80 raters each; red dots are the contested essays) → the four verdicts.
 
 **Explorer app (Streamlit)** for Q&A:
 
@@ -160,6 +161,7 @@ src/
   sweep_weights.py           10,626-vector consensus-weight sweep (H4) + frontier figure
   h2_direct.py               direct H2 comparison: adjudicated k=5 vs k=3, writer-cluster CIs
   make_demo_summary.py       precomputes results/demo_summary.json for the demo
+  build_showcase.py          nine-scene seminar page (demo/showcase.html, gitignored)
   demo_app.py                Streamlit seminar demo
 results/
   manifest.csv               380 essay IDs (100 SEA, 100 native, 140 GRA, 40 WEP demo-only)
